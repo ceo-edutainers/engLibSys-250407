@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import TutorLoginFormNew from '@/components/Authentication/TutorLoginFormNew'
 
 const Authentication = () => {
@@ -10,14 +11,14 @@ const Authentication = () => {
     const base = process.env.NEXT_PUBLIC_API_BASE_URL
     if (!base) {
       console.error(
-        'TEST:환경변수 NEXT_PUBLIC_API_BASE_URL이 정의되지 않았습니다.'
+        'FRONT:환경변수 NEXT_PUBLIC_API_BASE_URL이 정의되지 않았습니다.'
       )
       return
     } else {
       console.log('NEXT_PUBLIC_API_BASE_URL OK')
     }
     setUrl(base + '/t_login')
-    console.log('✅ API Base URL:', base + '/t_login')
+    console.log('FRONT； API Base URL:', base + '/t_login')
   }, [])
   return (
     <React.Fragment>
