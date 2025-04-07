@@ -67,10 +67,10 @@ yarn-error.log*
 *.map
 *.psd
 *.wasm
-*.gif
-*.jpg
-*.jpeg
-*.png
+# *.gif
+# *.jpg
+# *.jpeg
+# *.png
 *.mp4
 *.mov
 *.pdf
