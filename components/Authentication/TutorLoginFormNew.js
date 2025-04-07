@@ -5,10 +5,11 @@ import Router, { useRouter } from 'next/router'
 import TryRegisterFormEnter from './TryRegisterFormEnter'
 
 const TutorLoginFormNew = ({ after_login_redirect }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   var url = DB_CONN_URL + '/t_login'
-  // const [mbn, setMbn] = useState('') //login時
-  // alert(after_login_redirect)
+  console.log('DB_CONN_URL' + DB_CONN_URL)
+  console.log('✅ API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
+
   const [T_loginStatus, setT_LoginStatus] = useState(false) //login時
   const [tbn, setTbn] = useState('')
   const [T_email, setT_Email] = useState('')
@@ -127,20 +128,7 @@ const TutorLoginFormNew = ({ after_login_redirect }) => {
 
         <button type="submit" onClick={submitlogin}>
           Log In
-          {/* {loading ? <Spinner color="success" /> : ''} */}
         </button>
-        {/* <h1>
-        {loginStatus && (
-          <button onClick={userAuthenticated}>Check if Authenticated</button>
-        )}
-      </h1> */}
-        {/* <h3>
-        {loginStatus && (
-          <button onClick={userAuthenticated}>
-            login中{console.log('in LoginForm:loginStatus ', loginStatus)}
-          </button>
-        )}
-      </h3> */}
       </div>
     </>
   )
