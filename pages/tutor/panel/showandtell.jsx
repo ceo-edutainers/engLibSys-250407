@@ -125,7 +125,7 @@ const SHOWANDTELL = () => {
   const functionMemberInfo = (mbn) => {
     // alert(mbn)
     axios
-      .post('https://englib.net/member_info_mbn', {
+      .post(DB_CONN_URL + '/member_info_mbn', {
         mbn: mbn,
       })
       .then((response) => {
