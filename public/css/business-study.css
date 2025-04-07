@@ -1,0 +1,124 @@
+.BSApp {
+  text-align: center;
+  font-family: arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.BSMenu {
+  width: 100%;
+  height: auto;
+  min-width: 375px;
+  margin: 0;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.BSMenu input,
+button {
+  width: 300px;
+  /* height: 50px; */
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: darkgray;
+}
+
+.BSoptionSelect {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.BSQuiz {
+  width: 100%;
+  min-width: 375px;
+  height: auto;
+  margin: 0;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  border: 10px solid #dedede;
+  border-radius: 20px;
+  /* background-color: lightseagreen; */
+
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.BSMenu,
+.BSQuiz,
+.BSEndScreen h1 {
+  color: black;
+}
+
+.BSEndScreen {
+  width: 100%;
+  min-width: 375px;
+  height: auto;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+.BSstartBtn {
+  width: 240px;
+  height: 150px;
+  color: black;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 30px;
+  font-weight: 600;
+  background-color: #ececec;
+}
+.BSstartBtn:hover {
+  cursor: pointer;
+  color: white;
+  background-color: darkgray;
+}
+
+.BSLessonBtn {
+  width: 240px;
+  height: 150px;
+  color: white;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 30px;
+  font-weight: 600;
+  background-color: mediumslateblue;
+}
+.BSLessonBtn:hover {
+  cursor: pointer;
+  color: white;
+  background-color: darkgray;
+}
+
+#BSnextQuestion {
+  width: 200px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+h3 {
+  color: #ffffff;
+}

@@ -1,0 +1,30 @@
+.payroll-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payroll-table th,
+.payroll-table td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+.payroll-table th {
+  background-color: #f2f2f2;
+}
+
+.payroll-table td {
+  background-color: #e6ffe6;
+}
+
+.payroll-table td[colspan='6'] {
+  background-color: #ffffcc;
+}
+
+.payroll-table-yellow td {
+  background-color: #ebf7ad;
+}
+.payroll-table-gray td {
+  background-color: #d7d7d4;
+}

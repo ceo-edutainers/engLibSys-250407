@@ -1,0 +1,117 @@
+.App {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Menu {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  min-width: 375px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin: 0%; */
+  height: 500px;
+  border-radius: 10px;
+  /* background-color: lightseagreen; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Menu input,
+button {
+  background-color: rgb(182, 223, 248);
+  /* width: 750px; */
+  /* height: 50px; */
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: darkgray;
+}
+
+.optionSelect {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.Quiz {
+  width: 100%;
+  min-width: 375px;
+  height: auto;
+  margin-top: 15px;
+  /* margin: 0; */
+  padding-top: 15px;
+  padding-bottom: 20px;
+  border: 10px solid #dedede;
+  border-radius: 20px;
+  /* background-color: lightseagreen; */
+
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Menu,
+.Quiz,
+.EndScreen h1 {
+  color: #ececec;
+}
+
+.EndScreen {
+  width: 100%;
+  min-width: 375px;
+  height: auto;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+.startBtn {
+  width: 90%;
+  max-width: 400px;
+  height: 100px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 30px;
+  font-weight: 600;
+  background-color: #ececec;
+}
+.startBtn:hover {
+  cursor: pointer;
+  color: black;
+  background-color: #dedede;
+}
+
+#nextQuestion {
+  width: 200px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+h3 {
+  color: #ffffff;
+}

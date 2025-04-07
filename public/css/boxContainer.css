@@ -1,0 +1,40 @@
+#boxContainerContainer {
+  width: 100%;
+  background: white;
+  text-align: center;
+}
+
+#boxContainer {
+  width: 90%;
+  /* border: thick dotted #060; */
+  margin: 10px auto 10px auto;
+  text-align: center;
+}
+
+#box1 {
+  margin-right: 1%;
+  width: 48%;
+  height: auto;
+  background: white;
+  text-align: left;
+}
+#box2 {
+  margin-left: 1%;
+  width: 48%;
+  height: auto;
+  background: white;
+  text-align: left;
+}
+/* #box3 {
+  width: 50px;
+  height: 50px;
+  background: white;
+} */
+
+#boxContainer,
+#box1,
+#box2,
+#box3 {
+  display: inline-block;
+  vertical-align: top;
+}

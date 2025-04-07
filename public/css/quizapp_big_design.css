@@ -1,0 +1,242 @@
+.AppBig {
+  width: 100%;
+  margin-top: 0px;
+  text-align: center;
+  vertical-align: top;
+  background-color: white;
+  overflow: hidden;
+  font-family: arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* .stepBAudioLabel {
+  background-color: '#cc3333';
+  height: '30px';
+  padding-right: '5px';
+  padding-left: '5px';
+  padding-bottom: 0;
+  padding-top: 3;
+  margin-top: 0;
+  margin-bottom: 20;
+  margin-right: '10px';
+  width: '100';
+  font-weight: '600';
+  border-radius: '10px';
+  color: 'white';
+  align-items: 'center';
+  vertical-align: 'middle';
+} */
+.img-bigger:hover {
+  background: white;
+  transform: rotate(5deg) scale(1.6);
+}
+
+.MenuBig {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  min-width: 375px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin: 0%; */
+  height: 500px;
+  border-radius: 10px;
+  /* background-color: lightseagreen; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.MenuBig input,
+button {
+  background-color: rgb(182, 223, 248);
+  /* width: 750px; */
+  /* height: 50px; */
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.startBtnBig {
+  width: 90%;
+  max-width: 400px;
+  height: 100px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 30px;
+  font-weight: 600;
+  background-color: #ececec;
+}
+.startBtnBig:hover {
+  cursor: pointer;
+  color: black;
+  background-color: #dedede;
+}
+
+button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: blue;
+}
+
+/* .questionsBig {
+  width: 100%;
+} */
+
+.optionSelectBig {
+  width: 95%;
+  background-color: darkgray;
+  color: black;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.optionSelectBigClick {
+  width: 95%;
+  background-color: blue;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.optionSelectBigClick:hover {
+  width: 95%;
+  background-color: blue;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.optionSelectBig:hover {
+  width: 95%;
+  background-color: blue;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.QuizBig {
+  width: 800px;
+  min-width: 300px;
+  height: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  border: 10px solid #dedede;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.QuizBigShowandtell {
+  width: 1000px;
+  min-width: 300px;
+  height: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  border: 10px solid #dedede;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.QuizBigShadowing {
+  width: 800px;
+  min-width: 300px;
+  height: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  border: 10px solid #ccc777;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.QuizBigShadowingVideo {
+  width: 800px;
+  min-width: 300px;
+  height: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  border: 10px solid #ccc777;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.questionsLineBig {
+  width: auto;
+  text-align: center;
+  overflow-wrap: break-word;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: white;
+  color: black;
+  font-size: 21px;
+}
+
+.MenuBig,
+.QuizBig,
+.EndScreenBig h1 {
+  color: #dedede;
+}
+
+.EndScreenBig {
+  width: 100%;
+  min-width: 375px;
+  height: auto;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+#nextQuestionBig {
+  /* width: 200px; */
+  width: 100%;
+  min-width: 300px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+h3 {
+  color: #ffffff;
+}

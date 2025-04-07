@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "minjaekato",
+    "password": "Minedcom74!",
+    "database": "englib",
+    "host": "englibdb.cklw0rvleo5x.ap-northeast-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "minjaekato",
+    "password": "Minedcom74!",
+    "database": "englib",
+    "host": "englibdb.cklw0rvleo5x.ap-northeast-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "minjaekato",
+    "password": "Minedcom74!",
+    "database": "englib",
+    "host": "englibdb.cklw0rvleo5x.ap-northeast-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  }
+}

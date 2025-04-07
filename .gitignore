@@ -1,0 +1,94 @@
+# node_modules
+# .next
+# package-lock.json
+# yarn.lock
+# yarn-error.log*
+# .DS_Store
+# #local env files
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+
+# #vercel
+# .vercel
+# /server
+# .env
+# /public/images
+# /public/files
+
+# # 대용량 또는 불필요한 빌드 결과물
+# *.map
+# *.psd
+# *.wasm
+# *.gif
+# *.jpg
+# *.jpeg
+# *.png
+# *.mp4
+# *.mov
+# *.pdf
+# *.zip
+# *.tar
+# *.log
+
+# # macOS 및 system
+# Thumbs.db
+# ehthumbs.db
+# .DS_Store
+
+# # Visual Studio Code
+# .vscode/
+# node, next
+node_modules
+.next
+.vercel
+/server
+
+# system
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# package managers
+package-lock.json
+yarn.lock
+yarn-error.log*
+
+# local env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# media and heavy assets
+/public/images/*.psd
+*.map
+*.psd
+*.wasm
+*.gif
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.mov
+*.pdf
+*.zip
+*.tar
+*.log
+
+
+
+# public folders with large files
+/public/images
+/public/files
+/public/pspdfkit-lib
+/public/files/myenglib/materials/1-min-speaking/2min/audio/input/*.mp3
+/public/pspdfkit-lib/pspdfkit-bc328c2fa7141274.asm.js
+/public/pspdfkit-lib/pspdfkit-5c34320c337b6b52.wasm
+/ public/images/courses/*.psd
+/public/images/man.jpg
+# editor
+.vscode/
+clean-repo/

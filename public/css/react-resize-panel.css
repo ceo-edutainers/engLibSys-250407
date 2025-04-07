@@ -1,0 +1,31 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.customResizeBorder {
+  cursor: ew-resize;
+  width: 5px;
+  background: gray;
+  display: flex;
+  z-index: 99999;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.customHandle {
+  cursor: ew-resize;
+  width: 10px;
+  height: 30px;
+  margin: 0px -5px;
+  background: lightblue;
+  border: 2px solid gray;
+  border-radius: 2px;
+  text-align: center;
+  z-index: 99999;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}

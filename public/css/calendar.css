@@ -1,0 +1,125 @@
+:root {
+  --black: rgb(58, 58, 58);
+  --grey: rgb(205, 205, 205);
+  --white: rgb(240, 240, 240);
+  --red: rgb(206, 36, 36);
+  --light-blue: rgb(102, 193, 255);
+  --light-gray: #d6d6d8;
+  --font-light: 'AirbnbCerealLight', sans-serif;
+  --font-book: 'AirbnbCerealBook', sans-serif;
+  --font-black: 'AirbnbCerealBlack', sans-serif;
+  color: var(--black);
+  font-family: var(--font-light);
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  /* font-smoothing: antialiased; */
+  -webkit-font-smoothing: antialiased;
+}
+
+.calendar {
+  box-sizing: border-box;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  /*max-width: 600px;*/
+
+  background-color: rgb(174, 175, 171);
+  /* background-color: whitesmoke; */
+}
+
+.calendar .header {
+  background-color: var(--grey);
+  text-align: center;
+  padding: 10px;
+  align-items: center;
+  min-height: 2rem;
+  line-height: 2rem;
+  color: var(--black);
+  font-family: var(--font-book);
+  font-weight: 900;
+  font-size: 18px;
+  display: flex;
+}
+
+.calendar .day-names {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.calendar .body {
+  border: 1px solid var(--light-gray);
+}
+
+.calendar .header .previous {
+  flex: 1;
+  text-align: left;
+
+  margin-left: 1rem;
+}
+
+.calendar .header .next {
+  flex: 1;
+  text-align: right;
+  margin-right: 1rem;
+}
+
+.calendar .week {
+  background-color: white;
+  width: calc(100% / 7);
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--black);
+  font-weight: 400;
+}
+.calendar .week div {
+  width: 100%;
+}
+
+.calendar .day {
+  position: relative;
+  width: calc(100% / 7);
+  height: 100px;
+  display: inline-block;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 1;
+  text-align: center;
+  border-bottom: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
+}
+.calendar .day:hover {
+  background-color: #ececec;
+}
+
+.calendar .day div {
+  width: 100%; /*original 54px*/
+  height: 44px;
+  position: relative;
+  color: var(--black);
+  z-index: 100;
+  line-height: 44px;
+}
+
+.calendar .day div.before {
+  color: var(--grey);
+}
+
+.calendar .day div.selected {
+  background-color: var(--red);
+  color: var(--white);
+  font-weight: bold;
+  align-items: center;
+}
+
+.calendar .day div.today {
+  background-color: var(--grey);
+}
