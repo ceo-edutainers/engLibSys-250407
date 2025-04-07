@@ -62,49 +62,6 @@ const TryRegisterFormEnter = () => {
   //alert
   const [isGoNextPage, setIsGoNextPage] = useState(false)
 
-  // //For TEST
-  // useEffect(() => {
-  //   setStudentName('河東聖水')
-  //   setStudentNameEng('Kato Kiyomi')
-  //   setGender('male')
-  //   setParentName('河東ミンジェ')
-  //   setParentNameKana('カトウ　ミンジェ')
-  //   setEmail('minjaekato@gmail.com')
-  //   setTel('032-1111-2222')
-  //   setMobilephone('080-5288-1440')
-  //   setEnglishHistory('3年間アメリカ滞在')
-  //   setPassword('minedcom')
-  //   setBirthY('2007')
-  //   setBirthM('8')
-  //   setBirthD('25')
-  //   setMotherTongue('韓国語')
-  //   setZip('153-0063')
-  //   setPref('東京都')
-  //   setCity('目黒区目黒')
-  //   setAddr('1-2-19')
-  //   setLearnType('ホームスクリング')
-  //   setSchoolName('MIS')
-  //   setGrade('中２')
-  //   setNationality('韓国')
-  //   setSelectedCountry('JP/Japan')
-  //   setCountryNameList([])
-  //   setSelectedCountryCode('JP')
-  //   setSelectedCountryName('日本')
-  //   setTimezoneCountryCode('test')
-  //   setTimezoneCountryName('test')
-  // }, [])
-  //TEST END
-  // const [timezoneCity, setTimezoneCity] = useState()
-  // const [timezoneUTC, setTimezoneUTC] = useState()
-
-  // const [timeZone, setTimeZone] = useState('')
-  // const [country, setCountry] = useState('')
-
-  // //for listing
-  // const [membersList, setMembersList] = useState([])
-  // //for update
-  // const [newTel, setNewTel] = useState('')
-
   const router = useRouter() //使い方：router.replace('/')
   const [memberInfo, setMemberInfo] = useState([])
 

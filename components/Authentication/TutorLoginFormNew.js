@@ -5,10 +5,21 @@ import Router, { useRouter } from 'next/router'
 import TryRegisterFormEnter from './TryRegisterFormEnter'
 
 const TutorLoginFormNew = ({ after_login_redirect }) => {
-  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-  var url = DB_CONN_URL + '/t_login'
-  console.log('DB_CONN_URL' + DB_CONN_URL)
-  console.log('✅ API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
+  const [url, setUrl] = useState('')
+  useEffect(() => {
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL
+    if (!base) {
+      console.error(
+        '❌ 환경변수 NEXT_PUBLIC_API_BASE_URL이 정의되지 않았습니다.'
+      )
+      return
+    }
+    setUrl(base + '/t_login')
+    console.log('✅ API Base URL:', base + '/t_login')
+  }, [])
+
+  // console.log('DB_CONN_URL', DB_CONN_URL)
+  console.log('✅ API Base URL:', url)
 
   const [T_loginStatus, setT_LoginStatus] = useState(false) //login時
   const [tbn, setTbn] = useState('')
