@@ -5,7 +5,20 @@ const Authentication = () => {
   //ログイン後戻るページ
   var after_login_redirect = 'upcoming?tbn='
   // var after_login_redirect = '/index2?'
-
+  const [url, setUrl] = useState('')
+  useEffect(() => {
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL
+    if (!base) {
+      console.error(
+        'TEST:환경변수 NEXT_PUBLIC_API_BASE_URL이 정의되지 않았습니다.'
+      )
+      return
+    } else {
+      console.log('NEXT_PUBLIC_API_BASE_URL OK')
+    }
+    setUrl(base + '/t_login')
+    console.log('✅ API Base URL:', base + '/t_login')
+  }, [])
   return (
     <React.Fragment>
       <div className="profile-authentication-area ptb-70">
