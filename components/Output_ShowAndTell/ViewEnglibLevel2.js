@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
 const ViewEnglibLevel = ({ mbn, courseName }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [englibLevelAllInfo, setEnglibLevelAllInfo] = useState([])
   const [levelView, setLevelView] = useState(false) //IdeaView
   const [englibLevel, setEnglibLevel] = useState()

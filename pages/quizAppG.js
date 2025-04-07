@@ -15,7 +15,7 @@ function App() {
   const [englib_level, setEnglib_level] = useState('A1')
   const [test_group, setTest_group] = useState('1') //同じレベルの中で何番目のテストなのか
 */
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   //初期設定: quizapp5000.js
   const [group, setGroup] = useState('100')

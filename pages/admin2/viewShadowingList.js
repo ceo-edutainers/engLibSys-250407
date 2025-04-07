@@ -5,7 +5,7 @@ import YoutubeScriptTimeInsertForShadowing from '@/components/Admin/YoutubeScrip
 
 import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 const SingleCourses = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [shadowingAllInfo, setShadowingAllInfo] = useState([])
   const [shadowingView, setShadowingView] = useState(false)
   const [youtubeID, setYoutubeID] = useState()

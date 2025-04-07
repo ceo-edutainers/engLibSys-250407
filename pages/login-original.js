@@ -8,7 +8,7 @@ const LoginFormNew = () => {
   const [email, setEmail] = useState('') //login入力時
   const [password, setPassword] = useState('') //login入力時
   const [loginStatus, setLoginStatus] = useState(false) //login時
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //axios.defaults.withCredentials = true
 
   const submitlogin = async (e) => {

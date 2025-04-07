@@ -3,7 +3,7 @@ import axios from 'axios'
 import Link from 'next/link'
 
 const AlertTop1 = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [bookInfo, setBookInfo] = useState([])
   const [bookCounts, setBookCounts] = useState([])
   const [myBookCount, setMyBookCount] = useState()

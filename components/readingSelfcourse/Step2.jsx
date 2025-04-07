@@ -134,7 +134,7 @@ const Step2 = () => {
     dispatch({ type: 'RESTART' })
   }
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   const [vocaPartView, setVocaPartView] = useState(false)
   //import useWindowDimensionsを使う

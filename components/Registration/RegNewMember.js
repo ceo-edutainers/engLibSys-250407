@@ -10,7 +10,7 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 const TryRegisterFormEnter = () => {
   ////////////////////////////////////////////////////
   //もし全ページで登録した内容を変更する場合ここに入れる。START
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   useEffect(() => {
     var TRYstudentName = localStorage.getItem('TRYstudentName')
     var TRYstudentNameEng = localStorage.getItem('TRYstudentNameEng')

@@ -30,7 +30,7 @@ import {
 } from '@/components/FunctionComponent'
 import Swal from 'sweetalert2'
 const DifficultWords = ({ homework_id, mbn, tbn, bookStory }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [clearBookWord, setClearBookWord] = useState([]) //必要のない文字は全部消すかSpaceに変える, Wordのabc準
 
   const [viewInsertWord, setViewInsertWord] = useState(true)

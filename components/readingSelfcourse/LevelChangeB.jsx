@@ -6,7 +6,7 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 import { QuizContext } from '@/components/readingSelfcourse/ContextsB'
 
 const LevelChange = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [isLevelUpChangeConfirm, setIsLevelUpChangeConfirm] = useState(false)
   const [isLevelDownChangeConfirm, setIsLevelDownChangeConfirm] =
     useState(false)

@@ -8,7 +8,7 @@ import Upload from '@/components/readingSelfcourse/uploadBookQuestion'
 //import { Questions } from '../../pages/quizhelper/Questions'
 // import ViewBookQuestionFile from '@/components/readingSelfcourse/viewBookQuestionFileB'
 const EndScreen = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //////////////////////////////////////////////
   //BASIC SETTING NEED START
   //////////////////////////////////////////////

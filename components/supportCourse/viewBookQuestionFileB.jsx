@@ -21,7 +21,7 @@ import {
 // currentStep="MainMenuAll"
 //stepStatus="ThisWeekHW"
 const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [mindmapView, setMindmapView] = useState(false) //IdeaView
   const [fileBookQuestion, setFileBookQuestion] = useState([])
   const [isFileAru, setIsFileAru] = useState(false)

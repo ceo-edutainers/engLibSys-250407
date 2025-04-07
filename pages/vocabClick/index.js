@@ -8,7 +8,7 @@
 
 // As they settled in, the magic key began to glow again, indicating that their adventure was not over yet. "Looks like the key is ready to take us somewhere new," said Wilf, looking at the glowing object with anticipation. "I hope it's somewhere dry," Amy joked, trying to lighten the mood. They all laughed, knowing that wherever the magic key took them next, they would face it together. The key glowed brighter, and then, in a flash of light, they were gone, whisked away to their next adventure.`
 
-//   const DB_CONN_URL = process.env.DB_CONN_URL
+//   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 //   const [modalIsOpen, setIsOpen] = useState(false)
 //   const [selectedWord, setSelectedWord] = useState('')
 //   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 })

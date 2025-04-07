@@ -18,7 +18,7 @@ import ViewTutorOnlyMemo from '@/components/Output_ShowAndTell/ViewTutorOnlyMemo
 import emailjs from 'emailjs-com'
 
 const SHOWANDTELL = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [usePreviousHomework, setUsePreviousHomework] = useState(false)
 

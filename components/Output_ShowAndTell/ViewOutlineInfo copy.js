@@ -44,7 +44,7 @@ const ViewOutlineInfo = () => {
   //DBからデーターを持ってくる + ゲームのスタート情報をDBへ入れる
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   useEffect(() => {
     var mbn = localStorage.getItem('MypageMbn')
 

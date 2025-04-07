@@ -12,7 +12,7 @@ import axios from 'axios'
 const RegYoutubeScriptTime = () => {
   const [timeScript, setTimeScript] = useState('')
   const [arrayTimeScript, setArrayTimeScript] = useState([])
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
     scriptSplit(timeScript)

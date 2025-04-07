@@ -3,7 +3,7 @@ import axios from 'axios'
 import Router, { useRouter } from 'next/router' // //get값이 넘어왔을 경우
 
 const ViewPastVerb = ({}) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const inputRef = useRef()
   const router = useRouter() //使い方：router.replace('/')
   // const [grammarView, setGrammarView] = useState(false) //IdeaView

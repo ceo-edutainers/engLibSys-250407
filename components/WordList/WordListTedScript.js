@@ -14,7 +14,7 @@ export default function WordListTedScript({
   mbn,
   tbn,
 }) {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [rndWidth1, setRndWidth1] = useState(400)
   const [rndHeight1, setRndHeight1] = useState(500)
   const [defaultX, setDefaultX] = useState(-400)

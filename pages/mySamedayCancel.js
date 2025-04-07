@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 // ['menu', 'playing', 'finished']
 
 function App() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [classAutoid, setClassAutoid] = useState()
   const [reason, setReason] = useState()

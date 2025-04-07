@@ -10,7 +10,7 @@ const ProductComponent = () => {
 
   const fetchProducts = async () => {
     try {
-      const DB_CONN_URL = process.env.DB_CONN_URL
+      const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
       const response = await fetch('http://localhost:3001/products') // Node.js 서버의 엔드포인트
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)

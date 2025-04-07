@@ -46,7 +46,7 @@ import {
 import { red } from '@material-ui/core/colors'
 import { FaHandHoldingUsd } from 'react-icons/fa'
 const StepSH2 = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   //import useWindowDimensionsを使う
   const { height, width } = useWindowDimensions()

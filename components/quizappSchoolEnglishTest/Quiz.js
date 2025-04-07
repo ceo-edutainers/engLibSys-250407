@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 const Quiz = () => {
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //import useWindowDimensionsを使う
   const { height, width } = useWindowDimensions()
   const thisWidth = width - 10 + 'px'

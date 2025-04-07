@@ -12,7 +12,7 @@ import Cookies from 'js-cookie'
 
 const NavbarEnglib_Tutor = () => {
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //Tutor-Authentication
   useEffect(() => {
     if (localStorage.getItem('T_loginStatus') !== 'true') {

@@ -29,7 +29,7 @@ const SingleCourses = () => {
   const [rightCorrectCnt, setRightCorrectCnt] = useState()
   const [detailMbn, setDetailMbn] = useState()
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
     const fetchData2 = async () => {

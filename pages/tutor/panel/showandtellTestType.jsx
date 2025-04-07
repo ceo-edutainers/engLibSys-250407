@@ -19,7 +19,7 @@ import VoiceRecorderToS3ForSelfLessonPage from '@/components/VoiceRecorder/Voice
 import emailjs from 'emailjs-com'
 
 const SHOWANDTELL = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [setUsePreviousHomework, usePreviousHomework] = useState(false)
 

@@ -37,7 +37,7 @@ function MainMenu() {
     totalQuestion,
     setTotalQuestion,
   } = useContext(QuizContext)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [loginStatus, setLoginStatus] = useState(false) //login時
   let logOut = () => {
     setLoginStatus(false)

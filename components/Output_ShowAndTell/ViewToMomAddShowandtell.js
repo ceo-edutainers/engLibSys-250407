@@ -12,7 +12,7 @@ const ViewToMomAdd = ({
   homework_id,
   subject,
 }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const inputRef = useRef()
 
   const [memoInfo, setMemoInfo] = useState([])

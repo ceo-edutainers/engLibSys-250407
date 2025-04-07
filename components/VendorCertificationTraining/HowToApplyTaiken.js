@@ -15,7 +15,7 @@ const HowToApplyTaiken = () => {
   const [email, setEmail] = useState('')
   const [gender, setGender] = useState('')
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const addMemInfo = () => {
     const fetchData = async () => {
       // alert(studentName)

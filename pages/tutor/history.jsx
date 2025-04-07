@@ -14,7 +14,7 @@ import Modal from '@/components/modal/ModalMemberInfo'
 
 const LessonHistory = () => {
   const { query } = useRouter() //값이 get url로 넘어왔을 경우 사용
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //modal
   const [openModal, setOpenModal] = useState(false)
   const [mbnModal, setMbnModal] = useState()

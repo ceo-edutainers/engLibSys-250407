@@ -26,7 +26,7 @@ const RndEditor = ({
   // storyNum,
   // storyTitle,
 }) => {
-  // const DB_CONN_URL = process.env.DB_CONN_URL
+  // const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [rndWidth1, setRndWidth1] = useState(300)
   const [rndHeight1, setRndHeight1] = useState(60)
   const [defaultX, setDefaultX] = useState(1100)

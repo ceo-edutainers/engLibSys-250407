@@ -5,7 +5,7 @@ import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 import { FaPause, FaPlay } from 'react-icons/fa'
 
 function YouTubePlayer() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [playing, setPlaying] = useState(true)
   const playerRef = useRef(null)
 

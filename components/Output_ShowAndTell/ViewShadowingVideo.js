@@ -6,7 +6,7 @@ import YoutubeScriptTimeInsertForShadowing from '@/components/Youtube/YoutubeScr
 import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 import RndHomeworkShadowing from '@/components/Output_ShowAndTell/RndHomeworkShadowing'
 const ViewShadowing = ({ mbn, tbn }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [englibLevelAllInfo, setEnglibLevelAllInfo] = useState([])
   const [levelView, setLevelView] = useState(false) //IdeaView
   const [englibLevel, setEnglibLevel] = useState()

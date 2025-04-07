@@ -24,7 +24,7 @@ export default function ReadingView({
   courseName,
 }) {
   const [pauseState, setPauseState] = useState(true)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //let newUrl = 'https://www.youtube.com/embed/' + yID + '&cc_load_policy=0'
   const [url, setUrl] = useState(newUrl)
 

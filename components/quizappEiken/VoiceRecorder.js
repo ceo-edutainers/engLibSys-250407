@@ -30,7 +30,7 @@ const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
 
 const audioRecorder = new MicRecorder({ bitRate: 160 })
 const limitDuration = '5' //録音音声が指定した数字の秒以上にならないと登録されない
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 //128:radio quality,  160 or higher:CD, 256 kilobit- iTunes
 // const [initRecording, setInitRecording] = useState()
 // useEffect(() => {

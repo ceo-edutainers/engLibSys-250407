@@ -7,7 +7,7 @@ import Link from '@/utils/ActiveLink'
 import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 
 const RndHomework = ({ homework_id, subject }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [hwInfo, setHwInfo] = useState([])
   const [rndWidth1, setRndWidth1] = useState(300)
   const [rndHeight1, setRndHeight1] = useState(60)

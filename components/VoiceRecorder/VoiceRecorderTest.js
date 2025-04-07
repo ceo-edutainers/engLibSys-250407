@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import MicRecorder from 'mic-recorder-to-mp3'
 const audioRecorder = new MicRecorder({ bitRate: 128 })
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 class App extends React.Component {
   constructor(props) {

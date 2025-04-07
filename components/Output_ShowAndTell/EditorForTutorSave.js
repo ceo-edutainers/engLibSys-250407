@@ -24,7 +24,7 @@ const EditorForTutorSave = ({
   // storyNum,
   // storyTitle,
 }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [tbn2, settbn2] = useState()
   const [tutorNameEng2, settutorNameEng2] = useState()

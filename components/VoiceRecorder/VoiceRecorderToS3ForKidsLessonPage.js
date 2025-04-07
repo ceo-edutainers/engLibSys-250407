@@ -25,7 +25,7 @@ import {
 import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 import { NavigateBeforeSharp } from '@material-ui/icons'
 // import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mobile or tablet etc...portrait...
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
 const REGION = process.env.S3_REACT_APP_REGION
 const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID

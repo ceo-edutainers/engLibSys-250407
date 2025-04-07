@@ -11,7 +11,7 @@ import 'balloon-css' //tooltip balloon , usage:https://kazzkiq.github.io/balloon
 import WordListReadingBook from '@/components/WordList/WordListReadingBookNoMeaning' //単語リスト
 
 const VocaSelect = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   //import useWindowDimensionsを使う
   // const { height, width } = useWindowDimensions()

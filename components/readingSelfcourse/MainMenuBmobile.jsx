@@ -6,7 +6,7 @@ import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 import Upload from '@/components/readingSelfcourse/uploadBookQuestionMobile'
 import ViewBookQuestionFile from '@/components/readingSelfcourse/viewBookQuestionFileB'
 function MainMenuB() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [englibLevelAllInfo, setEnglibLevelAllInfo] = useState([])
 
   const {

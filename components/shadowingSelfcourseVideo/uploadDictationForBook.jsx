@@ -15,7 +15,7 @@ function Upload({
   const { thisSubject, setThisSubject, practiceTempId, setPracticeTempId } =
     useContext(QuizContext)
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   const fileInput = useRef()
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)

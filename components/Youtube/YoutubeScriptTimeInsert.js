@@ -24,7 +24,7 @@ export default function YoutubeScriptTimeInsert({
   //const [youtubeID, setYoutubeID] = useState(youtubeID)
   const [pauseState, setPauseState] = useState(true)
   //const [inputValue, setInputValue] = useState('')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [playStatus, setPlayStatus] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [subTitleStatus, setSubTitleStatus] = useState(false)

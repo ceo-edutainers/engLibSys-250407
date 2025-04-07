@@ -36,7 +36,7 @@ const IdeaBox = () => {
     setPoint,
   } = useContext(QuizContext)
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
     var Url = DB_CONN_URL + '/get-hw-show-and-tell-idea-box'

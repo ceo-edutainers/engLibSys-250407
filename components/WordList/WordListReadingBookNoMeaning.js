@@ -19,7 +19,7 @@ export default function WordListReadingBook({
   mbn,
   tbn,
 }) {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [rndWidth1, setRndWidth1] = useState(250)
   const [rndHeight1, setRndHeight1] = useState(750)
   const [defaultX, setDefaultX] = useState(-400)

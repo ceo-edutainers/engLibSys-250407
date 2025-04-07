@@ -6,7 +6,7 @@ import PdfViewer from '@/components/PdfViewer/PdfViewer'
 import { DriveEtaOutlined } from '@material-ui/icons'
 // import S3 from 'react-aws-s3'
 const ViewGrammarBooks = ({ currentStep, stepStatus }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [grammraTermView, setGrammarTermView] = useState([])
 
   const [isFileAru, setIsFileAru] = useState(false)

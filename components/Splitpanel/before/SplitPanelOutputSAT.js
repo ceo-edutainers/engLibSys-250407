@@ -34,7 +34,7 @@ const SplitPanelOutputSAT = ({ mbn, tbn, homework_id, name_eng }) => {
   // console.log('3.youtubeID', youtubeID)
   // console.log('4.google_doc_link', google_doc_link)
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   // const [file1, setFile1] = useState('./3min-Presentation_PART1_Lesson_1.pdf')
   const [file1, setFile1] = useState(

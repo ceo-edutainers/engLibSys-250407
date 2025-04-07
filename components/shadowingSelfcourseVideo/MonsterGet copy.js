@@ -17,7 +17,7 @@ const MonsterGet = () => {
   // const [nowClickedColor, setNowClickedColor] = useState('') //クリックした答えのボタンの色が変わる
   const [pointKeyNum, setPointKeyNum] = useState('RR-1') //DBのsys_point_set テーブルの pointKeyNum
   const [isGotPoint, setIsGetPoint] = useState(false) //pointをゲットした場合、trueになる
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   // const [audioDurtaionFromDB, setAudioDurtaionFromDB] = useState(0)
 
   // const [recordingCountForNextStep, setRecordingCountForNextStep] = useState(0)

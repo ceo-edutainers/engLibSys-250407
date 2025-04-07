@@ -48,7 +48,7 @@ function lessonPre() {
   const [yoyakuDate, setYoyakuDate] = useState()
   const [yoyakuTime, setYoyakuTime] = useState()
   const [lessonSubject, setLessonSubject] = useState()
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [viewNoHurikae, setViewNoHurikae] = useState(false)
   const [viewYasumiSoon, setViewYasumiSoon] = useState(false)
   const [viewHurikae, setViewHurikae] = useState(false)

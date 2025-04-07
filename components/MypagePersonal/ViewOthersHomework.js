@@ -5,7 +5,7 @@ import { faHandPointer } from '@fortawesome/free-solid-svg-icons'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 export default function ViewReadingLevel() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [viewLevel, setViewLevel] = useState(false)
   const [englibLevelAllInfo, setEnglibLevelAllInfo] = useState([])
   const [englibLevel, setEnglibLevel] = useState('')

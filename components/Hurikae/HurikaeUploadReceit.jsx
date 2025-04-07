@@ -31,7 +31,7 @@ const HurikaeAskNormalTimeNew = () => {
       setLoader(false)
     }, 1000)
   }, [])
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const fileInput = useRef()
   const [isFileAru, setIsFileAru] = useState(false)
   const [isPermettedFile, setIsPermettedFile] = useState(false)

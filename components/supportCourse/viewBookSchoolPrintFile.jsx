@@ -19,7 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 // import S3 from 'react-aws-s3'
 const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [mindmapView, setMindmapView] = useState(false) //IdeaView
   const [fileBookQuestion, setFileBookQuestion] = useState([])
   const [qrLinkOtherHW, setQrLinkOtherHW] = useState([])

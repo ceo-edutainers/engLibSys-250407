@@ -54,7 +54,7 @@ export default function VoiceRecorderToS3ForLessonPage(mbn, homework_id) {
   const [record_comment, setRecord_comment] = useState('')
   const [recordFileList, setRecordFileList] = useState([])
   const [recordListView, setRecordListView] = useState(false)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //const audioRecorder = new MicRecorder({ bitRate: 128 })
 
   const [audioRecorder, setAudioRecorder] = useState(

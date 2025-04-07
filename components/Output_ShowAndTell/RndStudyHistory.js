@@ -9,7 +9,7 @@ import PointBar from '@/components/Tutor/PointBar'
 import MonsterGet from '@/components/Tutor/MonsterGet'
 import MyCalendarFromScratch from '@/components/MyCalendarFromScratch/MyCalendarFromScratch'
 const RndStudyHistory = ({ homework_id, mbn, courseName }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [bookUrl, setBookUrl] = useState()
 
   const [rndSwWidth1, setRndSwWidth1] = useState(300)

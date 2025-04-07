@@ -43,7 +43,7 @@ import SpeechRecognition, {
 
 function QuizModal({ closeModal, lastTotalWords }) {
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //text to speech//
   // const onEnd = () => {
   //   setHighlightedText('')

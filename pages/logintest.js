@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import Link from 'next/link'
 const LoginTest = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [emailReg, setEmailReg] = useState('')
   const [passwordReg, SetPasswordReg] = useState('')
 

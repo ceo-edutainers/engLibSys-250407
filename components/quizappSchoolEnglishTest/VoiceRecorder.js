@@ -26,7 +26,7 @@ import { NavigateBeforeSharp } from '@material-ui/icons'
 
 const audioRecorder = new MicRecorder({ bitRate: 128 })
 const limitDuration = '5' //録音音声が指定した数字の秒以上にならないと登録されない
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
 const REGION = process.env.S3_REACT_APP_REGION

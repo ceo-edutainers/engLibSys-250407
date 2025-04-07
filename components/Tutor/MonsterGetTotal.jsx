@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const MonsterGet = ({ mbn, homework_id }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [getMonsterInfo, setGetMonsterInfo] = useState([])
   const [totalMonster, setTotalMonster] = useState()
 

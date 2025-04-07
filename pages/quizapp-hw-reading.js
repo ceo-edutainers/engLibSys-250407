@@ -10,7 +10,7 @@ import { QuizContext } from '@/components/quizapp-hw-reading/Contexts'
 // ['menu', 'playing', 'finished']
 function App() {
   //初期設定
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [course, setCourse] = useState('Input Course')
   const [courseName, setCourseName] = useState('CourseA')
   const [gameTitle, setGameTitle] = useState('Word Quiz')

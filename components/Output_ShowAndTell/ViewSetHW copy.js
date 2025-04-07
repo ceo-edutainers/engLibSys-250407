@@ -6,7 +6,7 @@ import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 // const [homework_id, sethomework_id] = useState()
 
 const ViewSetHW = ({ mbn, homework_id }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [homeworkIdMaincourse, setHomeworkIDMaincourse] = useState(homework_id)
   const [homeworkIdShadowing, setHomeworkIDShadowing] = useState()
   const [selectedMainCourseHW, setSelectedMainCourseHW] = useState()

@@ -6,7 +6,7 @@ import YoutubeScriptTimeInsertForShadowing3 from '@/components/Admin/YoutubeScri
 import { FaPause, FaPlay } from 'react-icons/fa'
 
 function YouTubePlayer() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [shadowingAllInfo, setShadowingAllInfo] = useState([])
   const [shadowingView, setShadowingView] = useState(false)
   const [youtubeID, setYoutubeID] = useState()

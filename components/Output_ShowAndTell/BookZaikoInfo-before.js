@@ -20,7 +20,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
   const [readingLevel, setReadingLevel] = useState()
   const [bookTitle, setBookTitle] = useState()
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
     checkZaiko()

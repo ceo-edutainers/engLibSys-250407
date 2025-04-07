@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mobile or tablet etc...portrait...
 
 const StepGoal = ({ leastRecordCount, pageView }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   return (
     <>

@@ -15,7 +15,7 @@ import Router, { useRouter } from 'next/router'
 function showandtellCourse() {
   const [myMbn, setMyMbn] = useState('')
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //初期設定
   const [course, setCourse] = useState('Input_Course')
   const [courseSelf, setCourseSelf] = useState('self')

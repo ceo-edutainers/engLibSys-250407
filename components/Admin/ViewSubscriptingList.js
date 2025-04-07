@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 
 const ViewMemberList = ({ sort }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [memberDetailView, setMemberDetailView] = useState(false)
   const [memberDetailViewMember, setMemberDetailViewMember] = useState(false)
 

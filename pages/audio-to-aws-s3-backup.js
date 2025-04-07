@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const audioRecorder = new MicRecorder({ bitRate: 160 })
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 //128:radio quality,  160 or higher:CD, 256 kilobit- iTunes
 // const [initRecording, setInitRecording] = useState()
 // useEffect(() => {

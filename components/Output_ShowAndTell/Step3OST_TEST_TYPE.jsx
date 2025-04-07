@@ -24,7 +24,7 @@ import Subpage from '@/components/Output_ShowAndTell/SubpageStep2_2'
 import ViewOutlineInfo from '@/components/Output_ShowAndTell/ViewOutlineInfo_step3'
 
 const Step3OST = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   //import useWindowDimensionsを使う
   const { height, width } = useWindowDimensions()

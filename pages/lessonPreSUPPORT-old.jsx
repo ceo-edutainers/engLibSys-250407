@@ -29,7 +29,7 @@ import {
 // ['menu', 'playing', 'finished']
 
 function lessonPre() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const { myMbn, setMyMbn, userName, setUserName } = useContext(QuizContext)
   const [G_loginStatus, setG_LoginStatus] = useState(false) //login時
   const router = useRouter() //使い方：router.replace('/')

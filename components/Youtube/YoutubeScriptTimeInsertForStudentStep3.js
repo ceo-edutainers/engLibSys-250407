@@ -29,7 +29,7 @@ export default function YoutubeScriptTimeInsertForStudentStep3({
   //const [youtubeID, setYoutubeID] = useState(youtubeID)
   const [pauseState, setPauseState] = useState(true)
   //const [inputValue, setInputValue] = useState('')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [videoRefresh, setVideoRefresh] = useState(false)
   const [playStatus, setPlayStatus] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(shadowingSpeed)

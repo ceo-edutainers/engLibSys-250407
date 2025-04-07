@@ -30,7 +30,7 @@ const Upcoming = () => {
   //get값이 넘어왔을 경우
 
   const { query } = useRouter()
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [key, setKey] = useState(0) // 키 상태로 컴포넌트의 리렌더링을 제어
   // 컴포넌트 리로드 함수

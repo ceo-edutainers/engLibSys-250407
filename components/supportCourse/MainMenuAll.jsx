@@ -19,7 +19,7 @@ import ViewBookQuestionFile from '@/components/supportCourse/viewBookQuestionFil
 import ViewBookSchoolPrintFile from '@/components/supportCourse/viewBookSchoolPrintFile'
 
 function MainMenuB() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [englibLevelAllInfo, setEnglibLevelAllInfo] = useState([])
 
   const {

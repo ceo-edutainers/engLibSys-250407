@@ -12,7 +12,7 @@ import 'react-quill/dist/quill.snow.css'
 // import { Editor } from 'react-draft-wysiwyg'
 
 const RndEditor = ({ homework_id, mbn }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   function saveEditor(
     tbn,

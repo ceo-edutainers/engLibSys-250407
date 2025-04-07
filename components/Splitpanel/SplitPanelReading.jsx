@@ -18,7 +18,7 @@ const SplitPanelReading = ({
   // thisOsusumeLetterSumScript,
   // thisOsusumeLetterSumOutline,
 }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [file1, setFile1] = useState(
     'https://englib-materials.s3.ap-northeast-1.amazonaws.com/3min-presentation/3min-Presentation_PART1_Lesson_1.pdf'

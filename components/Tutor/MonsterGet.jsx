@@ -8,7 +8,7 @@ import withReactContent from 'sweetalert2-react-content'
 import HWDataTable from '@/components/Utils/HWDateTable'
 
 const MonsterGet = ({ mbn, homework_id }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [getMonsterInfo, setGetMonsterInfo] = useState([])
   const [getThisMonsterInfo, setGetThisMonsterInfo] = useState([])
   const [getMonsterInfoRaw, setGetMonsterInfoRaw] = useState([])

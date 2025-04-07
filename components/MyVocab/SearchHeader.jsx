@@ -29,7 +29,7 @@ import {
 function App() {
   const { myMbn, setMyMbn, userName, setUserName, searchWord, setSearchWord } =
     useContext(VocaContext)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const inputRef = useRef()
   const [vocaSearchView, setVocaSearchView] = useState(false)
 

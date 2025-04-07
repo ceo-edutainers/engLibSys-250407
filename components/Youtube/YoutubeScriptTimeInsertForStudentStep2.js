@@ -48,7 +48,7 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
   //   if (playLayout) playerRef.current.play()
   // }, [playLayout])
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [pauseState, setPauseState] = useState(true)
   const [dictText, setDictText] = useState([])
   const [viewNum, setViewNum] = useState('')

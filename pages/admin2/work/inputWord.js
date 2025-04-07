@@ -16,7 +16,7 @@ const Upcoming = () => {
   //get값이 넘어왔을 경우
 
   const { query } = useRouter()
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   // const tbn = query.tbn
 
   const [myWord, setMyWord] = useState()

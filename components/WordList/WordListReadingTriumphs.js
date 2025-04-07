@@ -7,7 +7,7 @@ import {
 import { spacing } from '@mui/system'
 
 export default function Test() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [bookData, setBookData] = useState([])
   const [clearBookData, setClearBookData] = useState([]) //必要のない文字は全部消すかSpaceに変える
   const [course, setCourse] = useState('')

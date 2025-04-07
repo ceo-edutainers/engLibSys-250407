@@ -18,7 +18,7 @@ function readingSelfCourseA() {
   const cS = query.cS //SELF
   const sB = query.sB //subject
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [HWbookInfo, setHWbookInfo] = useState([]) //DBからHWのデータを持ってきて入れる
   const [audioDurtaionFromDB, setAudioDurtaionFromDB] = useState(0)

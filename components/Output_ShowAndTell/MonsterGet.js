@@ -6,7 +6,7 @@ import 'balloon-css' //tooltip balloon , usage:https://kazzkiq.github.io/balloon
 // import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mobile or tablet etc...portrait...
 import SweetAlert from 'react-bootstrap-sweetalert'
 const MonsterGet = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [getMonsterInfo, setGetMonsterInfo] = useState([])
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
   function range(start, end) {

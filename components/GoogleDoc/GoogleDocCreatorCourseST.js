@@ -12,7 +12,7 @@ export default function GoogleDocCreatorCourseST({
   // youtubeID,
 }) {
   // const [questionList, setQuestionList] = useState([])
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [googleUrl, setGoogleUrl] = useState()
   const [googleView, setGoogleView] = useState('')
   const [showandtellHWLIST, setShowandtellHWLIST] = useState([])

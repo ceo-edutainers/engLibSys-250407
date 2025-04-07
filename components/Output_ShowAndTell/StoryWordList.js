@@ -18,7 +18,7 @@ const StoryWordList = ({
   mbn,
   tbn,
 }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [clearBookWord, setClearBookWord] = useState([]) //必要のない文字は全部消すかSpaceに変える, Wordのabc準
 
   // useEffect(() => {

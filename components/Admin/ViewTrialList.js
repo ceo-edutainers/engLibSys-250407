@@ -4,7 +4,7 @@ import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 const App = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [isDel, setIsDel] = useState(false)
   const [trialAutoid, setTrialAutoid] = useState()

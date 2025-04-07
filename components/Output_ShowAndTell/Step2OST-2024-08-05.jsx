@@ -18,7 +18,7 @@ import OutlineSample from '@/components/Output_ShowAndTell/SampleOutline'
 import Subpage from '@/components/Output_ShowAndTell/SubpageStep2'
 
 const Step2OST = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
 
   let audioRightAnswer = new Audio(

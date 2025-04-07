@@ -43,7 +43,7 @@ const READINGA = () => {
     localStorage.setItem('email', '')
   }, [])
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
   // const [isFinishThisLesson, setIsFinishThisLesson] = useState(false)

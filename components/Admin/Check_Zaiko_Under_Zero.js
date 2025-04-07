@@ -3,7 +3,7 @@ import Link from '@/utils/ActiveLink'
 import axios from 'axios'
 
 const App = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [dataInfo, setDataInfo] = useState([])
   const [dataInfoLength, setDataInfoLength] = useState()
   useEffect(() => {

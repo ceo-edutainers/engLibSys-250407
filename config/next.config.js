@@ -15,7 +15,7 @@ module.exports = withPWA({
   },
 
   env: {
-    DB_CONN_URL: process.env.DB_CONN_URL,
+    DB_CONN_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     SENDGRID_KEY: process.env.SENDGRID_KEY,

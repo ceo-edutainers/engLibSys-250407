@@ -10,7 +10,7 @@ import { QuizContext } from '@/components/readingSelfcourse/ContextsA'
 import Router, { useRouter } from 'next/router'
 
 function readingSelfCourseA() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [redirectTopGruopUrl, setRedirectTopGruopUrl] = useState('/loginGroup')
   // const [redirectTopPersonalUrl, setRedirectTopPersonalUrl] =
   //   useState('/loginPersonal')

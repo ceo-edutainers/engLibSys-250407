@@ -13,7 +13,7 @@ import { faLaptop } from '@fortawesome/free-solid-svg-icons'
 // ['menu', 'playing', 'finished']
 
 function lessonPre() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   const { query } = useRouter() //값이 get url로 넘어왔을 경우 사용
   const [cN, setCN] = useState(query.courseName)

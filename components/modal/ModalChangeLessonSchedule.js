@@ -21,7 +21,7 @@ const ModalChangeLessonSchedule = ({ closeModal, hw_id, mbn, login_level }) => {
   const [newWeekday, setNewWeekday] = useState(null)
   const [changed_dateTimeChangeMemo, setChanged_dateTimeChangeMemo] =
     useState(null)
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const router = useRouter() //使い方：router.replace('/')
   const handleReload = () => {

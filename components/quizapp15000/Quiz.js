@@ -17,7 +17,7 @@ import { myFun_vocaFormJapanese } from '@/components/FunctionComponent'
 const Quiz = () => {
   // const { speak } = useSpeechSynthesis()
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   let audioRightAnswer = new Audio(
     'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
   )

@@ -28,7 +28,7 @@ const REGION = process.env.S3_REACT_APP_REGION
 const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
 const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
 
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 export default class VoiceRecorderToS3ForLessonPage extends React.Component {
   constructor(props) {
     super(props)

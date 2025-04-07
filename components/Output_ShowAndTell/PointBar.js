@@ -7,7 +7,7 @@ import Router from 'next/router'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 const PointBar = ({ cStep, pageTitle, bcolor, pointKeyNum, HWID }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
 
   const [totalPoint, setTotalPoint] = useState()

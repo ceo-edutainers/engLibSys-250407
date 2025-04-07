@@ -10,7 +10,7 @@ export default function DiscussionStudentWorkBox({ youtubeID, homework_id }) {
   const onDayClick = (e, day) => {
     //alert(day)
   }
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   useEffect(() => {
     multipleQuestion()
   }, [])

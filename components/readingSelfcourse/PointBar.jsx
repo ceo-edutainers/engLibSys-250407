@@ -7,7 +7,7 @@ import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mob
 import SweetAlert from 'react-bootstrap-sweetalert'
 
 const PointBar = ({ cStep, pageTitle, pageSubTitle, bcolor, pointKeyNum }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [thisBgColor, setThisBgColor] = useState(bcolor)
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
   const [pointInfo, setPointInfo] = useState([])

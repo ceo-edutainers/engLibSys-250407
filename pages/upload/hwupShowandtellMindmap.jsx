@@ -45,7 +45,7 @@ function App() {
   const [fileLength, setFileLength] = useState(0)
   const [mindmapView, setMindmapView] = useState(false)
 
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter()
   const { query } = useRouter()
 

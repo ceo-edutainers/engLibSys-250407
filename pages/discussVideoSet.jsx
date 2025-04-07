@@ -7,7 +7,7 @@ import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 const ModalVideo = dynamic(import('react-modal-video'))
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 function DiscussionVideoList() {
   const [display, setDisplay] = useState(false)
@@ -17,7 +17,7 @@ function DiscussionVideoList() {
   const cN = query.cN //courseName
   const cS = query.cS //courseSelf
   const sB = query.sB //subject
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [G_loginStatus, setG_LoginStatus] = useState(false) //login時
   const [myMbn, setMyMbn] = useState('')
   const router = useRouter() //使い方：router.replace('/')

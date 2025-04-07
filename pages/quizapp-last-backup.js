@@ -20,7 +20,7 @@ function App() {
   const [score, setScore] = useState(0)
   const [totalQuestion, setTotalQuestion] = useState(0)
   const [audioOnOff, setAudioOnOff] = useState('on')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //get member info : name_eng +  quizTempIdを発行
   useEffect(() => {
     if (quizTempId == '') {

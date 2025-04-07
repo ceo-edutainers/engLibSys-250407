@@ -11,7 +11,7 @@ export default function DiscussionMultiQuestionBox({ youtubeID, homework_id }) {
 
   function multipleQuestion() {
     console.log('youtubeID', youtubeID)
-    const DB_CONN_URL = process.env.DB_CONN_URL
+    const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
     axios
       .post(DB_CONN_URL + '/get-member-discuss-multiple-question/', {
         youtubeID: youtubeID,

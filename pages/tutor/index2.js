@@ -16,7 +16,7 @@ function TutorTop() {
   const [lessonHistoryUrl, setLessonHistoryUrl] = useState('')
   const [lessonListUrl, setLessonListUrl] = useState('')
   const [upcomingLessonList, setUpcomingLessonList] = useState('')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   useEffect(() => {
     var tbn = localStorage.getItem('tbn')
     setLessonHistoryUrl('/tutor/history?tbn=' + tbn)

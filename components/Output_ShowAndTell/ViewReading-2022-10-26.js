@@ -9,7 +9,7 @@ import WordListReadingBookAForTutor from '@/components/readingSelfcourse/WordLis
 import RndBlackcatAnswer from '@/components/Output_ShowAndTell/RndBlackcatAnswer'
 
 const ViewReading = ({ courseName, mbn, tbn, homework_id }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [bookUrl, setBookUrl] = useState()
 
   const [viewQuestion, setViewQuestion] = useState(false)

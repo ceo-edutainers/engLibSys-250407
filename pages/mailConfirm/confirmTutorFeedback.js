@@ -6,7 +6,7 @@ import Router, { useRouter } from 'next/router'
 const Confirm = () => {
   const router = useRouter()
   const { query } = useRouter()
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   const [HWID, setHWID] = useState()
   const [mbn, setMbn] = useState()

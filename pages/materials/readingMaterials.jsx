@@ -8,7 +8,7 @@ import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 import WordListReadingBookAForTutor from '@/components/readingSelfcourse/WordListReadingBookAForTutor' //単語リスト
 
 const ViewReading = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //https://www.myenglib.com/onlesson/teacher_book_list_bc.php?mbn=123
 
   // totor material page

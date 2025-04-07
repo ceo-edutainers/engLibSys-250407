@@ -14,7 +14,7 @@ const EndScreen = () => {
   const cN = query.cN //courseName
   const cS = query.cS //courseSelf
   const sB = query.sB //subject
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   //////////////////////////////////////////////
   //BASIC SETTING NEED START

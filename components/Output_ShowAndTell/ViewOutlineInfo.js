@@ -4,7 +4,7 @@ import { QuizContext } from './Contexts'
 import axios from 'axios'
 
 const ViewOutlineInfo = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [outlineView, setOutlineView] = useState(false)
   const [VIEWoutlineTopic, setVIEWOutlineTopic] = useState()
   const [VIEWoutlineIntroduction, setVIEWOutlineIntroduction] = useState()

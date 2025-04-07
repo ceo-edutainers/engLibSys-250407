@@ -21,7 +21,7 @@ const myLesson = () => {
 
   const [tbn, setTbn] = useState(query.tbn)
   const [lessonInfo, setLessonInfo] = useState([])
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   console.log('query.tbn:', query.tbn)
 
   useEffect(() => {

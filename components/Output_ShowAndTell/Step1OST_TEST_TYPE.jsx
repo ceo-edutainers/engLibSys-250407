@@ -25,7 +25,7 @@ import Subpage from '@/components/Output_ShowAndTell/Subpage'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 
 const Step1OST = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
 
   const [mindmapView, setMindmapView] = useState(false) //IdeaView

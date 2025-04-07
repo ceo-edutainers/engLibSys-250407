@@ -11,7 +11,7 @@ import Router, { useRouter } from 'next/router'
 
 function App() {
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   //初期設定
   const [gameTitle, setGameTitle] = useState('Level Test')
   // const [englib_level, setEnglib_level] = useState('eiken_level参考')

@@ -10,7 +10,7 @@ import ViewBookQuestionFile from '@/components/readingSelfcourse/viewBookQuestio
 import { red } from '@material-ui/core/colors'
 import Router, { useRouter } from 'next/router'
 const EndScreen = () => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   //////////////////////////////////////////////
   //BASIC SETTING NEED START

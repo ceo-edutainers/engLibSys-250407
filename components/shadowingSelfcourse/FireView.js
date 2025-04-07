@@ -6,7 +6,7 @@ import fireRed from './img/fire_shadowing.png'
 import fireGray from './img/fire-gray.png'
 
 const FireView = ({ thisSubject }) => {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const [fireViewCount, setFireViewCount] = useState()
 
   useEffect(() => {

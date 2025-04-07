@@ -4,7 +4,7 @@ import axios from 'axios'
 import Router, { useRouter } from 'next/router'
 
 function TutorTop() {
-  const DB_CONN_URL = process.env.DB_CONN_URL
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
   const [tutorInfo, setTutorInfo] = useState([])
   const [loginStatus, setLoginStatus] = useState()

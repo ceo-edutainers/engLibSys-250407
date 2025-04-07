@@ -18,7 +18,7 @@ import {
 
 import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 
-const DB_CONN_URL = process.env.DB_CONN_URL
+const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
 const REGION = process.env.S3_REACT_APP_REGION
