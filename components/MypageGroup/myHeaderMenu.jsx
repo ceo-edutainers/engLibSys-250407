@@ -1199,8 +1199,11 @@ function App({ mst }) {
 
                       // disabled: 'disabled', //今日がレッスン日ではない場合？使えないようにする
                     }}
+                    // onClick={() => {
+                    //   goSamedayCancel('mySamedayCancel')
+                    // }}
                     onClick={() => {
-                      goSamedayCancel('mySamedayCancel')
+                      setIsNotReady(true)
                     }}
                   >
                     <p
