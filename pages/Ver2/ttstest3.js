@@ -12,6 +12,12 @@ export default function StoryPractice() {
   const [userTypedText, setUserTypedText] = useState('')
   const [hideSentence, setHideSentence] = useState(false) // 문장 숨김 상태
 
+  const sentences = [
+    'This is the first sentence.',
+    "Let's practice shadowing.",
+    "Keep going, you're doing great!",
+  ]
+
   const speakSentence = (sentence) => {
     // 현재 재생 중인 소리 멈춤
     speechSynthesis.cancel()
