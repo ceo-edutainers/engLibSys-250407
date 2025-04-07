@@ -94,6 +94,14 @@ const TutorLoginFormNew = ({ after_login_redirect }) => {
   return (
     <>
       <div className="login-form">
+        <div style={{ padding: '2rem' }}>
+          <h1>🌐 환경변수 테스트 페이지</h1>
+          <p>
+            <strong>process.env.NEXT_PUBLIC_API_BASE_URL:</strong>{' '}
+            {/* {process.env.NEXT_PUBLIC_API_BASE_URL || '❌ 환경변수 없음'} */}
+            {url || '❌ 환경변수 없음'}
+          </p>
+        </div>
         <h2>engLib's Tutor Login</h2>
 
         <div className="form-group">
