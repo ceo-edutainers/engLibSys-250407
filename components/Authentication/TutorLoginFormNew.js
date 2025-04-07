@@ -13,6 +13,8 @@ const TutorLoginFormNew = ({ after_login_redirect }) => {
         '❌ 환경변수 NEXT_PUBLIC_API_BASE_URL이 정의되지 않았습니다.'
       )
       return
+    } else {
+      console.log('NEXT_PUBLIC_API_BASE_URL OK')
     }
     setUrl(base + '/t_login')
     console.log('✅ API Base URL:', base + '/t_login')
