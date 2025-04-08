@@ -43,7 +43,14 @@ function MainMenuSH() {
     setUserName,
   } = useContext(QuizContext)
 
-  const [url, setUrl] = useState('https://www.youtube.com/embed/' + youtubeID)
+  const [url, setUrl] = useState('') // 컴포넌트 최상단에서 선언
+
+  useEffect(() => {
+    const youID = youtubeID
+    if (youID) {
+      setUrl('https://www.youtube.com/embed/' + youID)
+    }
+  }, [youtubeID])
 
   const nextStepCheck = (nStep) => {
     //次のstep1のsys_hw_historyテーブルのstatusがendになっている場合は、step2にいく。
@@ -213,6 +220,33 @@ function MainMenuSH() {
               トップページへ戻る
             </span>
           </Link>
+          <br />
+          <br />
+          <ReactPlayer
+            url={url}
+            // playing={playStatus}
+            // controls={true}
+            // playbackRate={playbackRate}
+            // loop={playLoop}
+            width="100%"
+            //contentWindow="false"
+            style={{ marginBottom: '10px' }}
+            onReady={() => {
+              console.log('onReady')
+            }}
+            onStart={() => {
+              console.log('onStart')
+            }}
+            onPause={() => {
+              console.log('onPause')
+            }}
+            onEnded={() => {
+              console.log('onEnded')
+            }}
+            onError={() => {
+              console.log('onError')
+            }}
+          />
         </div>
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           {/* {seriesName} */}
@@ -265,32 +299,6 @@ function MainMenuSH() {
               Start Video Shadowing
               <p style={{ color: 'black' }}>{userName}</p>
             </button>
-            youtube url: {url}
-            <ReactPlayer
-              url={url}
-              // playing={playStatus}
-              // controls={true}
-              // playbackRate={playbackRate}
-              // loop={playLoop}
-              width="100%"
-              //contentWindow="false"
-              style={{ marginBottom: '10px' }}
-              onReady={() => {
-                console.log('onReady')
-              }}
-              onStart={() => {
-                console.log('onStart')
-              }}
-              onPause={() => {
-                console.log('onPause')
-              }}
-              onEnded={() => {
-                console.log('onEnded')
-              }}
-              onError={() => {
-                console.log('onError')
-              }}
-            />
           </>
         )}
 
