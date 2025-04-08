@@ -222,9 +222,21 @@ function MainMenuSH() {
           </Link>
           <br />
           <br />
-          youtube:{url}
-          <br />
-          <ReactPlayer
+          {youtubeID && (
+            <iframe
+              width="100%"
+              height="360"
+              src={`https://www.youtube.com/embed/${youtubeID}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{ marginBottom: '10px' }}
+            ></iframe>
+          )}
+          {/* youtube:{url}
+          <br /> */}
+          {/* <ReactPlayer
             url={url}
             // playing={playStatus}
             // controls={true}
@@ -248,7 +260,7 @@ function MainMenuSH() {
             onError={() => {
               console.log('onError')
             }}
-          />
+          /> */}
         </div>
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           {/* {seriesName} */}
