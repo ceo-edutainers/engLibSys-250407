@@ -308,29 +308,18 @@ const Step3B = () => {
           if (response.data.length >= leastRecordCount_step3) {
             var stepStatus = 'end'
             var nextStep = 'finished' //これが元々
-            // practiceStart(nextStep)
+
             practiceStart(nextStep)
-            // hwHistoryUpdate(
-            //   stepStatus,
-            //   HWID,
-            //   practiceTempId,
-            //   nextStep,
-            //   thisSubject
-            // )
           } else {
             //alert('次のステップに行くためには録音をしてください。')
-            setIsGoNextPage(false)
-            setIsCantGoNextPage(true)
+            // setIsGoNextPage(false)
+            // setIsCantGoNextPage(true)
+            var stepStatus = 'end'
+            var nextStep = 'finished' //これが元々
+
+            practiceStart(nextStep)
             return false
           }
-
-          // hwHistoryUpdate(
-          //   stepStatus,
-          //   HWID,
-          //   practiceTempId,
-          //   nextStep,
-          //   thisSubject
-          // )
         })
       } catch (error) {
         alert('select error!')

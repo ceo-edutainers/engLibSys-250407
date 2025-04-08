@@ -389,9 +389,12 @@ const Step1B = () => {
       })
   }
 
+  //다음 스텝으로 가는 코드, 일시 정지중
+
   const nextStepCheck = (option, arrayNum) => {
     setIsGoNextPage(true)
   }
+
   const nextStep = (option, arrayNum) => {
     // if (!isGotPoint || 録音ファイルが0ではない時) {
 
@@ -422,8 +425,21 @@ const Step1B = () => {
               )
             } else {
               //alert('次のステップに行くためには録音をしてください。')
-              setIsGoNextPage(false)
-              setIsCantGoNextPage(true)
+              // setIsGoNextPage(false)
+              // setIsCantGoNextPage(true)
+
+              /**以下のコードは後で削除 start */
+              var stepStatus = 'end'
+              var nextStep = 'Step2B'
+
+              hwHistoryUpdate(
+                currentStep,
+                stepStatus,
+                HWID,
+                practiceTempId,
+                nextStep
+              )
+              /**以下のコードは後で削除 end */
               return false
             }
             practiceStart(nextStep)

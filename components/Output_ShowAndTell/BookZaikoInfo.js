@@ -122,46 +122,6 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
     fetchData()
   }
 
-  // function readingLevelCheck(seriesName, readingLevel, book_autoid, bookTitle) {
-  //   var Url =
-  //     DB_CONN_URL +
-  //     '/reading-level-check/' +
-  //     mbn +
-  //     '&' +
-  //     seriesName +
-  //     '&' +
-  //     readingLevel
-
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(Url)
-
-  //       if (response.data.message == 'success') {
-  //         //現在の会員のレベルと一致する場合
-  //         //この教材を注文した履歴があるのかを確認する
-  //         // alert('success')
-  //         checkPreviouslyOrdered(
-  //           seriesName,
-  //           readingLevel,
-  //           bookTitle,
-  //           book_autoid
-  //         )
-  //       } else {
-  //         if (response.data.message == 'different-level') {
-  //           setMemberReadingLevelInfo(response.data) //現在会員のリーディングの教材とレベルを入れる
-  //           setDifferentLevel(true)
-  //         } else {
-  //           alert(response.data.message) //different-level-and-no-data
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }
-
   const [tutorInfoName, setTutorInfoName] = useState()
   const [tutorInfoEmail, setTutorInfoEmail] = useState()
 
@@ -174,6 +134,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
       .then((response) => {
         // setTutorInfo(response.data)
         setTutorInfoEmail(response.data.response[0].email)
+        // console.log('TEST-email:', response.data.response[0].email)
 
         setTutorInfoName(response.data.response[0].first_name)
       })
@@ -275,32 +236,6 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
         console.log('FAILED...', error)
       }
     )
-
-    //email to student
-    // var templateParams = {
-    //   to_email: email_student,
-    //   to_student_name: name_eng,
-    //   reply_to: 'no-reply',
-    //   from_name: 'engLib',
-    //   zipcode: zipcode,
-    //   address: address,
-    //   tel: tel,
-    //   seriesName: seriesName,
-    //   readingLevel: readingLevel,
-    //   bookTitle: bookTitle,
-    // }
-    // var YOUR_SERVICE_ID = 'service_nu801ay'
-    // var YOUR_TEMPLATE_ID = 'template_f3up9tv'
-    // var YOUR_USER_ID = 'user_6SxtrwiGOxzL2JpT8S4xM'
-    // emailjs.init(YOUR_USER_ID)
-    // emailjs.send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, templateParams).then(
-    //   function (response) {
-    //     console.log('SUCCESS!', response.status, response.text, email_student)
-    //   },
-    //   function (error) {
-    //     console.log('FAILED...', error)
-    //   }
-    // )
   }
 
   function chooseZaikoFunc(book_autoid, seriesName, readingLevel, bookTitle) {
@@ -342,6 +277,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
                 orderdNewBook()
                 checkZaiko()
                 sendingEmail()
+                alert(response.data.message)
               } else if (response.data.message == 'no stock') {
                 // alert(
                 //   'We are sorry. Another order came in just a bit sooner, so the stock ran out before we could notify you. Please choose another item. / 申し訳ございません。他の注文が少しだけ早く入ったため、お知らせする間もなく在庫がなくなってしまいました。他の教材をお選び下さい。'

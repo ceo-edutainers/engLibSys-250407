@@ -157,9 +157,9 @@ const MonsterGet = ({ mbn, homework_id }) => {
               fontColor: 'black',
             }}
           >
-            <div>
+            {/* <div>
               <HWDataTable mbn={mbn} homework_id={homework_id} />
-            </div>
+            </div> */}
           </div>
           <div
             className="col-lg-12 col-md-12 pt-2 pl-2 pr-2 pb-0 mt-2"

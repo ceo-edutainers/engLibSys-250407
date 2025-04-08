@@ -1482,13 +1482,14 @@ const ViewSetHW = ({
             lessonMemoForMom: lessonMemoForMom,
           })
           .then((response) => {
-            // alert(response.data.message)
-
             if (response.data.message != 'Success') {
-              alert(
-                'Some error occurred when setting the homework  ' +
-                  response.data.message
-              )
+              // alert(
+              //   'Some error occurred when setting the homework  ' +
+              //     response.data.message
+              // )
+              alert(JSON.stringify(response.data.error, null, 2))
+
+              console.log('TEST-error:', response.data.error)
             } else {
               setIsSuccessSetNewLesson(true)
             }
