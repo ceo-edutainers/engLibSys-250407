@@ -269,52 +269,38 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       let duration = dur
 
       try {
-        const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
+        // 📡 Render에 있는 백엔드에서 presigned PUT URL 요청
+        const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
         })
 
-        const {
-          uploadURL,
-          key,
-          policy,
-          x_amz_algorithm,
-          x_amz_credential,
-          x_amz_date,
-          x_amz_signature,
-        } = response.data.data
+        const { signedUrl, publicUrl } = response.data.data
 
-        const formData = new FormData()
-        formData.append('key', key)
-        formData.append('x-amz-algorithm', x_amz_algorithm)
-        formData.append('x-amz-credential', x_amz_credential)
-        formData.append('x-amz-date', x_amz_date)
-        formData.append('policy', policy)
-        formData.append('x-amz-signature', x_amz_signature)
-        formData.append('file', file)
-
-        await axios.post(uploadURL, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+        // 📤 파일을 signed URL로 PUT 업로드
+        await axios.put(signedUrl, file, {
+          headers: {
+            'Content-Type': fileType,
+          },
         })
 
-        const fileUrl = `https://${process.env.NEXT_PUBLIC_R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${key}`
-        this.setState({ audio: fileUrl, isRefreshBtn: true })
-
-        this.getFileFromR2(
+        // ✅ 성공 시 상태 업데이트 및 DB 기록
+        this.setState({ audio: publicUrl, isRefreshBtn: true })
+        this.getFileFromAws(
           this.state.mbn,
           this.state.homework_id,
           this.state.practiceTempId,
           this.state.pointStep
         )
+        this.audioIntoDB(fileName, duration)
         this.setState({ showWaitingPopup: false })
       } catch (error) {
+        console.error('업로드 에러:', error)
         alert('送信エラーです。もう一度録音して下さい。')
-        this.setState({ showWaitingPopup: false })
+        this.setState({ isError: true, showWaitingPopup: false })
       }
-
-      this.setState({ isLoading: false })
-      this.audioIntoDB(fileName, duration)
     }
+
     fetchData()
   }
 
@@ -500,7 +486,9 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
               //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
               //   val.filename
 
-              var audioFile = `https://englib-public-worker.englib-new-materials.workers.dev/uploadrecording/${val.filename}`
+              // R2의 Public Worker 도메인 기반으로 바꾸기
+              const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+              var audioFile = `${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
               return (
                 <div key={key} className="row align-items-center">
                   <div className="col-lg-2 col-md-12"></div>
