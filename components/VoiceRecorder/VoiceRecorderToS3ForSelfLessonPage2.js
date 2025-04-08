@@ -263,7 +263,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         const fileName = file.name
         const fileType = file.type
 
-        // 1. 백엔드에서 presigned PUT URL과 key 받기
+        // 1. 백엔드에서 presigned PUT URL과 key 받기//
         const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
@@ -271,6 +271,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
         const { signedUrl, key, publicUrl } = response.data.data
 
+        // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
         // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
         await axios.put(signedUrl, file, {
           headers: {
