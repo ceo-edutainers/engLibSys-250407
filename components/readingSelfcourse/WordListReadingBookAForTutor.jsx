@@ -142,23 +142,23 @@ export default function WordListReadingBookAForTutor({
     'https://englib.s3.ap-northeast-1.amazonaws.com/img_voca5000/noimage.png'
   )
 
-  useEffect(() => {
-    getWordForm()
-  }, [])
-  function getWordForm() {
-    var url = DB_CONN_URL + '/get-word-form-set/'
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(url)
+  // useEffect(() => {
+  //   getWordForm()
+  // }, [])
+  // function getWordForm() {
+  //   var url = DB_CONN_URL + '/get-word-form-set/'
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(url)
 
-        setWordFormList(response.data)
-        //console.log('wordFormList', wordFormList)
-      } catch (error) {
-        alert('WordFormList Error')
-      }
-    }
-    fetchData()
-  }
+  //       setWordFormList(response.data)
+  //       //console.log('wordFormList', wordFormList)
+  //     } catch (error) {
+  //       alert('WordFormList Error-E')
+  //     }
+  //   }
+  //   fetchData()
+  // }
 
   //memory-word-get-info-word-henkan-get-meaning/
   // my word listに登録されている単語の意味を持ってくる
@@ -182,7 +182,7 @@ export default function WordListReadingBookAForTutor({
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-J')
       }
     }
 
@@ -541,19 +541,7 @@ export default function WordListReadingBookAForTutor({
             readingLevel={readingLevel}
           />
         )}
-        {/* {bookStory && (
-          <StoryWordList
-            homework_id={homework_id}
-            bookStory={bookStory}
-            seriesName={seriesName}
-            readingLevel={readingLevel}
-            storyNum={storyNum}
-            bookNum={bookNum}
-            mbn={mbn}
-            tbn={tbn}
-          />
-        )} */}
-        {/* {mbn}/{homework_id}/{tbn}/{bookStory} */}
+
         {mbn && (
           <DifficultWords
             homework_id={homework_id}

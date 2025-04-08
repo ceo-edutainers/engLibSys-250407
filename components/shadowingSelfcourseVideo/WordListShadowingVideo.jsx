@@ -246,7 +246,7 @@ export default function WordListShadowingVideo({
         setWordFormList(response.data)
         console.log('wordFormList', wordFormList)
       } catch (error) {
-        alert('WordFormList Error')
+        alert('WordFormList Error-J')
       }
     }
     fetchData()
@@ -276,7 +276,7 @@ export default function WordListShadowingVideo({
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-S')
       }
     }
     fetchData3()
@@ -298,7 +298,7 @@ export default function WordListShadowingVideo({
         } else {
         }
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-T')
       }
     }
 

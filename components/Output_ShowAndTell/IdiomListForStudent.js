@@ -162,7 +162,7 @@ const IdiomList = ({
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-C')
       }
     }
     fetchData3()

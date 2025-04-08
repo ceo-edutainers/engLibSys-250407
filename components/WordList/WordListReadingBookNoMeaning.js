@@ -252,7 +252,7 @@ export default function WordListReadingBook({
         //alert(response.data.response)
         setSelectedWords(response.data.response)
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-U')
         setError3(true)
       }
       setLoading3(false)

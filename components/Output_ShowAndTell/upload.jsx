@@ -183,18 +183,10 @@ function Upload({
 
       .then((response) => {
         reloadImage()
-        // if (stepStatus == 'giveup') {
-        //   router.reload('/outputShowAndTellCourse') // ここでリロード
-        // } else if (stepStatus == 'end') {
-        //   setPageView(nextStep)
-        // }
       })
   }
 
-  // const imgRefresh = (filemindmap) => {
-  //   var filename = "<img src='" + filemindmap + "'/>"
-  //   return filename
-  // }
+  // const imgRe
   const reloadImage = () => {
     if (localStorage.getItem('loginStatus') == 'true') {
       var mbn = localStorage.getItem('MypageMbn')
@@ -208,16 +200,8 @@ function Upload({
           const response = await axios.get(Url)
           // alert('there')
           if (!response.data.length) {
-            //alert('here1')
-            // alert(response.data.length)
-            // alert(response.data.message)
             setFileMindmap('')
           } else {
-            //alert('here')
-            //alert(response.data.response[0].fileName)
-            // alert(response.data.message)
-            // alert(response.data.length)
-
             var filemindmap =
               'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
               response.data.response[0].fileName

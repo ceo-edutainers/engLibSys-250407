@@ -233,7 +233,7 @@ export default function WordListReadingBookAForTutor({
         setWordFormList(response.data)
         //console.log('wordFormList', wordFormList)
       } catch (error) {
-        alert('WordFormList Error')
+        alert('WordFormList Error-A')
       }
     }
     fetchData()
@@ -261,7 +261,7 @@ export default function WordListReadingBookAForTutor({
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error 1')
+        alert('wordListView Error-D')
       }
     }
 

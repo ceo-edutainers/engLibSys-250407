@@ -1,23 +1,21 @@
 /** @format */
-import react, { useContext } from 'react'
+import react, { useContext, useEffect, useState } from 'react'
 import { QuizContext } from '@/components/shadowingSelfcourseVideo/Contexts'
 import axios from 'axios'
 import Link from '@/utils/ActiveLink'
-// import Upload from '@/components/shadowingSelfcourseVideo/uploadDictation'
-// import ViewDictationFile from '@/components/shadowingSelfcourseVideo/viewDictationFile'
+import ReactPlayer from 'react-player/youtube'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 import UploadHWShadowing from '@/components/shadowingSelfcourseVideo/UploadHWShadowing'
 import YoutubeScriptTimeInsertForStudentStepStart from '@/components/Youtube/YoutubeScriptTimeInsertForStudentStepStart'
 
 function MainMenuSH() {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
   const {
     shadowingHWAmount,
     setShadowingHWAmount,
     dictationStart,
     setDictationStart,
-    // audioDuration,
-    // setAudioDuration,
     qrLinkVideoDictation,
     setQrLinkVideoDictation,
     myMbn,
@@ -26,60 +24,35 @@ function MainMenuSH() {
     setHWID,
     youtubeID,
     setYoutubeID,
-    // dictationMin,
-    // setDictationMin,
-    // shadowingSpeed,
-    // setShadowingSpeed,
-    // dictationHow,
-    // setDictationHow,
-    // lessonOrder,
-    // setLessonOrder,
+
     thisSubject,
     setThisSubject,
-    // leastRecordCount_ondoku,
-    // setLeastRecordCount_ondoku,
-    // leastRecordCount_shadowing,
-    // setLeastRecordCount_shadowing,
-    // bookCoverImgUrl,
-    // setBookCoverImgUrl,
-    // bookImgUrl,
-    // setBookImgUrl,
+
     shadowingLevel,
     setShadowingLevel,
-    // storyTitle,
-    // setStoryTitle,
-    // storyStartPage,
-    // setStoryStartPage,
+
     practiceTempId,
     setPracticeTempId,
-    // audioOnOff,
-    // setAudioOnOff,
-    // course,
-    // setCourse,
-    // courseName,
-    // setCourseName,
+
     pageView,
     setPageView,
     courseLevel,
     setCourseLevel,
-    // textbook,
-    // setTextbook,
-    // eikenLevel,
-    // setEikenLevel,
+
     userName,
     setUserName,
-    // point,
-    // setPoint,
-    // totalQuestion,
-    // setTotalQuestion,
   } = useContext(QuizContext)
+
+  const [url, setUrl] = useState('https://www.youtube.com/embed/' + youtubeID)
 
   const nextStepCheck = (nStep) => {
     //次のstep1のsys_hw_historyテーブルのstatusがendになっている場合は、step2にいく。
     //왜냐하면, step1은 처음 한번만 하는 step이므로.
     var homework_id = HWID
+    // console.log('TEST:homework_id', homework_id)
     // var nextStep = 'Step1b'
     var nextStep = nStep //Step1b
+    // console.log('TEST:nextStep', nStep)
     // alert('nextStep')
     // alert(nextStep)
 
@@ -88,13 +61,29 @@ function MainMenuSH() {
     const fetchData = async () => {
       //Server側で、step1 AND stepStatus='end'もチェックする
       var url = DB_CONN_URL + '/get-step-sys-hw-history/'
+
       var Url =
         url + myMbn + '&' + homework_id + '&' + nextStep + '&' + thisSubject
 
+      // var Url = `${url}${encodeURIComponent(myMbn)}&${encodeURIComponent(
+      //   homework_id
+      // )}&${encodeURIComponent(nextStep)}&${encodeURIComponent(thisSubject)}`
+
+      // console.log('TEST:homework_id', homework_id)
+      // console.log('TEST:nextStep', nextStep)
+      // console.log('TEST:thisSubject', thisSubject)
+      // console.log('TEST:myMbn', myMbn)
+      // console.log('TEST:Url', Url)
+
       try {
         const response = await axios.get(Url)
-        //alert(response.data.message)
-        //stepStatus='end'があるものがあるのあk
+        // console.log('TEST:response.data.message', response.data.message)
+        // console.log('TEST:return_mbn', response.data.mbn)
+        // console.log('TEST:return_homework_id', response.data.homework_id)
+        // console.log('TEST:return_nextStep', response.data.nextStep)
+        // console.log('TEST:return_thisSubject', response.data.thisSubject)
+        // console.log('TEST:data.length', response.data.length)
+        // console.log('TEST:response.data.message', response.data.message)
 
         if (response.data.length > 0) {
           //step1をすでに終わった場合
@@ -112,24 +101,19 @@ function MainMenuSH() {
           const fetchData2 = async () => {
             try {
               const response = await axios.get(Url)
-
+              console.log('TEST:response.data.message', response.data.message)
               if (response.data.length > 0) {
-                // if (response.data.response[0].stepStatus == 'holding') {
-
-                //   var thisStep = response.data.response[0].step
-                //   practiceStart(thisStep)
-                //   console.log('thisStep1:', thisStep)
-                // } else {
                 //holdingではない場合、Step1は終わってるので、step2へへ行く。
                 var thisStep = 'StepSH2'
                 practiceStart(thisStep)
-                console.log('thisStep2:', thisStep)
+                // console.log('thisStep2:', thisStep)
                 // }
               } else {
                 var thisStep = 'StepSH2'
                 practiceStart(thisStep)
                 console.log('thisStep3:', thisStep)
               }
+
               // practiceStart(thisStep)
               // console.log('thisStep4:', thisStep)
             } catch (error) {
@@ -160,53 +144,6 @@ function MainMenuSH() {
     fetchData()
   }
 
-  // const nextStepCheck = (nStep) => {
-  //   //次のStepSH1のsys_hw_historyテーブルのstatusがendになっている場合は、step2にいく。
-  //   //왜냐하면, StepSH1은 처음 한번만 하는 step이므로.
-  //   // alert(HWID)
-  //   var homework_id = HWID
-  //   // var nextStep = 'StepSH1'
-  //   var nextStep = nStep
-  //   var url = DB_CONN_URL + '/get-step-sys-hw-history/'
-  //   var Url =
-  //     url + myMbn + '&' + homework_id + '&' + nextStep + '&' + thisSubject
-
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(Url)
-
-  //       if (response.data.length > 0) {
-  //         //StepSH1の stepStatus==endがある場合
-  //         if (response.data.response[0].step == 'StepSH1') {
-  //           //alert('first')
-  //           var thisStep = 'StepSH2'
-  //           //console.log('thisStep-first:', thisStep)
-  //         } else {
-  //           var thisStep = response.data.response[0].step
-  //           //alert('second')
-
-  //           // console.log('thisStep-second:', thisStep)
-  //         }
-  //       } else {
-  //         //아직 아무런 history가 들어 있지 않을 경우 (처음으로 이  스토리를 공부하는 경우)
-
-  //         var thisStep = 'StepSH1'
-  //         // alert('3')
-  //         // console.log('###-3:', thisStep)
-  //       }
-
-  //       practiceStart(thisStep)
-  //       console.log('thisStep:', thisStep)
-
-  //       //setTotalQuestion(response.data.response.length)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }
-
   const practiceStart = (nextStep) => {
     // localStorage.removeItem('holdTempIdSH', '')
     //次のStepSH1のsys_hw_historyテーブルのstepStatusがendになっている場合は、step2にいく。
@@ -214,12 +151,11 @@ function MainMenuSH() {
 
     const fetchData = async () => {
       try {
-        // alert(nextStep)
-        // alert('testend')
         var homework_id = HWID
         var step = nextStep
         var pti = practiceTempId
         var url = DB_CONN_URL + '/reg-sys-hw-history'
+        // console.log('2TEST:url', url)
         axios
           .post(url, {
             mbn: myMbn,
@@ -229,10 +165,26 @@ function MainMenuSH() {
             thisSubject: thisSubject,
           })
           .then((response) => {
+            console.log('2TEST:response.data.status', response.data.status)
+            console.log('2TEST:response.data.message', response.data.message)
+            console.log('2TEST:myMbn', myMbn)
+            console.log('2TEST:homework_id', homework_id)
+            console.log('2TEST:step', step)
+            console.log('2TEST:pti', pti)
+            console.log('2TEST:thisSubject', thisSubject)
+
+            console.log('2TEST:return_mbn', response.data.mbn)
+            console.log('2TEST:return_homework_id', response.data.homework_id)
+            console.log('2TEST:step', response.data.step)
+            console.log('2TEST:return_thisSubject', response.data.thisSubject)
+            console.log('2TEST:NowRegdate', response.data.NowRegdate)
+            console.log('2TEST:NowRegtime', response.data.NowRegtime)
+            console.log('2TEST:youtube', youtubeID)
             if (!response.data.status) {
             } else {
               // alert(nextStep)
               setPageView(nextStep)
+              // console.log('2TEST:nextStep', nextStep)
             }
           })
       } catch (error) {
@@ -242,28 +194,6 @@ function MainMenuSH() {
     fetchData()
   }
 
-  // useEffect(() => {
-  //   var url = DB_CONN_URL + '/get-hw-and-Shadowing-info-split-concat/'
-  //   var Url = url + bookTitle + '&' + bookNum + '&' + storyNum
-
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(Url)
-  //       let arr = []
-  //       arr = response.data
-
-  //       const sentences = arr.map(({ sentence }) => sentence).join('')
-
-  //       // alert('sentences' + sentences)
-  //       setBookStory(sentences)
-
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [])
   return (
     <>
       <div
@@ -283,9 +213,6 @@ function MainMenuSH() {
               トップページへ戻る
             </span>
           </Link>
-          {/* <span className="ml-3" style={{ color: 'black', fontWeight: 'bold' }}>
-            {userName}
-          </span> */}
         </div>
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           {/* {seriesName} */}
@@ -294,21 +221,6 @@ function MainMenuSH() {
         <h3 className="mb-3" style={{ color: 'white' }}>
           {courseLevel}
         </h3>
-
-        {/* <div className="col-lg-12 col-md-12 mt-2 ">
-        <img
-          src={bookCoverImgUrl}
-          width="150px"
-          className="mr-2 mb-3"
-          style={{ border: '4px solid #dedede' }}
-        />
-        <img
-          src={bookImgUrl}
-          width="150px"
-          className="mb-3"
-          style={{ border: '4px solid #dedede' }}
-        />
-      </div> */}
 
         {shadowingLevel == 'START' && (
           <>
@@ -353,21 +265,34 @@ function MainMenuSH() {
               Start Video Shadowing
               <p style={{ color: 'black' }}>{userName}</p>
             </button>
+            youtube url: {url}
+            <ReactPlayer
+              url={url}
+              // playing={playStatus}
+              // controls={true}
+              // playbackRate={playbackRate}
+              // loop={playLoop}
+              width="100%"
+              //contentWindow="false"
+              style={{ marginBottom: '10px' }}
+              onReady={() => {
+                console.log('onReady')
+              }}
+              onStart={() => {
+                console.log('onStart')
+              }}
+              onPause={() => {
+                console.log('onPause')
+              }}
+              onEnded={() => {
+                console.log('onEnded')
+              }}
+              onError={() => {
+                console.log('onError')
+              }}
+            />
           </>
         )}
-
-        {/* <Link href="/mytopGroup">
-          <button
-            className="btn btn-danger mt-4 mb-4"
-            style={{ fontWeight: '900', color: 'white', marginTop: '10px' }}
-          >
-            BEN TOPへ
-            <ruby>
-              戻<rt>もど</rt>
-            </ruby>
-            る
-          </button>
-        </Link> */}
 
         {qrLinkVideoDictation && shadowingLevel != 'START' && (
           <>

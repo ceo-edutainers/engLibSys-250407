@@ -246,7 +246,7 @@ export default function WordListShadowingBook({
         setWordFormList(response.data)
         console.log('wordFormList', wordFormList)
       } catch (error) {
-        alert('WordFormList Error')
+        alert('WordFormList Error-I')
       }
     }
     fetchData()
@@ -276,7 +276,7 @@ export default function WordListShadowingBook({
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-Q')
       }
     }
     fetchData3()
@@ -298,7 +298,7 @@ export default function WordListShadowingBook({
         } else {
         }
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-R')
       }
     }
 

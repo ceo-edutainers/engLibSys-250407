@@ -77,7 +77,7 @@ yarn-error.log*
 
 
 # public folders with large files
-/public/images
+# /public/images
 /public/files
 /public/pspdfkit-lib
 /public/files/myenglib/materials/1-min-speaking/2min/audio/input/*.mp3

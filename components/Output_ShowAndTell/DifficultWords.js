@@ -187,7 +187,7 @@ const DifficultWords = ({ homework_id, mbn, tbn, bookStory }) => {
         }
         // alert('2')
       } catch (error) {
-        alert('wordListView Error')
+        alert('wordListView Error-B' + url)
       }
     }
     fetchData3()

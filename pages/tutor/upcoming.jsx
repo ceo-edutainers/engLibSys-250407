@@ -143,21 +143,26 @@ const Upcoming = () => {
     var status = 'homework'
     var Url = DB_CONN_URL + '/tutor_upcoming_lesson_info2/' + tbn + '&' + status
     // console.log('Url', Url)
-    axios.get(Url).then((response) => {
-      //errorの場合
+    axios.get(Url).then(
+      (response) => {
+        //errorの場合
 
-      if (!response.data.status) {
-        alert(response.data.message) //for test
-      } else {
-        if (response.data.length > 0) {
-          setLessonInfo(response.data.response)
+        if (!response.data.status) {
+          alert(response.data.message) //for test
         } else {
-          alert(response.data.message)
-          setLessonInfo([])
-          // logOutID()
+          if (response.data.length > 0) {
+            setLessonInfo(response.data.response)
+          } else {
+            alert(response.data.message)
+            setLessonInfo([])
+            // logOutID()
+          }
         }
+      },
+      {
+        withCredentials: true,
       }
-    })
+    )
   }, [])
 
   useEffect(() => {
@@ -339,7 +344,7 @@ const Upcoming = () => {
           }
         }
       } catch (error) {
-        alert('error1')
+        alert('error2')
       }
     }
     // howManyLessonComma()
@@ -439,7 +444,7 @@ const Upcoming = () => {
           }
         }
       } catch (error) {
-        alert('error')
+        alert('error3')
       }
     }
     howManyLessonComma()
@@ -632,7 +637,7 @@ const Upcoming = () => {
           }
         }
       } catch (error) {
-        alert('error')
+        alert('error4')
       }
     }
     howManyLessonComma()
@@ -706,7 +711,7 @@ const Upcoming = () => {
           }
         }
       } catch (error) {
-        alert('error')
+        alert('error-1')
       }
     }
     howManyLessonComma()
@@ -1302,7 +1307,7 @@ const Upcoming = () => {
                                         </button>
                                       )}
 
-                                      {(login_level == '1' ||
+                                      {/* {(login_level == '1' ||
                                         login_level == '2') && (
                                         <button
                                           type="button"
@@ -1317,7 +1322,7 @@ const Upcoming = () => {
                                         >
                                           tutor
                                         </button>
-                                      )}
+                                      )} */}
 
                                       {val.autoid == modifyTutorAutoid &&
                                         modifyTutorView == true && (
