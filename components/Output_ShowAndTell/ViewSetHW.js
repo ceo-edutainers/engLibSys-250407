@@ -758,9 +758,12 @@ const ViewSetHW = ({
           // alert('length' + response.data.length)
 
           if (response.data.length > 0) {
+            // alert('length>0' + response.data.message)
             setReadingAllLevelInfo(response.data.response)
             // setCourseName(cN)
             getReadingInfo(cN, rL)
+          } else {
+            // alert('length==0' + response.data.message)
           }
         })
       } catch (error) {
@@ -825,6 +828,9 @@ const ViewSetHW = ({
 
           if (response.data.length > 0) {
             setShadowingLevelInfo(response.data.response)
+            // alert(response.data.message)
+          } else {
+            // alert(response.data.message)
           }
         })
       } catch (error) {
@@ -1264,6 +1270,7 @@ const ViewSetHW = ({
           // alert('length' + response.data.length)
 
           if (response.data.length > 0) {
+            alert(response.data.message)
             setViewMyReadingHistoryList(response.data.response)
           }
         })
@@ -2464,7 +2471,9 @@ const ViewSetHW = ({
                               }}
                             />
                             &nbsp;
-                            <span style={{ color: 'red' }}>Level Change</span>
+                            <span style={{ color: 'red' }}>
+                              Reading Level Change
+                            </span>
                             {/* 
                             selectedReadingTextbook：{selectedReadingTextbook}
                             <br /> */}
@@ -3240,7 +3249,10 @@ const ViewSetHW = ({
                               disabled={checkedOneMoreShadowing && 'disabled'}
                             />
                             &nbsp;
-                            <span style={{ color: 'red' }}> Level Change</span>
+                            <span style={{ color: 'red' }}>
+                              {' '}
+                              Shadowing Level Change
+                            </span>
                             <div
                               className="pt-0 mt-0"
                               style={{
