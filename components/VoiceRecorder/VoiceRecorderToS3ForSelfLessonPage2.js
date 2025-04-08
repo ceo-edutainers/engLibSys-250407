@@ -305,6 +305,8 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
   }
 
   audioIntoDB = (fileName, duration) => {
+    console.log('FILE-TEST-fileName:', fileName)
+    console.log('FILE-TEST-duration:', duration)
     var rc = this.state.record_comment
     const fetchData3 = async () => {
       try {
@@ -320,6 +322,14 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           when_record: 'homework',
           length_second: duration,
         })
+        console.log('FILE-TEST-mbn', mbn)
+        console.log('FILE-TEST-homework_id', homework_id)
+        console.log('FILE-TEST-practiceTempId', practiceTempId)
+        console.log('FILE-TEST-step', step)
+        console.log('FILE-TEST-record_comment', record_comment)
+        console.log('FILE-TEST-who_record', who_record)
+        console.log('FILE-TEST-when_record', when_record)
+        console.log('FILE-TEST-length_second', length_second)
       } catch (error) {
         alert('db insert error')
       }
