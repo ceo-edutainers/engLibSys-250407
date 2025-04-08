@@ -480,8 +480,14 @@ function MainMenuB() {
                           ③ */}
                           <br />
                           <br />
-                          以下の「Start
-                          Reading」ボタンを押して学習をスタートします。
+                          {/* 以下の「Start
+                          Reading」ボタンを押して学習をスタートします。 */}
+
+                          <p style={{ color: 'black', fontWeight: 'bold' }}>
+                            現在、録音機能がまだ復旧できてない状況ですので、手元にある教材で練習を行なってください。
+                          </p>
+                          <br />
+                          <br />
                         </p>
                       </p>
                     </>

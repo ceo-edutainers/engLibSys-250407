@@ -222,6 +222,11 @@ function MainMenuSH() {
           </Link>
           <br />
           <br />
+          <p style={{ color: 'black', fontWeight: 'bold' }}>
+            現在、シャドーイングのシステムがまだ復旧できてない状況ですので、以下のビデオで練習を行なってください。
+          </p>
+          <br />
+          <br />
           {!youtubeID ? (
             <div style={{ textAlign: 'center', padding: '40px' }}>
               <div className="spinner"></div>
@@ -258,7 +263,6 @@ function MainMenuSH() {
               style={{ marginBottom: '10px' }}
             ></iframe>
           )}
-
           {/* youtube:{url}
           <br /> */}
           {/* <ReactPlayer
