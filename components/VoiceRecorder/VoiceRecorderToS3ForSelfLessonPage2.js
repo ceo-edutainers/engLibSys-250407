@@ -20,10 +20,7 @@ import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 import ViewBookReadingTriumphs from './ViewBookReadingTriumphs'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-// const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
-// const REGION = process.env.S3_REACT_APP_REGION
-// const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
-// const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
+
 export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Component {
   constructor(props) {
     super(props)
@@ -260,37 +257,46 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
   //   }
   //   fetchData()
   // }
-
-  handleaudiofile(ev, dur) {
+  handleaudiofile(file, duration) {
     const fetchData = async () => {
-      let file = ev
-      let fileName = ev.name
-      let fileType = ev.type
-      let duration = dur
-
       try {
-        // 📡 Render에 있는 백엔드에서 presigned PUT URL 요청
+        const fileName = file.name
+        const fileType = file.type
+
+        // 1. 백엔드에서 presigned POST 정보 받기
         const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
         })
 
-        const signedUrl = response.data?.data?.signedUrl
-        const publicUrl = response.data?.data?.publicUrl
+        const {
+          uploadURL,
+          key,
+          policy,
+          x_amz_algorithm,
+          x_amz_credential,
+          x_amz_date,
+          x_amz_signature,
+        } = response.data.data
 
-        if (!signedUrl) {
-          console.error('❌ signedUrl 없음!', response.data)
-          return
-        }
+        // 2. formData로 파일 업로드
+        const formData = new FormData()
+        formData.append('key', key)
+        formData.append('policy', policy)
+        formData.append('x-amz-algorithm', x_amz_algorithm)
+        formData.append('x-amz-credential', x_amz_credential)
+        formData.append('x-amz-date', x_amz_date)
+        formData.append('x-amz-signature', x_amz_signature)
+        formData.append('Content-Type', fileType)
+        formData.append('file', file)
 
-        // 📤 파일을 signed URL로 PUT 업로드
-        await axios.put(signedUrl, file, {
-          headers: {
-            'Content-Type': fileType,
-          },
+        await axios.post(uploadURL, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
         })
 
-        // ✅ 성공 시 상태 업데이트 및 DB 기록
+        const publicUrl = `${process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN}/${key}`
+
+        // 3. 성공 시 상태 업데이트 및 DB 기록
         this.setState({ audio: publicUrl, isRefreshBtn: true })
         this.getFileFromAws(
           this.state.mbn,
@@ -302,7 +308,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         this.setState({ showWaitingPopup: false })
       } catch (error) {
         console.error('업로드 에러:', error)
-        alert('送信エラーです。もう一度録音して下さい。')
+        alert('送信エラーです。もう一度録音して下さい---')
         this.setState({ isError: true, showWaitingPopup: false })
       }
     }
