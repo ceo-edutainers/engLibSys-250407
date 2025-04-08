@@ -1486,7 +1486,7 @@ const ViewSetHW = ({
 
             if (response.data.message != 'Success') {
               alert(
-                'Some error occurred when setting the homework' +
+                'Some error occurred when setting the homework  ' +
                   response.data.message
               )
             } else {

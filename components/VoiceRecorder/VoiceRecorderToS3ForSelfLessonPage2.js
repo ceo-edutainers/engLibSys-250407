@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import S3 from 'react-aws-s3'
+// import S3 from 'react-aws-s3'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
 import Recorder from 'recorder-js'
@@ -20,10 +20,10 @@ import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 import ViewBookReadingTriumphs from './ViewBookReadingTriumphs'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
-const REGION = process.env.S3_REACT_APP_REGION
-const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
-const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
+// const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
+// const REGION = process.env.S3_REACT_APP_REGION
+// const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
+// const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
 export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Component {
   constructor(props) {
     super(props)
@@ -207,6 +207,60 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     })
   }
 
+  // handleaudiofile(ev, dur) {
+  //   const fetchData = async () => {
+  //     let file = ev
+  //     let fileName = ev.name
+  //     let fileType = ev.type
+  //     let duration = dur
+
+  //     try {
+  //       var url = DB_CONN_URL + '/sign_s3'
+  //       const response = await axios.post(url, { fileName, fileType })
+
+  //       var returnData = response.data.data.returnData
+  //       var signedRequest = returnData.signedRequest
+  //       var url = returnData.url
+  //       var options = {
+  //         statusCode: 200,
+  //         headers: {
+  //           'Content-Type': fileType,
+  //           'Access-Control-Allow-Origin': '*',
+  //           'Access-Control-Allow-Methods': 'POST,GET,PUT',
+  //           'Access-Control-Allow-Headers': 'Content-Type',
+  //         },
+  //       }
+
+  //       const fetchData2 = async () => {
+  //         try {
+  //           const result = await axios.put(signedRequest, file, options)
+  //           this.setState({ audio: url, isRefreshBtn: true })
+  //           this.getFileFromAws(
+  //             this.state.mbn,
+  //             this.state.homework_id,
+  //             this.state.practiceTempId,
+  //             this.state.pointStep
+  //           )
+  //           this.setState({ showWaitingPopup: false })
+  //         } catch (error) {
+  //           alert('送信エラーです。もう一度録音して下さい。1')
+  //           this.setState({ showWaitingPopup: false })
+  //         }
+  //       }
+  //       fetchData2()
+  //     } catch (error) {
+  //       this.setState({ isError: true, showWaitingPopup: false })
+  //       this.setState({ isError: true })
+  //       alert('送信エラーです。もう一度録音して下さい。2')
+  //       return false
+  //     }
+
+  //     this.setState({ isLoading: false })
+  //     this.audioIntoDB(fileName, duration)
+  //   }
+  //   fetchData()
+  // }
+
   handleaudiofile(ev, dur) {
     const fetchData = async () => {
       let file = ev
@@ -215,44 +269,47 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       let duration = dur
 
       try {
-        var url = DB_CONN_URL + '/sign_s3'
-        const response = await axios.post(url, { fileName, fileType })
+        const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
+          fileName,
+          fileType,
+        })
 
-        var returnData = response.data.data.returnData
-        var signedRequest = returnData.signedRequest
-        var url = returnData.url
-        var options = {
-          statusCode: 200,
-          headers: {
-            'Content-Type': fileType,
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST,GET,PUT',
-            'Access-Control-Allow-Headers': 'Content-Type',
-          },
-        }
+        const {
+          uploadURL,
+          key,
+          policy,
+          x_amz_algorithm,
+          x_amz_credential,
+          x_amz_date,
+          x_amz_signature,
+        } = response.data.data
 
-        const fetchData2 = async () => {
-          try {
-            const result = await axios.put(signedRequest, file, options)
-            this.setState({ audio: url, isRefreshBtn: true })
-            this.getFileFromAws(
-              this.state.mbn,
-              this.state.homework_id,
-              this.state.practiceTempId,
-              this.state.pointStep
-            )
-            this.setState({ showWaitingPopup: false })
-          } catch (error) {
-            alert('送信エラーです。もう一度録音して下さい。1')
-            this.setState({ showWaitingPopup: false })
-          }
-        }
-        fetchData2()
+        const formData = new FormData()
+        formData.append('key', key)
+        formData.append('x-amz-algorithm', x_amz_algorithm)
+        formData.append('x-amz-credential', x_amz_credential)
+        formData.append('x-amz-date', x_amz_date)
+        formData.append('policy', policy)
+        formData.append('x-amz-signature', x_amz_signature)
+        formData.append('file', file)
+
+        await axios.post(uploadURL, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+
+        const fileUrl = `https://${process.env.NEXT_PUBLIC_R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${key}`
+        this.setState({ audio: fileUrl, isRefreshBtn: true })
+
+        this.getFileFromR2(
+          this.state.mbn,
+          this.state.homework_id,
+          this.state.practiceTempId,
+          this.state.pointStep
+        )
+        this.setState({ showWaitingPopup: false })
       } catch (error) {
-        this.setState({ isError: true, showWaitingPopup: false })
-        this.setState({ isError: true })
-        alert('送信エラーです。もう一度録音して下さい。2')
-        return false
+        alert('送信エラーです。もう一度録音して下さい。')
+        this.setState({ showWaitingPopup: false })
       }
 
       this.setState({ isLoading: false })
@@ -354,19 +411,19 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     fetchData()
   }
 
-  handleDelFileS3 = (value) => {
-    const config = {
-      bucketName: S3_BUCKET,
-      region: REGION,
-      accessKeyId: ACCESS_KEY,
-      secretAccessKey: SECRET_ACCESS_KEY,
-    }
-    const ReactS3Client = new S3(config)
-    const filename = value
-    ReactS3Client.deleteFile(filename)
-      .then((response) => console.error(response))
-      .catch((err) => console.error('s3 delete failed', err))
-  }
+  // handleDelFileS3 = (value) => {
+  //   const config = {
+  //     bucketName: S3_BUCKET,
+  //     region: REGION,
+  //     accessKeyId: ACCESS_KEY,
+  //     secretAccessKey: SECRET_ACCESS_KEY,
+  //   }
+  //   const ReactS3Client = new S3(config)
+  //   const filename = value
+  //   ReactS3Client.deleteFile(filename)
+  //     .then((response) => console.error(response))
+  //     .catch((err) => console.error('s3 delete failed', err))
+  // }
 
   componentDidMount() {
     this.getFileFromAws(
@@ -439,10 +496,11 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
           {this.state.recordListView &&
             this.state.recordFileList.map((val, key) => {
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
 
+              var audioFile = `https://englib-public-worker.englib-new-materials.workers.dev/uploadrecording/${val.filename}`
               return (
                 <div key={key} className="row align-items-center">
                   <div className="col-lg-2 col-md-12"></div>

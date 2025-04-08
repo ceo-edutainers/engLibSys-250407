@@ -17,9 +17,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
+import ViewBookReadingTriumphs from './ViewBookReadingTriumphs'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-
 const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
 const REGION = process.env.S3_REACT_APP_REGION
 const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
@@ -55,6 +55,11 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       courseName: this.props.courseName,
       readingHWAmount: this.props.readingHWAmount,
       showWaitingPopup: false,
+      readingLevel: this.props.readingLevel,
+      storyTitle: this.props.storyTitle,
+      storyNum: this.props.storyNum,
+      seriesName: this.props.seriesName,
+      bookNum: this.props.bookNum,
     }
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -202,6 +207,60 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     })
   }
 
+  // handleaudiofile(ev, dur) {
+  //   const fetchData = async () => {
+  //     let file = ev
+  //     let fileName = ev.name
+  //     let fileType = ev.type
+  //     let duration = dur
+
+  //     try {
+  //       var url = DB_CONN_URL + '/sign_s3'
+  //       const response = await axios.post(url, { fileName, fileType })
+
+  //       var returnData = response.data.data.returnData
+  //       var signedRequest = returnData.signedRequest
+  //       var url = returnData.url
+  //       var options = {
+  //         statusCode: 200,
+  //         headers: {
+  //           'Content-Type': fileType,
+  //           'Access-Control-Allow-Origin': '*',
+  //           'Access-Control-Allow-Methods': 'POST,GET,PUT',
+  //           'Access-Control-Allow-Headers': 'Content-Type',
+  //         },
+  //       }
+
+  //       const fetchData2 = async () => {
+  //         try {
+  //           const result = await axios.put(signedRequest, file, options)
+  //           this.setState({ audio: url, isRefreshBtn: true })
+  //           this.getFileFromAws(
+  //             this.state.mbn,
+  //             this.state.homework_id,
+  //             this.state.practiceTempId,
+  //             this.state.pointStep
+  //           )
+  //           this.setState({ showWaitingPopup: false })
+  //         } catch (error) {
+  //           alert('送信エラーです。もう一度録音して下さい。1')
+  //           this.setState({ showWaitingPopup: false })
+  //         }
+  //       }
+  //       fetchData2()
+  //     } catch (error) {
+  //       this.setState({ isError: true, showWaitingPopup: false })
+  //       this.setState({ isError: true })
+  //       alert('送信エラーです。もう一度録音して下さい。2')
+  //       return false
+  //     }
+
+  //     this.setState({ isLoading: false })
+  //     this.audioIntoDB(fileName, duration)
+  //   }
+  //   fetchData()
+  // }
+
   handleaudiofile(ev, dur) {
     const fetchData = async () => {
       let file = ev
@@ -210,49 +269,48 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       let duration = dur
 
       try {
-        var url = DB_CONN_URL + '/sign_s3'
-        const response = await axios.post(url, { fileName, fileType })
+        // 1. R2 사인 URL 요청
+        const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
+          fileName,
+          fileType,
+        })
 
-        var returnData = response.data.data.returnData
-        var signedRequest = returnData.signedRequest
-        var url = returnData.url
-        var options = {
-          statusCode: 200,
-          headers: {
-            'Content-Type': fileType,
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST,GET,PUT',
-            'Access-Control-Allow-Headers': 'Content-Type',
-          },
-        }
+        const data = response.data.data
 
-        const fetchData2 = async () => {
-          try {
-            const result = await axios.put(signedRequest, file, options)
-            this.setState({ audio: url, isRefreshBtn: true })
-            this.getFileFromAws(
-              this.state.mbn,
-              this.state.homework_id,
-              this.state.practiceTempId,
-              this.state.pointStep
-            )
-            this.setState({ showWaitingPopup: false })
-          } catch (error) {
-            alert('送信エラーです。もう一度録音して下さい。1')
-            this.setState({ showWaitingPopup: false })
-          }
-        }
-        fetchData2()
+        // 2. 폼데이터로 변환
+        const formData = new FormData()
+        formData.append('key', data.key)
+        formData.append('x-amz-algorithm', data.x_amz_algorithm)
+        formData.append('x-amz-credential', data.x_amz_credential)
+        formData.append('x-amz-date', data.x_amz_date)
+        formData.append('policy', data.policy)
+        formData.append('x-amz-signature', data.x_amz_signature)
+        formData.append('file', file)
+
+        // 3. 실제 업로드
+        await axios.post(data.uploadURL, formData)
+
+        // 4. 업로드한 파일의 공개 URL 저장
+        const publicURL = `https://${process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN}/${data.key}`
+        this.setState({ audio: publicURL, isRefreshBtn: true })
+
+        this.getFileFromAws(
+          this.state.mbn,
+          this.state.homework_id,
+          this.state.practiceTempId,
+          this.state.pointStep
+        )
+        this.setState({ showWaitingPopup: false })
       } catch (error) {
+        console.error('Upload Error:', error)
         this.setState({ isError: true, showWaitingPopup: false })
-        this.setState({ isError: true })
-        alert('送信エラーです。もう一度録音して下さい。2')
-        return false
+        alert('送信エラーです。もう一度録音して下さい。')
       }
 
       this.setState({ isLoading: false })
       this.audioIntoDB(fileName, duration)
     }
+
     fetchData()
   }
 
@@ -503,6 +561,16 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
           <div className="row align-items-center">
             <div className="col-lg-12 col-md-12 mb-3 mt-0">
+              {this.props.seriesName === 'Reading Triumphs' && (
+                <ViewBookReadingTriumphs
+                  readingLevel={this.props.readingLevel}
+                  storyTitle={this.props.storyTitle}
+                  storyNum={this.props.storyNum}
+                  seriesName={this.props.seriesName}
+                  bookNum={this.props.bookNum}
+                />
+              )}
+
               {this.props.audioDurationFromDB && (
                 <h6 style={{ color: 'black' }}>
                   ストーリー
@@ -553,8 +621,8 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
               )}
             </div>
             <div
-              className="col-lg-5 col-md-12 mb-1 mt-2"
-              style={{ textAlign: 'right' }}
+              className="col-lg-12 col-md-12 mb-1 mt-2"
+              style={{ textAlign: 'center' }}
             >
               <div className="banner-content">
                 <span
@@ -626,7 +694,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
                 </span>
               </div>
             </div>
-            <div
+            {/* <div
               className="col-lg-1 col-md-12"
               style={{ backgroundColor: '#dedede' }}
             ></div>
@@ -642,7 +710,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
                 leastRecordCount={this.state.leastRecordCount}
                 pageView={this.state.pageView}
               />
-            </div>
+            </div> */}
             <div
               className="col-lg-2 col-md-12"
               style={{ backgroundColor: '#dedede' }}
