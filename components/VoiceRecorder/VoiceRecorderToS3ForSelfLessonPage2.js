@@ -263,48 +263,35 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         const fileName = file.name
         const fileType = file.type
 
-        // 1. 백엔드에서 presigned POST 정보 받기
+        // 1. 백엔드에서 presigned PUT URL과 key 받기
         const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
         })
 
-        const {
-          uploadURL,
-          key,
-          policy,
-          x_amz_algorithm,
-          x_amz_credential,
-          x_amz_date,
-          x_amz_signature,
-        } = response.data.data
+        const { signedUrl, key, publicUrl } = response.data.data
 
-        // 2. formData로 파일 업로드
-        const formData = new FormData()
-        formData.append('key', key)
-        formData.append('policy', policy)
-        formData.append('x-amz-algorithm', x_amz_algorithm)
-        formData.append('x-amz-credential', x_amz_credential)
-        formData.append('x-amz-date', x_amz_date)
-        formData.append('x-amz-signature', x_amz_signature)
-        formData.append('Content-Type', fileType)
-        formData.append('file', file)
-
-        await axios.post(uploadURL, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+        // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
+        await axios.put(signedUrl, file, {
+          headers: {
+            'Content-Type': fileType,
+          },
         })
 
-        const publicUrl = `${process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN}/${key}`
-
-        // 3. 성공 시 상태 업데이트 및 DB 기록
+        // 3. 상태 업데이트 및 DB 기록
         this.setState({ audio: publicUrl, isRefreshBtn: true })
+
+        // 🔁 녹음 파일 조회 함수 실행 (예: AWS에서 했던 것)
         this.getFileFromAws(
           this.state.mbn,
           this.state.homework_id,
           this.state.practiceTempId,
           this.state.pointStep
         )
+
+        // ✅ DB 기록
         this.audioIntoDB(fileName, duration)
+
         this.setState({ showWaitingPopup: false })
       } catch (error) {
         console.error('업로드 에러:', error)
