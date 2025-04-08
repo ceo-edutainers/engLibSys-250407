@@ -295,7 +295,7 @@ export default class VoiceRecorder extends React.Component {
           alert(response.data.message)
         }
       } catch (error) {
-        alert('db insert error')
+        alert('db insert error-1')
       }
     }
 

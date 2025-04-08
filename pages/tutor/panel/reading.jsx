@@ -209,7 +209,12 @@ const READINGA = () => {
   const sendEmailtoAbsentStudent = () => {
     setIsSendEmailToAbsentStudent(false)
     setIsCheckedAbsentBtn(true)
-
+    // if (!sendEmail || !studentNameEng) {
+    //   alert('The email information has not been loaded yet. Please try again.')
+    //   return
+    // } else {
+    //   alert('success')
+    // }
     var templateParams = {
       to_admin: 'online-help@edutainers.jp',
       to_email: sendEmail,
@@ -305,12 +310,21 @@ const READINGA = () => {
     }
 
     // env環境設定=next.config.js
-    const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
-    const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
+    // const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
+    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_YOUR_SERVICE_ID
+    // const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
+    const YOUR_USER_ID = process.env.NEXT_PUBLIC_YOUR_USER_ID
     const YOUR_TEMPLATE_ID_to_student = 'template_rggl66c'
     const YOUR_TEMPLATE_ID_to_admin = 'template_09netzr'
 
-    emailjs.init(YOUR_USER_ID)
+    if (!YOUR_SERVICE_ID || !YOUR_USER_ID || !YOUR_TEMPLATE_ID_to_student) {
+      console.error('Missing EmailJS configuration.')
+      alert('Email Setting Error. Please contact to Admin.')
+      return
+    } else {
+      emailjs.init(YOUR_USER_ID)
+    }
+
     emailjs
       .send(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID_to_student, templateParams)
       .then(

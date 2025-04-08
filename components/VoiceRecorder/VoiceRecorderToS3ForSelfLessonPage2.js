@@ -305,9 +305,16 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
   }
 
   audioIntoDB = (fileName, duration) => {
-    console.log('FILE-TEST-fileName:', fileName)
-    console.log('FILE-TEST-duration:', duration)
     var rc = this.state.record_comment
+
+    console.log('FILE-TEST-fileName:', fileName)
+    console.log('FILE-TEST-length_second:', duration)
+    console.log('FILE-TEST-mbn', this.state.mbn)
+    console.log('FILE-TEST-homework_id', this.state.homework_id)
+    console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
+    console.log('FILE-TEST-pointStep', this.state.pointStep)
+    console.log('FILE-TEST-record_comment', this.state.record_comment)
+
     const fetchData3 = async () => {
       try {
         var url = DB_CONN_URL + '/member-record'
@@ -322,16 +329,10 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           when_record: 'homework',
           length_second: duration,
         })
-        console.log('FILE-TEST-mbn', mbn)
-        console.log('FILE-TEST-homework_id', homework_id)
-        console.log('FILE-TEST-practiceTempId', practiceTempId)
-        console.log('FILE-TEST-step', step)
-        console.log('FILE-TEST-record_comment', record_comment)
-        console.log('FILE-TEST-who_record', who_record)
-        console.log('FILE-TEST-when_record', when_record)
-        console.log('FILE-TEST-length_second', length_second)
+        // alert(response.data.message)
       } catch (error) {
-        alert('db insert error')
+        // alert('db insert error-A')
+        alert(response.data.message)
       }
     }
     fetchData3()
@@ -392,7 +393,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       try {
         await axios.get(Url).then((response) => {
           this.setState({ deleteFileName: response.data.result[0].filename })
-          this.handleDelFileS3(response.data.result[0].filename)
+          this.handleDelFileR2(response.data.result[0].filename)
         })
         this.getFileFromAws(
           this.state.mbn,
@@ -420,6 +421,27 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
   //     .then((response) => console.error(response))
   //     .catch((err) => console.error('s3 delete failed', err))
   // }
+
+  handleDelFileR2 = async (filename) => {
+    try {
+      const res = await fetch('/r2/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filename }),
+      })
+
+      if (res.ok) {
+        const result = await res.json()
+        console.log('deleted!!!!:', result)
+      } else {
+        console.error('Failed!!!:', await res.text())
+      }
+    } catch (err) {
+      console.error('Connection Error!!!:', err)
+    }
+  }
 
   componentDidMount() {
     this.getFileFromAws(
