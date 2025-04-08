@@ -1270,7 +1270,7 @@ const ViewSetHW = ({
           // alert('length' + response.data.length)
 
           if (response.data.length > 0) {
-            alert(response.data.message)
+            // alert(response.data.message)
             setViewMyReadingHistoryList(response.data.response)
           }
         })
