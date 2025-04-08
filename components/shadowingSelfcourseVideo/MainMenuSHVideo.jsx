@@ -222,7 +222,31 @@ function MainMenuSH() {
           </Link>
           <br />
           <br />
-          {youtubeID && (
+          {!youtubeID ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <div className="spinner"></div>
+              <p>ビデオがすぐ表示されます。</p>
+              <style jsx>{`
+                .spinner {
+                  border: 6px solid #f3f3f3;
+                  border-top: 6px solid #3498db;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  animation: spin 1s linear infinite;
+                  margin: 0 auto 10px;
+                }
+                @keyframes spin {
+                  0% {
+                    transform: rotate(0deg);
+                  }
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }
+              `}</style>
+            </div>
+          ) : (
             <iframe
               width="100%"
               height="360"
@@ -234,6 +258,7 @@ function MainMenuSH() {
               style={{ marginBottom: '10px' }}
             ></iframe>
           )}
+
           {/* youtube:{url}
           <br /> */}
           {/* <ReactPlayer
