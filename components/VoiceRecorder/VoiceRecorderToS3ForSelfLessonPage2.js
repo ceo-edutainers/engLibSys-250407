@@ -275,7 +275,13 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           fileType,
         })
 
-        const { signedUrl, publicUrl } = response.data.data
+        const signedUrl = response.data?.data?.signedUrl
+        const publicUrl = response.data?.data?.publicUrl
+
+        if (!signedUrl) {
+          console.error('❌ signedUrl 없음!', response.data)
+          return
+        }
 
         // 📤 파일을 signed URL로 PUT 업로드
         await axios.put(signedUrl, file, {
