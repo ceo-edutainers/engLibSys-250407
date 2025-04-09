@@ -453,8 +453,7 @@ const EndScreen = () => {
                         </ruby>
                       </span>
                     )}
-                    &nbsp;
-                    {audioFile}
+                    &nbsp; audiofile: {audioFile}
                     <audio
                       src={audioFile}
                       controls="controls"
