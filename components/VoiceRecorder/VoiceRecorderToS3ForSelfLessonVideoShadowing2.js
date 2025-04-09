@@ -380,18 +380,38 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     fetchData()
   }
 
-  handleDelFileS3 = (value) => {
-    const config = {
-      bucketName: S3_BUCKET,
-      region: REGION,
-      accessKeyId: ACCESS_KEY,
-      secretAccessKey: SECRET_ACCESS_KEY,
+  // handleDelFileS3 = (value) => {
+  //   const config = {
+  //     bucketName: S3_BUCKET,
+  //     region: REGION,
+  //     accessKeyId: ACCESS_KEY,
+  //     secretAccessKey: SECRET_ACCESS_KEY,
+  //   }
+  //   const ReactS3Client = new S3(config)
+  //   const filename = value
+  //   ReactS3Client.deleteFile(filename)
+  //     .then((response) => console.error(response))
+  //     .catch((err) => console.error('s3 delete failed', err))
+  // }
+  handleDelFileR2 = async (filename) => {
+    try {
+      const res = await fetch('/r2/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filename }),
+      })
+
+      if (res.ok) {
+        const result = await res.json()
+        console.log('deleted!!!!:', result)
+      } else {
+        console.error('Failed!!!:', await res.text())
+      }
+    } catch (err) {
+      console.error('Connection Error!!!:', err)
     }
-    const ReactS3Client = new S3(config)
-    const filename = value
-    ReactS3Client.deleteFile(filename)
-      .then((response) => console.error(response))
-      .catch((err) => console.error('s3 delete failed', err))
   }
 
   componentDidMount() {
@@ -453,9 +473,10 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
 
           {this.state.recordListView &&
             this.state.recordFileList.map((val, key) => {
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
 
               return (
                 <div key={key} className="row align-items-center">
