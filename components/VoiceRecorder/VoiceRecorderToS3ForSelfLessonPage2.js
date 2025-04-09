@@ -372,29 +372,6 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       alert('録音情報をデータベースに保存できませんでした。')
     }
   }
-  // audioIntoDB = (fileName, duration) => {
-  //   const fetchData3 = async () => {
-  //     try {
-  //       var url = DB_CONN_URL + '/member-record'
-  //       const response = await axios.post(url, {
-  //         mbn: this.state.mbn,
-  //         fileName,
-  //         homework_id: this.state.homework_id,
-  //         practiceTempId: this.state.practiceTempId,
-  //         step: this.state.pointStep,
-  //         record_comment: this.state.record_comment,
-  //         who_record: 'student',
-  //         when_record: 'homework',
-  //         length_second: duration,
-  //       })
-  //       alert(response.data.message)
-  //     } catch (error) {
-  //       // alert('db insert error-A')
-  //       alert(response.data.message)
-  //     }
-  //   }
-  //   fetchData3()
-  // }
 
   getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
     const fetchData4 = async () => {
@@ -610,7 +587,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
               // R2의 Public Worker 도메인 기반으로 바꾸기
               const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
-              var audioFile = `${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
               return (
                 <div key={key} className="row align-items-center">
                   <div className="col-lg-2 col-md-12"></div>

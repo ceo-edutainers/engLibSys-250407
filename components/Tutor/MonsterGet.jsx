@@ -92,11 +92,31 @@ const MonsterGet = ({ mbn, homework_id }) => {
     fetchData2()
   }, [mbn])
 
+  // useEffect(() => {
+  //   const fetchData2 = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/get-hw-history-fire-for-7days/'
+  //       var Url = url + mbn + '&' + homework_id
+  //       // alert(Url)
+  //       const response = await axios.get(Url)
+
+  //       // alert(response.data.message)
+
+  //       setGetThisFireInfo(response.data)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+
+  //   fetchData2()
+  // }, [mbn, homework_id])
+
+  //mysql2 backend용
   useEffect(() => {
     const fetchData2 = async () => {
       try {
         var url = DB_CONN_URL + '/get-hw-history-fire-for-7days/'
-        var Url = url + mbn + '&' + homework_id
+        var Url = url + mbn + '/' + homework_id // 경로 파라미터 방식으로 수정
         // alert(Url)
         const response = await axios.get(Url)
 
