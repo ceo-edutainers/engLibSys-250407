@@ -134,7 +134,7 @@ function App() {
     // 파일 이름 생성
     const date = new Date()
     const fileTime = date.getDate() + date.getTime()
-    const newfilename = `readingSelfCourse_${fileDetail}_${homework_id}_${i}_${fileTime}.${ext}`
+    const newfilename = `readingCourse_${fileDetail}_${homework_id}_${i}_${fileTime}.${ext}`
     setNewFileName(newfilename)
 
     try {
