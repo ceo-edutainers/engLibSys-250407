@@ -257,13 +257,60 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
   //   }
   //   fetchData()
   // }
+  // handleaudiofile(file, duration) {
+  //   const fetchData = async () => {
+  //     try {
+  //       const fileName = file.name
+  //       const fileType = file.type
+
+  //       // 1. 백엔드에서 presigned PUT URL과 key 받기//
+  //       const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
+  //         fileName,
+  //         fileType,
+  //       })
+
+  //       const { signedUrl, key, publicUrl } = response.data.data
+
+  //       // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
+  //       // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
+  //       await axios.put(signedUrl, file, {
+  //         headers: {
+  //           'Content-Type': fileType,
+  //         },
+  //       })
+
+  //       // 3. 상태 업데이트 및 DB 기록
+  //       this.setState({ audio: publicUrl, isRefreshBtn: true })
+
+  //       // 🔁 녹음 파일 조회 함수 실행 (예: AWS에서 했던 것)
+  //       this.getFileFromAws(
+  //         this.state.mbn,
+  //         this.state.homework_id,
+  //         this.state.practiceTempId,
+  //         this.state.pointStep
+  //       )
+
+  //       // ✅ DB 기록
+  //       this.audioIntoDB(fileName, duration)
+
+  //       this.setState({ showWaitingPopup: false })
+  //     } catch (error) {
+  //       console.error('업로드 에러:', error)
+  //       alert('送信エラーです。もう一度録音して下さい---')
+  //       this.setState({ isError: true, showWaitingPopup: false })
+  //     }
+  //   }
+
+  //   fetchData()
+  // }
+
   handleaudiofile(file, duration) {
     const fetchData = async () => {
       try {
         const fileName = file.name
-        const fileType = file.type
+        const fileType = 'audio/mpeg' // 명시적으로 설정 (안전)
 
-        // 1. 백엔드에서 presigned PUT URL과 key 받기//
+        // ① presigned URL 요청
         const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
@@ -271,27 +318,24 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
         const { signedUrl, key, publicUrl } = response.data.data
 
-        // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
-        // 2. presigned URL로 파일 직접 업로드 (PUT 방식)
+        // ② R2에 업로드
         await axios.put(signedUrl, file, {
           headers: {
             'Content-Type': fileType,
           },
         })
 
-        // 3. 상태 업데이트 및 DB 기록
+        // ③ 상태 업데이트
         this.setState({ audio: publicUrl, isRefreshBtn: true })
 
-        // 🔁 녹음 파일 조회 함수 실행 (예: AWS에서 했던 것)
+        // ④ DB에 저장 완료 후 → 리스트 다시 불러오기
+        await this.audioIntoDB(fileName, duration)
         this.getFileFromAws(
           this.state.mbn,
           this.state.homework_id,
           this.state.practiceTempId,
           this.state.pointStep
         )
-
-        // ✅ DB 기록
-        this.audioIntoDB(fileName, duration)
 
         this.setState({ showWaitingPopup: false })
       } catch (error) {
@@ -303,10 +347,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
     fetchData()
   }
-
-  audioIntoDB = (fileName, duration) => {
-    var rc = this.state.record_comment
-
+  audioIntoDB = async (fileName, duration) => {
     console.log('FILE-TEST-fileName:', fileName)
     console.log('FILE-TEST-length_second:', duration)
     console.log('FILE-TEST-mbn', this.state.mbn)
@@ -314,29 +355,46 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
     console.log('FILE-TEST-pointStep', this.state.pointStep)
     console.log('FILE-TEST-record_comment', this.state.record_comment)
-
-    const fetchData3 = async () => {
-      try {
-        var url = DB_CONN_URL + '/member-record'
-        const response = await axios.post(url, {
-          mbn: this.state.mbn,
-          fileName,
-          homework_id: this.state.homework_id,
-          practiceTempId: this.state.practiceTempId,
-          step: this.state.pointStep,
-          record_comment: rc,
-          who_record: 'student',
-          when_record: 'homework',
-          length_second: duration,
-        })
-        // alert(response.data.message)
-      } catch (error) {
-        // alert('db insert error-A')
-        alert(response.data.message)
-      }
+    try {
+      await axios.post(DB_CONN_URL + '/member-record', {
+        mbn: this.state.mbn,
+        fileName,
+        homework_id: this.state.homework_id,
+        practiceTempId: this.state.practiceTempId,
+        step: this.state.pointStep,
+        record_comment: this.state.record_comment,
+        who_record: 'student',
+        when_record: 'homework',
+        length_second: duration,
+      })
+    } catch (error) {
+      console.error('DB 저장 실패:', error)
+      alert('録音情報をデータベースに保存できませんでした。')
     }
-    fetchData3()
   }
+  // audioIntoDB = (fileName, duration) => {
+  //   const fetchData3 = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/member-record'
+  //       const response = await axios.post(url, {
+  //         mbn: this.state.mbn,
+  //         fileName,
+  //         homework_id: this.state.homework_id,
+  //         practiceTempId: this.state.practiceTempId,
+  //         step: this.state.pointStep,
+  //         record_comment: this.state.record_comment,
+  //         who_record: 'student',
+  //         when_record: 'homework',
+  //         length_second: duration,
+  //       })
+  //       alert(response.data.message)
+  //     } catch (error) {
+  //       // alert('db insert error-A')
+  //       alert(response.data.message)
+  //     }
+  //   }
+  //   fetchData3()
+  // }
 
   getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
     const fetchData4 = async () => {
@@ -349,21 +407,53 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           who_record: 'student',
           currentStep: pointStep,
         })
+        // alert(url + ' / ' + mbn + ' / ' + homework_id + ' / ' + practiceTempId)
+
+        console.log('🎯 TEST-서버 응답:', response.data)
 
         if (!response.data.status) {
-          alert(response.data.message)
+          alert('⚠️ TEST-서버 응답 오류: ' + response.data.message)
         } else {
           this.setState({
             recordFileList: response.data.result,
             recordListView: true,
           })
+          console.log('📋 TEST-받아온 리스트:', response.data.result)
         }
       } catch (error) {
-        alert('db insert error')
+        alert('❌ API 호출 에러 발생')
+        console.error('🧨 getFileFromAws 에러:', error)
       }
     }
     fetchData4()
   }
+
+  // getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
+  //   const fetchData4 = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/get-member-record-file'
+  //       const response = await axios.post(url, {
+  //         mbn,
+  //         homework_id,
+  //         practiceTempId,
+  //         who_record: 'student',
+  //         currentStep: pointStep,
+  //       })
+
+  //       if (!response.data.status) {
+  //         alert(response.data.message)
+  //       } else {
+  //         this.setState({
+  //           recordFileList: response.data.result,
+  //           recordListView: true,
+  //         })
+  //       }
+  //     } catch (error) {
+  //       alert('db insert error')
+  //     }
+  //   }
+  //   fetchData4()
+  // }
 
   handleViewList = (value) => {
     this.setState({
