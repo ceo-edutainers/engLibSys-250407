@@ -117,61 +117,6 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     })
   }
 
-  // start = () => {
-  //   if (this.state.isblocked) {
-  //     console.log('permission Denied')
-  //   } else {
-  //     navigator.mediaDevices
-  //       .getUserMedia({
-  //         audio: {
-  //           noiseSuppression: true,
-  //           echoCancellation: true,
-  //           sampleRate: 44100,
-  //         },
-  //       })
-  //       .then((stream) => {
-  //         this.applyAudioFilters(stream)
-  //         this.recorder.init(stream)
-  //         this.recorder.start().then(() => {
-  //           this.setState({
-  //             isrecording: true,
-  //             isdeleted: false,
-  //             isRefreshBtn: false,
-  //           })
-  //         })
-  //       })
-  //       .catch((e) => console.log(e))
-  //   }
-  // }
-  render() {
-    return (
-      <>
-        <div>
-          <div style={{ textAlign: 'center' }}>
-            {this.state.isrecording && <p>녹음 중...</p>}
-          </div>
-
-          {/* Start 버튼: isrecording이 true일 때 비활성화 */}
-          <button
-            onClick={this.start}
-            disabled={this.state.isrecording} // 녹음 중일 때 비활성화
-          >
-            녹음 시작
-          </button>
-
-          {/* Stop 버튼: isrecording이 false일 때 비활성화 */}
-          <button
-            onClick={this.stop}
-            disabled={!this.state.isrecording} // 녹음 중이지 않을 때 비활성화
-          >
-            녹음 중지
-          </button>
-        </div>
-      </>
-    )
-  }
-
-  //最近
   start = () => {
     if (this.state.isblocked) {
       console.log('permission Denied')
@@ -188,9 +133,8 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           this.applyAudioFilters(stream)
           this.recorder.init(stream)
           this.recorder.start().then(() => {
-            console.log('녹음 시작')
             this.setState({
-              isrecording: true, // 녹음 시작
+              isrecording: true,
               isdeleted: false,
               isRefreshBtn: false,
             })
@@ -200,82 +144,56 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     }
   }
 
-  //最新
   stop = () => {
     this.setState({ showWaitingPopup: true })
     this.recorder
       .stop()
       .then(({ blob, buffer }) => {
         const blobUrl = URL.createObjectURL(blob)
-        console.log('녹음 파일:', blobUrl) // 로그 추가
         getBlobDuration(blobUrl).then((dur) => {
           const duration = dur.toFixed(0)
-          console.log('녹음 길이:', duration) // 로그 추가
+          var aud =
+            localStorage.getItem('MODE') === 'TEST'
+              ? '0:5'
+              : this.props.audioDurationFromDB
+
+          var compareAudioDuration = this.handleCalAudioDurationFromDB(
+            aud,
+            duration,
+            0.7
+          )
+          if (compareAudioDuration === false) {
+            return
+          }
+
           this.setState({
             blobUrl,
             isrecording: false,
             isdeleted: false,
             isRefreshBtn: true,
           })
+
+          const d = new Date()
+          let y = d.getFullYear()
+          let mt = d.getMonth() + 1
+          let day = d.getDate()
+          let h = myFun_addZero(d.getHours())
+          let m = myFun_addZero(d.getMinutes())
+          let s = myFun_addZero(d.getSeconds())
+          let ms = myFun_addZero(d.getMilliseconds())
+          let time = `${y}-${mt}-${day}_${h}:${m}:${s}:${ms}`
+          var d2 = `${this.state.homework_id}_${time}`
+          var file = new File([blob], d2, { type: 'audio/mp3' })
+
+          this.handleaudiofile(file, duration)
+          this.insertPointToDB()
+          // setTimeout(() => {
+          //   this.setState({ showWaitingPopup: false })
+          // }, 2000) // Change the timeout value as per your requirement
         })
       })
-      .catch((error) => {
-        console.error('stop error', error)
-        this.setState({ isrecording: false }) // 에러가 발생했을 때 상태 리셋
-      })
+      .catch((error) => console.error('stop error', error))
   }
-
-  //最後 2025-04-09
-  // stop = () => {
-  //   this.setState({ showWaitingPopup: true })
-  //   this.recorder
-  //     .stop()
-  //     .then(({ blob, buffer }) => {
-  //       const blobUrl = URL.createObjectURL(blob)
-  //       getBlobDuration(blobUrl).then((dur) => {
-  //         const duration = dur.toFixed(0)
-  //         var aud =
-  //           localStorage.getItem('MODE') === 'TEST'
-  //             ? '0:5'
-  //             : this.props.audioDurationFromDB
-
-  //         var compareAudioDuration = this.handleCalAudioDurationFromDB(
-  //           aud,
-  //           duration,
-  //           0.7
-  //         )
-  //         if (compareAudioDuration === false) {
-  //           return
-  //         }
-
-  //         this.setState({
-  //           blobUrl,
-  //           isrecording: false,
-  //           isdeleted: false,
-  //           isRefreshBtn: true,
-  //         })
-
-  //         const d = new Date()
-  //         let y = d.getFullYear()
-  //         let mt = d.getMonth() + 1
-  //         let day = d.getDate()
-  //         let h = myFun_addZero(d.getHours())
-  //         let m = myFun_addZero(d.getMinutes())
-  //         let s = myFun_addZero(d.getSeconds())
-  //         let ms = myFun_addZero(d.getMilliseconds())
-  //         let time = `${y}-${mt}-${day}_${h}:${m}:${s}:${ms}`
-  //         var d2 = `${this.state.homework_id}_${time}`
-  //         var file = new File([blob], d2, { type: 'audio/mp3' })
-
-  //         this.handleaudiofile(file, duration)
-  //         this.insertPointToDB()
-  //         // setTimeout(() => {
-  //         //   this.setState({ showWaitingPopup: false })
-  //         // }, 2000) // Change the timeout value as per your requirement
-  //       })
-  //     })
-  //     .catch((error) => console.error('stop error', error))
-  // }
 
   deleteAudio = () => {
     this.setState({
