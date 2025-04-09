@@ -476,43 +476,8 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                   </h1>
                 </p>
               </div>
-              {/* <div className="single-courses-item-box  mr-0 pr-0">
-                    <div
-                      className="courses-image mt-3  mr-0 pr-0 pt-70"
-                      aria-label="１ページアップロードで５ポイントゲット！"
-                      data-balloon-pos="right"
-                      data-balloon-length="medium"
-                    >
-                      <div
-                        className="price shadow  mr-0 pr-0"
-                        style={{
-                          lineHeight: 1,
-                          width: '120px',
-                          height: '120px',
-                          // marginTop: '100px',
-                        }}
-                      >
-                        <p
-                          style={{
-                            fontSize: '14px',
-                            color: 'black',
-                            paddingTop: '20px',
-                            paddingBottom: 0,
-                            marginBottom: 0,
-                            lineHeight: 1.5,
-                            marginTop: 0,
-                          }}
-                        >
-                          1ページ
-                          <br />
-                          アップロードで
-                        </p>
-                        ５ポイント
-                      </div>
-                    </div>
-                  </div> */}
 
-              <div
+              {/* <div
                 className="col-lg-6 col-md-12 pt-3"
                 style={{ textAlign: 'center' }}
               >
@@ -647,7 +612,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                     </button>
                   </>
                 )}
-              </div>
+              </div> */}
             </div>
           </form>
         </center>
