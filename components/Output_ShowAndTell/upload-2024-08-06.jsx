@@ -428,7 +428,7 @@ function Upload({
                     </ruby>
                     アップロード
                     <br />
-                    (QRコードをスマートフォンにかざす)
+                    (QRコードをスマホにかざす)
                   </p>
                 </p>
                 {/* <p style={{ color: 'red', fontSize: '12px' }}>

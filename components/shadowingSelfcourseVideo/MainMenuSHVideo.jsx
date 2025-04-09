@@ -227,6 +227,7 @@ function MainMenuSH() {
           </p>
           <br />
           <br />
+
           {!youtubeID ? (
             <div style={{ textAlign: 'center', padding: '40px' }}>
               <div className="spinner"></div>
@@ -263,33 +264,6 @@ function MainMenuSH() {
               style={{ marginBottom: '10px' }}
             ></iframe>
           )}
-          {/* youtube:{url}
-          <br /> */}
-          {/* <ReactPlayer
-            url={url}
-            // playing={playStatus}
-            // controls={true}
-            // playbackRate={playbackRate}
-            // loop={playLoop}
-            width="100%"
-            //contentWindow="false"
-            style={{ marginBottom: '10px' }}
-            onReady={() => {
-              console.log('onReady')
-            }}
-            onStart={() => {
-              console.log('onStart')
-            }}
-            onPause={() => {
-              console.log('onPause')
-            }}
-            onEnded={() => {
-              console.log('onEnded')
-            }}
-            onError={() => {
-              console.log('onError')
-            }}
-          /> */}
         </div>
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           {/* {seriesName} */}

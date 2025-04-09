@@ -404,7 +404,8 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                       padding: '10px',
                     }}
                   >
-                    {/* <p>{qrLinkBookQuestion}</p> */}
+                    <p>{qrLinkBookQuestion}</p>
+
                     <QrcodeGenerator
                       url={qrLinkBookQuestion}
                       title="課題アップロード"
@@ -420,7 +421,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                       </ruby>
                       アップロード
                       <br />
-                      (QRコードをスマートフォンにかざす)
+                      (QRコードをスマホにかざす.)
                     </p>
                   </p>
                   {/* <p style={{ color: 'red', fontSize: '12px' }}>
