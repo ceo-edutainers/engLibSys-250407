@@ -347,6 +347,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     this.handleFileSelect(id)
     var url = DB_CONN_URL + '/record-delete/'
     var Url = url + id
+
     const fetchData = async () => {
       try {
         await axios.get(Url)

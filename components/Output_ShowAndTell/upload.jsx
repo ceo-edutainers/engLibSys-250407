@@ -300,14 +300,11 @@ function Upload({
                 width: '100%',
               }}
             >
-              <div
+              {/* <div
                 className="col-lg-7 col-md-7"
                 style={{ textAlign: 'center' }}
-              >
-                <div
-                // className="col-lg-7 col-md-12 pt-3"
-                // style={{ textAlign: 'center' }}
-                >
+              > */}
+              {/* <div>
                   <label
                     className="btn btn-warning"
                     style={{
@@ -351,9 +348,9 @@ function Upload({
                       jpg/png形式のみ
                     </p>
                   </label>
-                </div>
+                </div> */}
 
-                {isFileAru ? (
+              {/* {isFileAru ? (
                   <>
                     <button
                       style={{
@@ -401,10 +398,10 @@ function Upload({
                       アップロード
                     </button>
                   </>
-                )}
-              </div>
+                )} */}
+              {/* </div> */}
               <div
-                className="col-lg-5 col-md-5 "
+                className="col-lg-12 col-md-12 "
                 style={{ textAlign: 'center' }}
               >
                 <center>

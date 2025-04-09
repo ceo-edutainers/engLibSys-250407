@@ -72,16 +72,6 @@ function MainMenuSH() {
       var Url =
         url + myMbn + '&' + homework_id + '&' + nextStep + '&' + thisSubject
 
-      // var Url = `${url}${encodeURIComponent(myMbn)}&${encodeURIComponent(
-      //   homework_id
-      // )}&${encodeURIComponent(nextStep)}&${encodeURIComponent(thisSubject)}`
-
-      // console.log('TEST:homework_id', homework_id)
-      // console.log('TEST:nextStep', nextStep)
-      // console.log('TEST:thisSubject', thisSubject)
-      // console.log('TEST:myMbn', myMbn)
-      // console.log('TEST:Url', Url)
-
       try {
         const response = await axios.get(Url)
         // console.log('TEST:response.data.message', response.data.message)
@@ -93,6 +83,7 @@ function MainMenuSH() {
         // console.log('TEST:response.data.message', response.data.message)
 
         if (response.data.length > 0) {
+          // alert(response.data.message)
           //step1をすでに終わった場合
           //step1bの stepStatus==endがある場合 最後のデーター(response[0]が Step1B、stepStatus=endの場合)、つまりこの宿題でStep1Bを終わらせた場合は
           //いつもstep2からスタートする
@@ -104,21 +95,21 @@ function MainMenuSH() {
           //その２）holdingをチェックしてあったらそのstepに行く
           var url = DB_CONN_URL + '/get-step-sys-hw-history-holding/'
           var Url = url + myMbn + '&' + homework_id + '&' + thisSubject
-
+          alert(Url)
           const fetchData2 = async () => {
             try {
               const response = await axios.get(Url)
+              alert(response.data.message)
               console.log('TEST:response.data.message', response.data.message)
               if (response.data.length > 0) {
                 //holdingではない場合、Step1は終わってるので、step2へへ行く。
                 var thisStep = 'StepSH2'
                 practiceStart(thisStep)
                 // console.log('thisStep2:', thisStep)
+                alert('2')
                 // }
               } else {
-                var thisStep = 'StepSH2'
-                practiceStart(thisStep)
-                console.log('thisStep3:', thisStep)
+                alert('1')
               }
 
               // practiceStart(thisStep)
@@ -325,6 +316,8 @@ function MainMenuSH() {
               className="startBtnBig mt-5"
               onClick={() => {
                 nextStepCheck('StepSH1')
+                console.log('start')
+                // alert('start')
               }}
               style={{ fontSize: '30px' }}
             >

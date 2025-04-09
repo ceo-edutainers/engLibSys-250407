@@ -122,6 +122,9 @@ const EndScreen = () => {
     let audioEndAlert = new Audio(
       'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/complete.mp3'
     )
+    // const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+    // var audioEndAlert = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
+
     audioEndAlert.play()
   }, [])
 
@@ -198,9 +201,12 @@ const EndScreen = () => {
       try {
         const response = await axios.get(Url)
 
-        var awsUrl =
-          'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-          response.data[0].filaname
+        // var awsUrl =
+        //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+        //   response.data[0].filaname
+
+        const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+        var awsUrl = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${response.data[0].filaname}`
 
         setFirstLastRecording(response.data)
         setFirstRecordFile(awsUrl + response.data[0].filename)
@@ -393,9 +399,12 @@ const EndScreen = () => {
             {firstLastRecording.map((val, key) => {
               var diff = totalLastPoint - cutlinePointToNextStory
 
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
+              const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
+
               return (
                 <>
                   <h6>
