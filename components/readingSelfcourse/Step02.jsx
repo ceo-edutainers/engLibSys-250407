@@ -423,18 +423,9 @@ const Step2B = () => {
               )
             } else {
               //alert('次のステップに行くためには録音をしてください。')
-              // setIsGoNextPage(false)
-              // setIsCantGoNextPage(true)
+              setIsGoNextPage(false)
+              setIsCantGoNextPage(true)
 
-              var stepStatus = 'end'
-              var nextStep = 'Step3B'
-              hwHistoryUpdate(
-                currentStep,
-                stepStatus,
-                HWID,
-                practiceTempId,
-                nextStep
-              )
               return false
             }
             practiceStart(nextStep)

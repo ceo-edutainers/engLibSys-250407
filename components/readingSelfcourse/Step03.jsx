@@ -312,12 +312,11 @@ const Step3B = () => {
             practiceStart(nextStep)
           } else {
             //alert('次のステップに行くためには録音をしてください。')
-            // setIsGoNextPage(false)
-            // setIsCantGoNextPage(true)
-            var stepStatus = 'end'
-            var nextStep = 'finished' //これが元々
+            setIsGoNextPage(false)
+            setIsCantGoNextPage(true)
+            // var stepStatus = 'end'
+            // var nextStep = 'finished' //これが元々
 
-            practiceStart(nextStep)
             return false
           }
         })
