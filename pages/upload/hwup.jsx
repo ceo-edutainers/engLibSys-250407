@@ -122,116 +122,72 @@ function App() {
     }
   }
 
-  // const handleUpload = async (file, i) => {
-  //   const ext = file.name.split('.').pop().toLowerCase()
-  //   if (!['jpg', 'jpeg', 'png'].includes(ext)) {
-  //     setIsPermettedFile(true)
-  //     return
-  //   }
-
-  //   const date = new Date()
-  //   const fileTime = date.getDate() + date.getTime()
-  //   const newfilename = `readingSelfCourse_${fileDetail}_${homework_id}_${i}_${fileTime}.${ext}`
-  //   setNewFileName(newfilename)
-
-  //   try {
-  //     // ① presigned URL 요청
-
-  //     let ext = file.name.split('.').pop().toLowerCase()
-  //     let mimeType = ''
-
-  //     if (ext === 'jpg' || ext === 'jpeg') {
-  //       mimeType = 'image/jpeg'
-  //     } else if (ext === 'png') {
-  //       mimeType = 'image/png'
-  //     } else {
-  //       alert('jpg, jpeg, png 形式のみ許可されます。')
-  //       return
-  //     }
-
-  //     const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-  //       fileName: `uploadhw/${file.name}`,
-  //       fileType: mimeType,
-  //     })
-
-  //     const { signedUrl, key, publicUrl } = response.data.data
-
-  //     // ② presigned URL로 파일 업로드
-  //     await axios.put(signedUrl, file, {
-  //       headers: {
-  //         'Content-Type': 'image/jpeg',
-  //       },
-  //     })
-
-  //     // ③ DB 기록 및 상태 업데이트
-  //     hwHistoryUpdate(
-  //       currentStep,
-  //       stepStatus,
-  //       homework_id,
-  //       pti,
-  //       thisSubject,
-  //       newfilename,
-  //       fileDetail
-  //     )
-  //     setIsOpenBackMypage(true)
-  //     setAfterFileSelected(false)
-  //     insertPointToDB()
-  //   } catch (error) {
-  //     console.error('업로드 실패:', error)
-  //     alert('ファイルのアップロードに失敗しました。もう一度お試しください。')
-  //   }
-  // }
-
-  const handleUpload = async (file, index) => {
+  const handleUpload = async (file, i) => {
     const ext = file.name.split('.').pop().toLowerCase()
 
-    // MIME type 설정
-    let mimeType = ''
-    if (ext === 'jpg' || ext === 'jpeg') {
-      mimeType = 'image/jpeg'
-    } else if (ext === 'png') {
-      mimeType = 'image/png'
-    } else {
-      alert('jpg, jpeg, png 형식만 허용됩니다.')
+    // 확장자가 jpg, jpeg, png 인지 확인
+    if (!['jpg', 'jpeg', 'png'].includes(ext)) {
+      setIsPermettedFile(true)
       return
     }
 
-    // 새로운 파일 이름 구성
+    // 파일 이름 생성
     const date = new Date()
-    const timestamp = `${date.getFullYear()}${
-      date.getMonth() + 1
-    }${date.getDate()}_${date.getTime()}`
-    const newFileName = `readingCourse_${fileDetail}_${homework_id}_${index}_${timestamp}.${ext}`
-    const fileWithNewName = new File([file], newFileName, { type: mimeType })
+    const fileTime = date.getDate() + date.getTime()
+    const newfilename = `readingSelfCourse_${fileDetail}_${homework_id}_${i}_${fileTime}.${ext}`
+    setNewFileName(newfilename)
 
-    // ✅ R2 업로드용 presigned URL 요청
-    const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-      fileName: `uploadhw/${newFileName}`, // 원하는 경로 + 새 이름
-      fileType: mimeType,
-    })
+    try {
+      // ① presigned URL 요청
+      let mimeType = ''
+      if (ext === 'jpg' || ext === 'jpeg') {
+        mimeType = 'image/jpeg'
+      } else if (ext === 'png') {
+        mimeType = 'image/png'
+      } else {
+        alert('jpg, jpeg, png 形式のみ許可されます。')
+        return
+      }
 
-    const { signedUrl, key, publicUrl } = response.data.data
+      // ② R2 presigned URL 요청
+      // const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
+      //   fileName: `uploadhw/${newfilename}`, // 경로를 'uploadhw/'로 설정
+      //   fileType: mimeType,
+      // })
 
-    // ✅ 실제 파일 업로드
-    await axios.put(signedUrl, fileWithNewName, {
-      headers: {
-        'Content-Type': mimeType,
-      },
-    })
+      const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
+        fileName: `${file.name}`, // 경로를 uploadhw로 변경
+        fileType: file.type,
+      })
 
-    // ✅ 업로드 후 처리 (예: DB 기록 등)
-    await hwHistoryUpdate(
-      currentStep,
-      stepStatus,
-      homework_id,
-      pti,
-      thisSubject,
-      newFileName,
-      fileDetail
-    )
-    setIsOpenBackMypage(true)
-    setAfterFileSelected(false)
-    insertPointToDB()
+      const { signedUrl, key, publicUrl } = response.data.data
+
+      // ③ presigned URL로 파일 업로드
+      await axios.put(signedUrl, file, {
+        headers: {
+          'Content-Type': mimeType,
+        },
+      })
+
+      // ④ DB 기록 및 상태 업데이트
+      hwHistoryUpdate(
+        currentStep,
+        stepStatus,
+        homework_id,
+        pti,
+        thisSubject,
+        newfilename,
+        fileDetail
+      )
+
+      // ⑤ 상태 업데이트
+      setIsOpenBackMypage(true)
+      setAfterFileSelected(false)
+      insertPointToDB()
+    } catch (error) {
+      console.error('업로드 실패:', error)
+      alert('ファイルのアップロードに失敗しました。もう一度お試しください。')
+    }
   }
 
   const hwHistoryUpdate = (

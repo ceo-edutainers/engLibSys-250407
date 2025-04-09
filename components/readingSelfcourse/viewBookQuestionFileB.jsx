@@ -20,6 +20,7 @@ import {
 // import S3 from 'react-aws-s3'
 const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [mindmapView, setMindmapView] = useState(false) //IdeaView
   const [fileBookQuestion, setFileBookQuestion] = useState([])
   const [isFileAru, setIsFileAru] = useState(false)
@@ -167,7 +168,9 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
             style={{ height: '40px', width: 'auto' }}
           />
 
-          {mindmapView ? 'ファイルを隠す' : 'アップロードされたか確認する'}
+          {mindmapView
+            ? 'ファイルを隠す'
+            : 'アップロード済みのファイルを確認する'}
         </h5>
       </span>
       <div
@@ -177,12 +180,11 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
         {mindmapView &&
           isFileAru &&
           fileBookQuestion.map((val, key) => {
-            var uploadfile =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              val.fileName
+            var uploadfile = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
             return (
               <>
                 <p style={{ textAlign: 'center' }}>
+                  {uploadfile}
                   <img
                     src={uploadfile}
                     style={{
