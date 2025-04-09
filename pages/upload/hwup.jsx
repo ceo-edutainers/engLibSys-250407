@@ -150,15 +150,15 @@ function App() {
       }
 
       // ② R2 presigned URL 요청
-      // const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-      //   fileName: `uploadhw/${newfilename}`, // 경로를 'uploadhw/'로 설정
-      //   fileType: mimeType,
-      // })
-
       const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-        fileName: `${file.name}`, // 경로를 uploadhw로 변경
+        fileName: `uploadhw/${newfilename}`, // 경로를 'uploadhw/'로 설정
         fileType: file.type,
       })
+
+      // const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
+      //   fileName: `${file.name}`, // 경로를 uploadhw로 변경
+      //   fileType: file.type,
+      // })
 
       const { signedUrl, key, publicUrl } = response.data.data
 
