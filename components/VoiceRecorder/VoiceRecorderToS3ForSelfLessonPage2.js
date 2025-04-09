@@ -504,7 +504,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
                         {/* {key + 1}. &nbsp; */}
                         {key == 0 && '最新順 latest-order'}
                       </font>
-                      {audioFile}
+
                       <audio
                         src={audioFile}
                         controls="controls"
