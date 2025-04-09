@@ -13,66 +13,12 @@ function Upload({
   qrLinkVideoDictation,
 }) {
   const {
-    myMbn,
-    setMyMbn,
     HWID,
     setHWID,
-    youtubeID,
-    setYoutubeID,
-    dictationMin,
-    setDictationMin,
-    shadowingSpeed,
-    setShadowingSpeed,
-    dictationHow,
-    setDictationHow,
-    lessonOrder,
-    setLessonOrder,
     thisSubject,
     setThisSubject,
-    leastRecordCount_ondoku,
-    setLeastRecordCount_ondoku,
-    leastRecordCount_shadowing,
-    setLeastRecordCount_shadowing,
-    bookCoverImgUrl,
-    setBookCoverImgUrl,
-    bookImgUrl,
-    setBookImgUrl,
-    shadowingLevel,
-    setShadowingLevel,
-    storyTitle,
-    setStoryTitle,
-    storyStartPage,
-    setStoryStartPage,
-    dictationStart,
-    setDictationStart,
-    movieNum,
-    setMovieNum,
-    youtubeURL,
-    setYoutubeURL,
-    shadowingTitle,
-    setShadowingTitle,
     practiceTempId,
     setPracticeTempId,
-    audioOnOff,
-    setAudioOnOff,
-    course,
-    setCourse,
-    courseName,
-    setCourseName,
-    pageView,
-    setPageView,
-    courseLevel,
-    setCourseLevel,
-    textbook,
-    setTextbook,
-    eikenLevel,
-    setEikenLevel,
-    userName,
-    setUserName,
-    point,
-    setPoint,
-    totalQuestion,
-    setTotalQuestion,
   } = useContext(QuizContext)
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter() //使い方：router.replace('/')
@@ -252,141 +198,41 @@ function Upload({
 
   return (
     <>
+      {/* <QRCode value={qrcodeUrl} size="100" /> */}
       <div>
         <center>
           <form className="upload-steps" onSubmit={handleClick}>
-            <div
-              className="row mt-3  mb-3"
-              style={{
-                border: '1px solid black',
-                borderRadius: '10px',
-                padding: '10px',
-                width: '100%',
-              }}
-            >
-              {/* {' '}
-              <br />
-              <br />
-              <br />
-              <p>{qrcodeUrl}</p> */}
-              <div
-                className="col-lg-2 col-md-12 pt-1"
-                style={{ textAlign: 'center' }}
-              >
-                <QRCode value={qrcodeUrl} size="100" />
-              </div>
-              <div
-                className="col-lg-6 col-md-12 pt-2"
-                style={{ textAlign: 'center' }}
-              >
-                <label
-                  className="btn btn-warning"
+            <div className="col-lg-5 col-md-5 " style={{ textAlign: 'center' }}>
+              <center>
+                <p
                   style={{
-                    position: 'relative',
-                    overflow: 'hidden',
-                    fontAlign: 'center',
-                    width: '80%',
-                    height: '90px',
-                    paddingTop: '2px',
-                    fontSize: '13px',
+                    border: '0.1em solid #b0c4de',
                     borderRadius: '10px',
-                    fontWeight: '600',
+                    padding: '4px',
+                    paddingTop: 10,
                   }}
                 >
-                  ディクテーションやシャドーイングの 単語帳の写真ファイルを選択
-                  <br />
-                  （複数選択可）
-                  <input
-                    type="file"
-                    ref={fileInput}
-                    accept=".jpg, .jpeg, .png"
-                    onChange={() => {
-                      setIsFileAru(true)
-                    }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      margin: 0,
-                      padding: 0,
-                      fontSize: '20px',
-                      cursor: 'pointer',
-                      opacity: 0,
-                    }}
-                    multiple
-                  />
-                  <p
-                    style={{
-                      fontSize: '10px',
-                      color: 'black',
-                      paddingTop: 0,
-                    }}
-                  >
-                    jpg/png/形式のみ
+                  {/* <p>{qrLinkBookQuestion}</p> */}
+                  <QRCode value={qrcodeUrl} size="100" />
+                  <p style={{ color: 'blue', fontSize: '13px' }}>
+                    スマホ
+                    <ruby>
+                      用<rt>よう</rt>
+                    </ruby>
+                    の
+                    <ruby>
+                      課題<rt>かだい</rt>
+                    </ruby>
+                    アップロード
+                    <br />
+                    (QRコードをスマホにかざす)
                   </p>
-                </label>
-              </div>
-              <div
-                className="col-lg-4 col-md-12 "
-                style={{
-                  margin: 'auto',
-                  width: '100%',
-                  // border: '1px solid violet',
-                  // borderRadius: '10px',
-                  padding: '10px',
-                  textAlign: 'left',
-                }}
-              >
-                {isFileAru ? (
-                  <>
-                    <button
-                      style={{
-                        fontWeight: '600',
-                        padding: '10px',
-                        color: 'black',
-                        fontSize: '18px',
-                        borderRadius: '10px',
-                        backgroundColor: 'red',
-                        verticalAlign: 'middle',
-                        width: '100%',
-                        marginLeft: 0,
-                        marginRight: 0,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <img
-                        src="/images/homework-upload.png"
-                        style={{ height: '50px', width: 'auto' }}
-                      />
-                      アップロード
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      style={{
-                        fontWeight: '600',
-                        padding: '10px',
-                        color: 'black',
-                        fontSize: '18px',
-                        borderRadius: '10px',
-                        backgroundColor: '#F0E5F7',
-                        verticalAlign: 'middle',
-                        width: '100%',
-                        marginLeft: 0,
-                        marginRight: 0,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <img
-                        src="/images/homework-upload.png"
-                        style={{ height: '50px', width: 'auto' }}
-                      />
-                      アップロード
-                    </button>
-                  </>
-                )}
-              </div>
+                </p>
+                {/* <p style={{ color: 'red', fontSize: '12px' }}>
+                               1枚アップロードで5Pointゲットできますので、
+                               課題提出をお勧めします。
+                             </p> */}
+              </center>
             </div>
           </form>
         </center>

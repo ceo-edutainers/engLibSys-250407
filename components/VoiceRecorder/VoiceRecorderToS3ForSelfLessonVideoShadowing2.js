@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import S3 from 'react-aws-s3'
+// import S3 from 'react-aws-s3'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
 import Recorder from 'recorder-js'
@@ -196,54 +196,88 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
 
   handleaudiofile(ev, dur) {
     const fetchData = async () => {
-      let file = ev
-      let fileName = ev.name
-      let fileType = ev.type
-      let duration = dur
-
       try {
-        var url = DB_CONN_URL + '/sign_s3'
-        const response = await axios.post(url, { fileName, fileType })
+        let file = ev
+        let fileName = ev.name
+        // let fileType = ev.type
+        const fileType = 'audio/mpeg' // 명시적으로 설정 (안전)
+        let duration = dur
 
-        var returnData = response.data.data.returnData
-        var signedRequest = returnData.signedRequest
-        var url = returnData.url
-        var options = {
-          statusCode: 200,
+        // ① presigned URL 요청
+        const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
+          fileName,
+          fileType,
+        })
+
+        const { signedUrl, key, publicUrl } = response.data.data
+
+        // ② R2에 업로드
+        await axios.put(signedUrl, file, {
           headers: {
             'Content-Type': fileType,
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST,GET,PUT',
-            'Access-Control-Allow-Headers': 'Content-Type',
           },
-        }
+        })
+        // ③ 상태 업데이트
+        this.setState({ audio: publicUrl, isRefreshBtn: true })
 
-        const fetchData2 = async () => {
-          try {
-            const result = await axios.put(signedRequest, file, options)
-            this.setState({ audio: url, isRefreshBtn: true })
-            this.getFileFromAws(
-              this.state.mbn,
-              this.state.homework_id,
-              this.state.practiceTempId,
-              this.state.pointStep
-            )
-            this.setState({ showWaitingPopup: false })
-          } catch (error) {
-            alert('送信エラーです。もう一度録音して下さい。1')
-            this.setState({ showWaitingPopup: false })
-          }
-        }
-        fetchData2()
+        // ④ DB에 저장 완료 후 → 리스트 다시 불러오기
+        await this.audioIntoDB(fileName, duration)
+        this.getFileFromAws(
+          this.state.mbn,
+          this.state.homework_id,
+          this.state.practiceTempId,
+          this.state.pointStep
+        )
+
+        this.setState({ showWaitingPopup: false })
       } catch (error) {
+        console.error('업로드 에러:', error)
+        alert('送信エラーです。もう一度録音して下さい---')
         this.setState({ isError: true, showWaitingPopup: false })
-        this.setState({ isError: true })
-        alert('送信エラーです。もう一度録音して下さい。2')
-        return false
       }
+      // try {
+      //   var url = DB_CONN_URL + '/sign_s3'
+      //   const response = await axios.post(url, { fileName, fileType })
 
-      this.setState({ isLoading: false })
-      this.audioIntoDB(fileName, duration)
+      //   var returnData = response.data.data.returnData
+      //   var signedRequest = returnData.signedRequest
+      //   var url = returnData.url
+      //   var options = {
+      //     statusCode: 200,
+      //     headers: {
+      //       'Content-Type': fileType,
+      //       'Access-Control-Allow-Origin': '*',
+      //       'Access-Control-Allow-Methods': 'POST,GET,PUT',
+      //       'Access-Control-Allow-Headers': 'Content-Type',
+      //     },
+      //   }
+
+      //   const fetchData2 = async () => {
+      //     try {
+      //       const result = await axios.put(signedRequest, file, options)
+      //       this.setState({ audio: url, isRefreshBtn: true })
+      //       this.getFileFromAws(
+      //         this.state.mbn,
+      //         this.state.homework_id,
+      //         this.state.practiceTempId,
+      //         this.state.pointStep
+      //       )
+      //       this.setState({ showWaitingPopup: false })
+      //     } catch (error) {
+      //       alert('送信エラーです。もう一度録音して下さい。1')
+      //       this.setState({ showWaitingPopup: false })
+      //     }
+      //   }
+      //   fetchData2()
+      // } catch (error) {
+      //   this.setState({ isError: true, showWaitingPopup: false })
+      //   this.setState({ isError: true })
+      //   alert('送信エラーです。もう一度録音して下さい。2')
+      //   return false
+      // }
+
+      // this.setState({ isLoading: false })
+      // this.audioIntoDB(fileName, duration)
     }
     fetchData()
   }
@@ -266,6 +300,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
         })
       } catch (error) {
         alert('db insert error')
+        alert('録音情報をデータベースに保存できませんでした。')
       }
     }
     fetchData3()
@@ -282,22 +317,26 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
           who_record: 'student',
           currentStep: pointStep,
         })
+        // alert(url + ' / ' + mbn + ' / ' + homework_id + ' / ' + practiceTempId)
+
+        console.log('🎯 TEST-서버 응답:', response.data)
 
         if (!response.data.status) {
-          alert(response.data.message)
+          alert('⚠️ TEST-서버 응답 오류: ' + response.data.message)
         } else {
           this.setState({
             recordFileList: response.data.result,
             recordListView: true,
           })
+          console.log('📋 TEST-받아온 리스트:', response.data.result)
         }
       } catch (error) {
-        alert('db insert error')
+        alert('❌ API 호출 에러 발생')
+        console.error('🧨 getFileFromAws 에러:', error)
       }
     }
     fetchData4()
   }
-
   handleViewList = (value) => {
     this.setState({
       recordListView: value,

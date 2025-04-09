@@ -248,13 +248,13 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     fetchData()
   }
   audioIntoDB = async (fileName, duration) => {
-    console.log('FILE-TEST-fileName:', fileName)
-    console.log('FILE-TEST-length_second:', duration)
-    console.log('FILE-TEST-mbn', this.state.mbn)
-    console.log('FILE-TEST-homework_id', this.state.homework_id)
-    console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
-    console.log('FILE-TEST-pointStep', this.state.pointStep)
-    console.log('FILE-TEST-record_comment', this.state.record_comment)
+    // console.log('FILE-TEST-fileName:', fileName)
+    // console.log('FILE-TEST-length_second:', duration)
+    // console.log('FILE-TEST-mbn', this.state.mbn)
+    // console.log('FILE-TEST-homework_id', this.state.homework_id)
+    // console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
+    // console.log('FILE-TEST-pointStep', this.state.pointStep)
+    // console.log('FILE-TEST-record_comment', this.state.record_comment)
     try {
       await axios.post(DB_CONN_URL + '/member-record', {
         mbn: this.state.mbn,

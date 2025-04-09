@@ -275,7 +275,6 @@ function MainMenuSH() {
 
         {shadowingLevel == 'START' && (
           <>
-            {' '}
             <div
               className="col-lg-12 col-md-12"
               style={{ textAlign: 'center' }}
