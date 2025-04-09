@@ -151,7 +151,7 @@ function App() {
 
       // ② R2 presigned URL 요청
       const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-        fileName: `uploadhw/${newfilename}`, // 경로를 'uploadhw/'로 설정
+        fileName: `${newfilename}`, // 경로를 'uploadhw/'로 설정
         fileType: file.type,
       })
 
