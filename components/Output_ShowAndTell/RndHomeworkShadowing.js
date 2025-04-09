@@ -8,6 +8,8 @@ import { myFun_getYoutubeID } from '@/components/FunctionComponent'
 
 const RndHomeworkShadowing = ({ homework_id }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+
   const [hwInfo, setHwInfo] = useState([])
   const [rndWidth1, setRndWidth1] = useState(300)
   const [rndHeight1, setRndHeight1] = useState(60)
@@ -112,9 +114,11 @@ const RndHomeworkShadowing = ({ homework_id }) => {
 
         <div className="mt-3 p-4" style={{ overflow: 'scroll' }}>
           {hwInfo.map((val, key) => {
-            var imgSrc =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              val.fileName
+            // var imgSrc =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   val.fileName
+
+            var imgSrc = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
             return (
               <>
                 {' '}

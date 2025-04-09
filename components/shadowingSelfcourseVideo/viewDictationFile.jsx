@@ -20,6 +20,7 @@ import {
 // import S3 from 'react-aws-s3'
 const viewDictationFile = ({ currentStep, stepStatus }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [mindmapView, setMindmapView] = useState(false) //IdeaView
   const [fileBookQuestion, setFileBookQuestion] = useState([])
   const [isFileAru, setIsFileAru] = useState(false)
@@ -178,9 +179,10 @@ const viewDictationFile = ({ currentStep, stepStatus }) => {
         {mindmapView &&
           isFileAru &&
           fileBookQuestion.map((val, key) => {
-            var uploadfile =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              val.fileName
+            // var uploadfile =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   val.fileName
+            var uploadfile = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
             return (
               <>
                 <p>

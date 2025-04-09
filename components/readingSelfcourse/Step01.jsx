@@ -425,7 +425,7 @@ const Step1B = () => {
                 nextStep
               )
             } else {
-              //alert('次のステップに行くためには録音をしてください。')
+              // alert('次のステップに行くためには録音をしてください。')
               setIsGoNextPage(false)
               setIsCantGoNextPage(true)
 
@@ -455,6 +455,12 @@ const Step1B = () => {
         var step = nextStep
         var pti = practiceTempId
         var url = DB_CONN_URL + '/reg-sys-hw-history/'
+        console.log('2TEST-url: ', url)
+        console.log('2-TEST:front-myMbn', myMbn)
+        console.log('2-TEST:front-homework_id', homework_id)
+        console.log('2-TEST:front-step', step)
+        console.log('2-TEST:front-pti', pti)
+        console.log('2-TEST:front-thisSubject', thisSubject)
         axios
           .post(url, {
             mbn: myMbn,
@@ -464,6 +470,16 @@ const Step1B = () => {
             thisSubject: thisSubject,
           })
           .then((response) => {
+            console.log('2TEST-message: ', response.data.message)
+            console.log('2TEST-status: ', response.data.status)
+            console.log('2TEST-mbn: ', response.data.mbn)
+            console.log('2TEST-homework_id: ', response.data.homework_id)
+            console.log('2TEST-step: ', response.data.step)
+            console.log('2TEST-practiceTempId: ', response.data.practiceTempId)
+            console.log('2TEST-thisSubject: ', response.data.thisSubject)
+            console.log('2TEST-NowRegdate: ', response.data.NowRegdate)
+            console.log('2TEST-NowRegtime: ', response.data.NowRegtime)
+
             if (!response.data.status) {
             } else {
               setPageView(nextStep)

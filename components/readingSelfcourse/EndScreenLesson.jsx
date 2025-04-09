@@ -19,6 +19,7 @@ const EndScreen = () => {
   const sB = query.sB //subject
   // alert(cS)
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const router = useRouter() //使い方：router.replace('/')
   //////////////////////////////////////////////
   //BASIC SETTING NEED START
@@ -129,6 +130,7 @@ const EndScreen = () => {
       })
       .then((response) => {
         if (!response.data.status) {
+          console.log('TEST-message-Endscreen:', response.date.message)
           // alert(response.data.message) //for test
           //alert('ポイントゲット!!!')
           // console.log('##pointKeyNum', pointKeyNum)
@@ -223,9 +225,11 @@ const EndScreen = () => {
       try {
         const response = await axios.get(Url)
 
-        var awsUrl =
-          'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-          response.data[0].filaname
+        // var awsUrl =
+        //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+        //   response.data[0].filaname
+
+        var awsUrl = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${response.data[0].filaname}`
 
         setFirstLastRecording(response.data)
         setFirstRecordFile(awsUrl + response.data[0].filename)
@@ -515,9 +519,12 @@ const EndScreen = () => {
             {firstLastRecording.map((val, key) => {
               var diff = totalLastPoint - cutlinePointToNextStory
 
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
+
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
+
               return (
                 <>
                   <h6>
@@ -553,11 +560,34 @@ const EndScreen = () => {
                 </p>
               </button>
             </div> */}
-
             <div style={{ display: levelChangeView ? 'block' : 'none' }}>
               <LevelChange />
-            </div>
-            <div
+            </div>{' '}
+            {cN == 'CourseB' && (
+              <div
+                className="col-lg-12 col-md-12 p-3"
+                style={{
+                  border: '5px solid #E59866',
+                  borderRadius: '10px',
+                  color: '#2C3E50',
+                  textAlign: 'left',
+                }}
+              >
+                <span
+                  className="btn btn-warning"
+                  style={{
+                    fontSize: '20px',
+                    color: 'white',
+                    marginBottom: '10px',
+                  }}
+                >
+                  <a href={answerFile} target="_blank">
+                    チャプターの問題の解答をダウンロード
+                  </a>
+                </span>{' '}
+              </div>
+            )}
+            {/* <div
               className="col-lg-12 col-md-12 p-3"
               style={{
                 border: '5px solid #E59866',
@@ -574,8 +604,8 @@ const EndScreen = () => {
                     fontWeight: 'bold',
                     marginBottom: 0,
                   }}
-                >
-                  {/* 問題課題提出&nbsp;&nbsp;
+                > */}
+            {/* 問題課題提出&nbsp;&nbsp;
                   {cS == 'LESSON' && (
                     <p>
                       <ruby>
@@ -640,26 +670,12 @@ const EndScreen = () => {
                       してください。
                     </p>
                   )} */}
-                  {/* <span style={{ fontSize: '15px' }}>
+            {/* <span style={{ fontSize: '15px' }}>
                     <a>問題サンプルを見る</a>
                   </span> */}
-                  {cN == 'CourseB' && (
-                    <span
-                      className="btn btn-warning"
-                      style={{
-                        fontSize: '20px',
-                        color: 'white',
-                        marginBottom: '10px',
-                      }}
-                    >
-                      <a href={answerFile} target="_blank">
-                        チャプターの問題の解答をダウンロード
-                      </a>
-                    </span>
-                  )}
-                  {/* <p>{qrLinkBookQuestion}</p> */}
-                </h1>
-                {/* <p
+            {/* <p>{qrLinkBookQuestion}</p> */}
+            {/* </h1> */}
+            {/* <p
                   style={{
                     border: '0.1em solid #b0c4de',
                     borderRadius: '10px',
@@ -677,7 +693,7 @@ const EndScreen = () => {
                     (QRコードをスマホで読み込んでください。)
                   </p>
                 </p> */}
-                {/* <p style={{ color: 'red', fontSize: '15px' }}>
+            {/* <p style={{ color: 'red', fontSize: '15px' }}>
                   {cS == 'SELF' && (
                     <span>
                       課題を提出しなくても次の課題に進むことは可能ですが、
@@ -687,15 +703,14 @@ const EndScreen = () => {
                   1枚アップロードで5Pointゲットできますので、
                   課題提出をお勧めします。
                 </p> */}
-              </center>
-              {cN == 'CourseB' && (
+            {/* </center> */}
+            {/* {cN == 'CourseB' && (
                 <span>
                   テキストの中の問題(本によってはチャプター毎の終わり、または本の巻末にまとめてあります)は、
                   テキストに直接書いてください。問題を解いた後は、間違えを赤ペンで必ず直し、その写真を撮ってアップロードしてください。
                 </span>
-              )}
-
-              {/* <Upload
+              )} */}
+            {/* <Upload
                 // mbn={myMbn}
                 // homework_id={HWID}
                 currentStep="Endscreen"
@@ -704,12 +719,11 @@ const EndScreen = () => {
                 homework_id={HWID}
                 copyHW={copyHW}
               /> */}
-
-              <ViewBookQuestionFile
+            {/* <ViewBookQuestionFile
                 currentStep="Endscreen"
                 stepStatus="BookQuestion"
-              />
-            </div>
+              /> */}
+            {/* </div> */}
             <div className="col-lg-12 col-md-12">
               <Link href="mytopGroup">
                 <span

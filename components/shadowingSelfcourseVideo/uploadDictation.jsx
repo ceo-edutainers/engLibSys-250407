@@ -264,11 +264,15 @@ function Upload({
                 width: '100%',
               }}
             >
+              {/* {' '}
+              <br />
+              <br />
+              <br />
+              <p>{qrcodeUrl}</p> */}
               <div
                 className="col-lg-2 col-md-12 pt-1"
                 style={{ textAlign: 'center' }}
               >
-                {/* <p>{qrcodeUrl}</p> */}
                 <QRCode value={qrcodeUrl} size="100" />
               </div>
               <div
