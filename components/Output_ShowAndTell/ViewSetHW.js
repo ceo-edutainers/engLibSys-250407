@@ -184,54 +184,97 @@ const ViewSetHW = ({
   //processing popup
   const [processingPopup, setProcessingPopup] = useState(false)
 
+  // useEffect(() => {
+  //   dbMemberSetInfo()
+  // }, [mbn, subject])
+
+  // function dbMemberSetInfo() {
+  //   // var subject = 'READING'
+
+  //   var Url = DB_CONN_URL + '/get-member-set-info/' + mbn + '&' + subject
+  //   // alert(Url)
+  //   const fetchData2 = async () => {
+  //     try {
+  //       axios.get(Url).then((response) => {
+  //         alert('Url:' + Url)
+  //         // alert('message' + response.data.message)
+  //         if (response.data.length > 0) {
+
+  //           setDataMemberSetInfo(response.data)
+  //           setTodayHwReadingTextBook(response.data[0].textbookName)
+  //           setSelectedReadingTextbook(response.data[0].textbookName)
+  //           setTodayHwReadingLevel(response.data[0].courseLevel)
+  //           setSelectedReadingLevel(response.data[0].courseLevel)
+  //           setTodayHwReadingCourseName(response.data[0].courseName)
+  //           setTodayEnglibLevel(response.data[0].englibLevel)
+
+  //           setMainSubject(response.data[0].subject)
+
+  //           //Get Reading Info
+  //           var cN = response.data[0].courseName
+  //           var rL = response.data[0].courseLevel
+
+  //           if (subject == 'READING') {
+  //             getReadingInfo(cN, rL)
+  //             getReadingALlLevelInfo(cN, rL)
+  //           }
+
+  //           getShadowingLevelInfo()
+  //           getShadowingBookLevelInfo()
+
+  //         }
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData2()
+  // }
+
   useEffect(() => {
-    dbMemberSetInfo()
+    if (mbn && subject) {
+      dbMemberSetInfo()
+    } else {
+      console.log('mbn or subject is undefined')
+    }
   }, [mbn, subject])
 
   function dbMemberSetInfo() {
-    // var subject = 'READING'
-
     var Url = DB_CONN_URL + '/get-member-set-info/' + mbn + '&' + subject
+    console.log('Url:', Url) // Url이 잘 생성되는지 확인
+
     const fetchData2 = async () => {
       try {
-        axios.get(Url).then((response) => {
-          // alert(Url)
-          // alert('length' + response.data.length)
-          if (response.data.length > 0) {
-            // alert('dbMemberSetInfo')
-            setDataMemberSetInfo(response.data)
-            setTodayHwReadingTextBook(response.data[0].textbookName)
-            setSelectedReadingTextbook(response.data[0].textbookName)
-            setTodayHwReadingLevel(response.data[0].courseLevel)
-            setSelectedReadingLevel(response.data[0].courseLevel)
-            setTodayHwReadingCourseName(response.data[0].courseName)
-            setTodayEnglibLevel(response.data[0].englibLevel)
+        const response = await axios.get(Url)
+        alert('Url: ' + Url)
 
-            setMainSubject(response.data[0].subject)
+        if (response.data.length > 0) {
+          setDataMemberSetInfo(response.data)
+          setTodayHwReadingTextBook(response.data[0].textbookName)
+          setSelectedReadingTextbook(response.data[0].textbookName)
+          setTodayHwReadingLevel(response.data[0].courseLevel)
+          setSelectedReadingLevel(response.data[0].courseLevel)
+          setTodayHwReadingCourseName(response.data[0].courseName)
+          setTodayEnglibLevel(response.data[0].englibLevel)
 
-            //Get Reading Info
-            var cN = response.data[0].courseName
-            var rL = response.data[0].courseLevel //reading level
+          setMainSubject(response.data[0].subject)
 
-            // alert('courseName' + response.data[0].courseName)
+          var cN = response.data[0].courseName
+          var rL = response.data[0].courseLevel
 
-            if (subject == 'READING') {
-              getReadingInfo(cN, rL) //setReadingListInfo
-              getReadingALlLevelInfo(cN, rL)
-            }
-
-            getShadowingLevelInfo()
-            getShadowingBookLevelInfo()
-
-            // var phLO = response.data[0].phonicsLessonOrder
-            // getPhonicsInfo(phLO)
-            // getConversationInfo()
+          if (subject === 'READING') {
+            getReadingInfo(cN, rL)
+            getReadingALlLevelInfo(cN, rL)
           }
-        })
+
+          getShadowingLevelInfo()
+          getShadowingBookLevelInfo()
+        }
       } catch (error) {
         console.log(error)
       }
     }
+
     fetchData2()
   }
 
@@ -632,6 +675,7 @@ const ViewSetHW = ({
 
   //All Reading Stories of this book
   function getReadingInfo(cN, rL) {
+    alert('here')
     // alert('cL' + cN)
     // alert('rL' + rL)
     var readingLevel = rL
@@ -659,13 +703,13 @@ const ViewSetHW = ({
       // var seriesName = 'Oxford Reading Tree'
       var Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
     }
-    // alert('Url:' + Url)
 
     const fetchData = async () => {
       try {
         axios.get(Url).then((response) => {
           // alert('length' + response.data.length)
           // alert('1')
+          alert(response.data.message)
           if (response.data.length > 0) {
             setReadingListInfo(response.data.response)
             if (
@@ -735,6 +779,7 @@ const ViewSetHW = ({
     // var bookNum = bN
     // var storyNum = sN
     // var courseName = cN
+    alert('11111')
 
     if (cN.indexOf('CourseA') !== -1) {
       // var seriesName = 'Reading Triumphs'

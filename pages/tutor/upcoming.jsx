@@ -711,7 +711,7 @@ const Upcoming = () => {
           }
         }
       } catch (error) {
-        alert('error-1')
+        alert('error-1 upcoming')
       }
     }
     howManyLessonComma()

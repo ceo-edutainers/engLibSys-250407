@@ -10,6 +10,7 @@ const LoginFormNewGroup = () => {
     console.log('DB_CONN_URL', DB_CONN_URL)
     console.log('✅ API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
   }, [])
+
   const [email, setEmail] = useState('') //login入力時
 
   const [password, setPassword] = useState('') //login入力時
@@ -19,9 +20,7 @@ const LoginFormNewGroup = () => {
 
   const submitlogin = () => {
     var url = DB_CONN_URL + '/loginBtoB'
-
-    // alert(email)
-    // alert(password)
+    console.log('TEST-Request URL:', url) // 요청 URL을 로그에 출력
     axios
       .post(url, {
         email: email,
@@ -30,9 +29,10 @@ const LoginFormNewGroup = () => {
 
       .then((response) => {
         if (!response.data.auth) {
-          console.log('err-response in LoginFormNEw', response)
+          console.log('TEST-err-response in LoginFormNEw', response)
           alert(response.data.message)
         } else {
+          alert(response.data.message)
           //console.log('submit-login-ok-response in LoginFormNEw', response.data)
           setLoginStatus(true)
           localStorage.setItem('token', response.data.token)
@@ -69,6 +69,7 @@ const LoginFormNewGroup = () => {
 
           router.replace('/mytopGroup') // ここでリダイレクト
         }
+        console.log('TEST-Response:', response) // 응답 데이터 로그
       })
   }
 

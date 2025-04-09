@@ -1984,14 +1984,14 @@ const READINGA = () => {
               />
             ) : (
               <>
-                <ViewSetHW
+                {/* <ViewSetHW
                   mbn={mbn}
                   name_eng={nameEng}
                   tbn={tbn}
                   teacher_name={tutorNameEng}
                   homework_id={homework_id}
                   subject={subJ}
-                />
+                /> */}
               </>
             )}
           </div>

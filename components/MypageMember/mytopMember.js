@@ -56,6 +56,23 @@ function App() {
           var Url = url + mbn
           const response = await axios.get(Url)
 
+          // 데이터가 있는지 확인 후 접근
+          if (response.data && response.data.length > 0) {
+            var yoyakuDate = response.data[0].yoyakuDate
+            var yoyakuTime = response.data[0].yoyakuTime
+
+            // 추출한 값이 정상적으로 잘 들어왔는지 로그 확인
+            console.log(
+              'TEST-예약 날짜:',
+              yoyakuDate,
+              'TEST-예약 시간:',
+              yoyakuTime
+            )
+          } else {
+            // 데이터가 없을 경우 처리
+            console.log('TEST-데이터가 없습니다.')
+          }
+
           var yoyakuDate = response.data[0].yoyakuDate
           var yoyakuTime = response.data[0].yoyakuTime
 
