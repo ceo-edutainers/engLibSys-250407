@@ -184,7 +184,7 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
             return (
               <>
                 <p style={{ textAlign: 'center' }}>
-                  {uploadfile}
+                  {/* {uploadfile} */}
                   <img
                     src={uploadfile}
                     style={{
