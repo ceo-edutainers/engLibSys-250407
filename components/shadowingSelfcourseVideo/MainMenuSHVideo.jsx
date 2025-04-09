@@ -95,21 +95,21 @@ function MainMenuSH() {
           //その２）holdingをチェックしてあったらそのstepに行く
           var url = DB_CONN_URL + '/get-step-sys-hw-history-holding/'
           var Url = url + myMbn + '&' + homework_id + '&' + thisSubject
-          alert(Url)
+          // alert(Url)
           const fetchData2 = async () => {
             try {
               const response = await axios.get(Url)
-              alert(response.data.message)
+              // alert(response.data.message)
               console.log('TEST:response.data.message', response.data.message)
               if (response.data.length > 0) {
                 //holdingではない場合、Step1は終わってるので、step2へへ行く。
                 var thisStep = 'StepSH2'
                 practiceStart(thisStep)
                 // console.log('thisStep2:', thisStep)
-                alert('2')
+                // alert('2')
                 // }
               } else {
-                alert('1')
+                // alert('1')
               }
 
               // practiceStart(thisStep)

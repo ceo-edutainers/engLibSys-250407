@@ -454,6 +454,7 @@ const EndScreen = () => {
                       </span>
                     )}
                     &nbsp;
+                    {audioFile}
                     <audio
                       src={audioFile}
                       controls="controls"
