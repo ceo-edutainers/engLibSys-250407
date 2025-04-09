@@ -404,7 +404,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                       padding: '10px',
                     }}
                   >
-                    <p>{qrLinkBookQuestion}</p>
+                    {/* <p>{qrLinkBookQuestion}</p> */}
 
                     <QrcodeGenerator
                       url={qrLinkBookQuestion}
