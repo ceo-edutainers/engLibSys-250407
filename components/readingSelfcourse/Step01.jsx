@@ -407,15 +407,16 @@ const Step1B = () => {
       var homework_id = HWID
       var url = DB_CONN_URL + '/record-select-step/'
       var Url = url + step + '&' + homework_id + '&' + practiceTempId
-
+      console.log('TEST-Step01.jsx: ', Url)
       const fetchData = async () => {
         try {
           // const response =
           await axios.get(Url).then((response) => {
+            console.log('TEST-message: ', response.data.message)
             if (response.data.length >= leastRecordCount) {
               var stepStatus = 'end'
               var nextStep = 'Step2B'
-
+              console.log('TEST-Length: ', response.data.length)
               hwHistoryUpdate(
                 currentStep,
                 stepStatus,

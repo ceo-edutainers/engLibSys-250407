@@ -695,7 +695,7 @@ const EndScreen = () => {
                 </span>
               )}
 
-              <Upload
+              {/* <Upload
                 // mbn={myMbn}
                 // homework_id={HWID}
                 currentStep="Endscreen"
@@ -703,10 +703,7 @@ const EndScreen = () => {
                 pointKeyNum="RR-4"
                 homework_id={HWID}
                 copyHW={copyHW}
-
-                // practiceTempId={practiceTempId}
-                // thisSubject={thisSubject}
-              />
+              /> */}
 
               <ViewBookQuestionFile
                 currentStep="Endscreen"

@@ -10,6 +10,8 @@ import MonsterGet from '@/components/Tutor/MonsterGet'
 import MyCalendarFromScratch from '@/components/MyCalendarFromScratch/MyCalendarFromScratch'
 const RndStudyHistory = ({ homework_id, mbn, courseName }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+
   const [bookUrl, setBookUrl] = useState()
 
   const [rndSwWidth1, setRndSwWidth1] = useState(300)
@@ -179,13 +181,16 @@ const RndStudyHistory = ({ homework_id, mbn, courseName }) => {
                 {firstLastRecording.map((val, key) => {
                   // var diff = totalLastPoint - cutlinePointToNextStory
 
-                  var audioFile =
-                    'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                    val.filename
+                  // var audioFile =
+                  //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+                  //   val.filename
+
+                  var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
                   return (
                     <>
                       <h6>
                         {/* {key == 0 ? '1.' : '2.'} */}
+
                         <audio
                           src={audioFile}
                           controls="controls"
@@ -213,13 +218,16 @@ const RndStudyHistory = ({ homework_id, mbn, courseName }) => {
             {firstLastRecordingSH.map((val, key) => {
               // var diff = totalLastPoint - cutlinePointToNextStory
 
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
+
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
               return (
                 <>
                   <h6>
                     {/* {key == 0 ? '1.' : '2.'} */}
+
                     <audio
                       src={audioFile}
                       controls="controls"
