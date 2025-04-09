@@ -469,25 +469,20 @@ function MainMenuB() {
                           </span>
                         </a>
                         <p>
-                          {/* ①上記のボタンを押して「Oxford Reading
+                          ①上記のボタンを押して「Oxford Reading
                           Club」にログインします。
                           <br />
                           ②この画面の上に見える本のタイトルを「Oxford Reading
                           Club」で検索し、
                           <img src="/images/orc-view.png" width="20px" />
                           を押してそのタイトルのストーリーが見える状態にします。
-                          <br />
-                          ③ */}
-                          <br />
-                          <br />
-                          {/* 以下の「Start
-                          Reading」ボタンを押して学習をスタートします。 */}
-
-                          <p style={{ color: 'black', fontWeight: 'bold' }}>
+                          <br />③ 以下の「Start
+                          Reading」ボタンを押して学習をスタートします。
+                          {/* <p style={{ color: 'black', fontWeight: 'bold' }}>
                             現在、録音機能がまだ復旧できてない状況ですので、手元にある教材で練習を行なってください。
                           </p>
                           <br />
-                          <br />
+                          <br /> */}
                         </p>
                       </p>
                     </>

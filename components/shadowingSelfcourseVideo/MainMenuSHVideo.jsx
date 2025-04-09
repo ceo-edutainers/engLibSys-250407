@@ -207,7 +207,25 @@ function MainMenuSH() {
         className="MenuBig p-3"
         style={{ backgroundColor: '#F5B041', color: 'white', height: 'auto' }}
       >
-        <div className="col-lg-12 col-md-12" style={{ textAlign: 'center' }}>
+        {' '}
+        <div
+          className="col-lg-12 col-md-12 mb-0"
+          style={{ textAlign: 'center' }}
+        >
+          <Link href="/mytopGroup">
+            <span
+              className="btn btn-info"
+              style={{
+                fontWeight: '900',
+                color: 'white',
+                cursor: 'pointer',
+              }}
+            >
+              トップページへ戻る
+            </span>
+          </Link>
+        </div>
+        {/* <div className="col-lg-12 col-md-12" style={{ textAlign: 'center' }}>
           <Link href="/mytopGroup">
             <span
               className="btn btn-info"
@@ -264,15 +282,13 @@ function MainMenuSH() {
               style={{ marginBottom: '10px' }}
             ></iframe>
           )}
-        </div>
+        </div> */}
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           {/* {seriesName} */}
         </h1>
-
         <h3 className="mb-3" style={{ color: 'white' }}>
           {courseLevel}
         </h3>
-
         {shadowingLevel == 'START' && (
           <>
             <div
@@ -317,7 +333,6 @@ function MainMenuSH() {
             </button>
           </>
         )}
-
         {qrLinkVideoDictation && shadowingLevel != 'START' && (
           <>
             <div

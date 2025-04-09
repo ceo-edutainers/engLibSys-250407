@@ -476,6 +476,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
               // var audioFile =
               //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
               //   val.filename
+              const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
               var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
 
               return (
