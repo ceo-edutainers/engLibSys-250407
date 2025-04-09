@@ -4,10 +4,6 @@ import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import { useRouter } from 'next/router'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { myFun_addZero } from '../FunctionComponent'
-import withReactContent from 'sweetalert2-react-content'
 
 function App() {
   const [mbn, setMyMbn] = useState()
