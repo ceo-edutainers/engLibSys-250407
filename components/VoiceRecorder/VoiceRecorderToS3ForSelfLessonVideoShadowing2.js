@@ -282,28 +282,49 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     fetchData()
   }
 
-  audioIntoDB = (fileName, duration) => {
-    var rc = this.state.record_comment
-    const fetchData3 = async () => {
-      try {
-        var url = DB_CONN_URL + '/member-record'
-        const response = await axios.post(url, {
-          mbn: this.state.mbn,
-          fileName,
-          homework_id: this.state.homework_id,
-          practiceTempId: this.state.practiceTempId,
-          step: this.state.pointStep,
-          record_comment: rc,
-          who_record: 'student',
-          when_record: 'homework',
-          length_second: duration,
-        })
-      } catch (error) {
-        alert('db insert error')
-        alert('録音情報をデータベースに保存できませんでした。')
-      }
+  //2025-04-10 backup code
+  // audioIntoDB = (fileName, duration) => {
+  //   var rc = this.state.record_comment
+  //   const fetchData3 = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/member-record'
+  //       const response = await axios.post(url, {
+  //         mbn: this.state.mbn,
+  //         fileName,
+  //         homework_id: this.state.homework_id,
+  //         practiceTempId: this.state.practiceTempId,
+  //         step: this.state.pointStep,
+  //         record_comment: rc,
+  //         who_record: 'student',
+  //         when_record: 'homework',
+  //         length_second: duration,
+  //       })
+  //     } catch (error) {
+  //       alert('db insert error')
+  //       alert('録音情報をデータベースに保存できませんでした。')
+  //     }
+  //   }
+  //   fetchData3()
+  // }
+
+  audioIntoDB = async (fileName, duration) => {
+    try {
+      var url = DB_CONN_URL + '/member-record'
+      const response = await axios.post(url, {
+        mbn: this.state.mbn,
+        fileName,
+        homework_id: this.state.homework_id,
+        practiceTempId: this.state.practiceTempId,
+        step: this.state.pointStep,
+        record_comment: this.state.record_comment,
+        who_record: 'student',
+        when_record: 'homework',
+        length_second: duration,
+      })
+    } catch (error) {
+      alert('録音情報をデータベースに保存できませんでした。')
+      console.error(error)
     }
-    fetchData3()
   }
 
   getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
