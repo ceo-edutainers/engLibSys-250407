@@ -209,12 +209,8 @@ const READINGA = () => {
   const sendEmailtoAbsentStudent = () => {
     setIsSendEmailToAbsentStudent(false)
     setIsCheckedAbsentBtn(true)
-    // if (!sendEmail || !studentNameEng) {
-    //   alert('The email information has not been loaded yet. Please try again.')
-    //   return
-    // } else {
-    //   alert('success')
-    // }
+    // alert(process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID)
+
     var templateParams = {
       to_admin: 'online-help@edutainers.jp',
       to_email: sendEmail,
@@ -230,8 +226,8 @@ const READINGA = () => {
     }
 
     // env環境設定=next.config.js
-    const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
-    const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
+    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID
+    const YOUR_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_USER_ID
     const YOUR_TEMPLATE_ID_to_student = 'template_gxxau1a'
     const YOUR_TEMPLATE_ID_to_admin = 'template_s3mzdps'
 
@@ -310,10 +306,10 @@ const READINGA = () => {
     }
 
     // env環境設定=next.config.js
-    // const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
-    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_YOUR_SERVICE_ID
-    // const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
-    const YOUR_USER_ID = process.env.NEXT_PUBLIC_YOUR_USER_ID
+    // const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID
+    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID
+    // const YOUR_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_USER_ID
+    const YOUR_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_USER_ID
     const YOUR_TEMPLATE_ID_to_student = 'template_rggl66c'
     const YOUR_TEMPLATE_ID_to_admin = 'template_09netzr'
 
@@ -727,61 +723,6 @@ const READINGA = () => {
             >
               Back
             </span>
-            {/* {troubleShootView ? (
-              <>
-                <span
-                  className="btn btn-danger ml-3"
-                  onClick={() => {
-                    setTroubleShootView(!troubleShootView)
-                    // handleClear()
-                  }}
-                >
-                  Trouble
-                </span>
-              </>
-            ) : (
-              <>
-                <span
-                  className="btn btn-secondary ml-3"
-                  onClick={() => {
-                    setTroubleShootView(!troubleShootView)
-
-                    // handleClear()
-                  }}
-                >
-                  {' '}
-                  Trouble
-                </span>
-              </>
-            )} */}
-            {/* {prolongLessonView ? (
-              <>
-                <span
-                  className="btn btn-danger ml-3"
-                  onClick={() => {
-                    // setProlongLesson(!prolongLesson)
-                    setProlongLessonView(!prolongLessonView)
-                  }}
-                >
-                 
-                  REPORT EXTENDED TIME
-                </span>
-              </>
-            ) : (
-              <>
-                <span
-                  className="btn btn-secondary ml-3"
-                  onClick={() => {
-                    // setProlongLesson(!prolongLesson)
-                    setProlongLessonView(!prolongLessonView)
-                    // handleClear()
-                  }}
-                >
-                  {' '}
-                  REPORT EXTENDED TIME
-                </span>
-              </>
-            )} */}
             {!isCheckedAbsentBtn ? (
               <span
                 className="btn btn-danger ml-3"

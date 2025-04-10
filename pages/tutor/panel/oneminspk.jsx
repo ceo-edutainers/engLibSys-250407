@@ -223,8 +223,8 @@ const READINGA = () => {
     }
 
     // env環境設定=next.config.js
-    const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
-    const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
+    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID
+    const YOUR_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_USER_ID
     const YOUR_TEMPLATE_ID_to_student = 'template_gxxau1a'
     const YOUR_TEMPLATE_ID_to_admin = 'template_s3mzdps'
 
@@ -303,8 +303,8 @@ const READINGA = () => {
     }
 
     // env環境設定=next.config.js
-    const YOUR_SERVICE_ID = process.env.REACT_APP_YOUR_SERVICE_ID
-    const YOUR_USER_ID = process.env.REACT_APP_YOUR_USER_ID
+    const YOUR_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_SERVICE_ID
+    const YOUR_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_YOUR_USER_ID
     const YOUR_TEMPLATE_ID_to_student = 'template_rggl66c'
     const YOUR_TEMPLATE_ID_to_admin = 'template_09netzr'
 
