@@ -1305,6 +1305,8 @@ const ViewSetHW = ({
             // alert(response.data.message)
             // alert(response.data.nextLessonDate)
             var nextLessonDate = response.data.nextLessonDate
+            // console.log('HERE-nextLessonDate', nextLessonDate)
+            // console.log('HERE-sort', sort)
             if (mainSubject == 'READING') {
               saveNewHW(nextLessonDate, sort)
             } else if (
@@ -1326,8 +1328,11 @@ const ViewSetHW = ({
   function saveNewHW(nextLessonDate, sort) {
     setProcessingPopup(true)
 
+    // alert(nextLessonDate)
+    // alert(sort)
     var nn = nextLessonDate
-
+    // alert('sort', sort)
+    // return false
     // alert(nn)
     //sort: new or modify
     setIsFinishThisLesson(false)
@@ -1350,6 +1355,7 @@ const ViewSetHW = ({
       var oneMoreShadowing = 'no'
     }
 
+    // alert(sort)
     if (selectedReadingTextbook == 'Reading Triumphs') {
       var newMainCourse = 'CourseA'
     } else if (selectedReadingTextbook == 'Blackcat Series') {
@@ -1403,12 +1409,13 @@ const ViewSetHW = ({
             lessonMemoForMom: lessonMemoForMom,
           })
           .then((response) => {
+            // alert(response.data.message)
             if (response.data.message != 'Success') {
               // alert(
               //   'Some error occurred when setting the homework  ' +
               //     response.data.message
               // )
-              alert(JSON.stringify(response.data.error, null, 2))
+              // alert(JSON.stringify('1:', response.data.error, null, 2))
 
               console.log('TEST-error:', response.data.error)
             } else {
@@ -3124,7 +3131,7 @@ const ViewSetHW = ({
                               // setIsSetTheSameHW(true)
                             }}
                           >
-                            <b>No Show</b>
+                            <b>No Show H.W</b>
                             <p
                               style={{
                                 fontSize: '15px',
