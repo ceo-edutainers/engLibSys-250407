@@ -83,10 +83,53 @@ const LoginFormNewGroup = () => {
     <div className="container">
       <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
         <h1 className="text-2xl font-bold mb-4 text-center">
-          ログインの前に
+          重要なお知らせ：システム復旧に関するおしらせ
           <br />
-          以下の内容を必ずご確認してください。
+          <h2>以下の内容を必ずご確認してください。</h2>
         </h1>
+      </div>
+
+      <div className="pt-5">
+        <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
+          <h2 className="text-xl font-semibold mb-2">
+            【現時点でご利用可能な機能】
+          </h2>
+          <ul className="list-disc ml-6 mb-4">
+            <li>リーディング：全ての機能をご利用いただけます。</li>
+            <li>シャドーイング： 全ての機能をご利用いただけます。</li>
+          </ul>
+
+          <h2 className="text-xl font-semibold mb-2">
+            【Show and Tell コースをご受講中の方】
+          </h2>
+          <li>
+            Show and Tell → 本日(4/10)中に復旧作業が完了される予定です。Show and
+            Tellに参加中の生徒さんには改めてご連絡いたします。
+          </li>
+          <p className="mb-4">
+            課題文章はパソコンのテキストエディタ等に保存の上、レッスン前までに以下のメールアドレス宛に送信をお願いいたします：
+            <strong>online-help@edutainers.jp</strong>
+          </p>
+
+          <h2 className="text-xl font-semibold mb-2">
+            【Monsterの付与について】
+          </h2>
+          <p className="mb-4">
+            システム復旧後、対象の生徒様にMonster（ポイント）を正しく付与させていただきます。
+          </p>
+
+          <p className="mt-6">
+            皆様にはご不便をおかけし誠に申し訳ございません。安全を最優先に対応を進めてまいりますので、
+            引き続きどうぞよろしくお願いいたします。
+          </p>
+
+          <div className="mt-4 text-sm text-gray-600">
+            <p>
+              <strong>englibサポートチーム</strong>
+            </p>
+            <p>📧：online-help@edutainers.jp</p>
+          </div>
+        </div>
       </div>
       <div className="row mt-5">
         <div className="col-lg-12 col-md-12  text-center">
@@ -145,90 +188,6 @@ const LoginFormNewGroup = () => {
             <h2 style={{ fontWeight: 'bold', fontSize: '15px' }}>
               BEN by engLib
             </h2>
-          </div>
-        </div>
-      </div>
-      <div className="pt-5">
-        <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
-          <h1 className="text-2xl font-bold mb-4">
-            重要なお知らせ：システム一時停止のお知らせとレッスン参加方法について
-          </h1>
-          <p className="mb-4">
-            平素よりenglibをご利用いただき、誠にありがとうございます。現在、
-            <strong>
-              englibのサーバーに不正アクセスの痕跡が確認されたため、安全確認のため一時的にシステムを停止
-            </strong>
-            しております。現在はAmazon側と連携のうえ、復旧作業を進めております。
-            ご不便をおかけし、大変申し訳ございませんが、復旧まで今しばらくお待ちいただけますようお願い申し上げます。
-          </p>
-
-          <h2 className="text-xl font-semibold mb-2">【レッスンについて】</h2>
-          <ul className="list-disc ml-6 mb-4">
-            <li>
-              レッスンは<strong>通常通り</strong>実施されます。
-            </li>
-            <li>
-              ログイン後、「レッスン参加ボタン」より、いつも通りご参加いただけます。
-            </li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mb-2">
-            【現時点でご利用可能な機能】
-          </h2>
-          <ul className="list-disc ml-6 mb-4">
-            <li>「レッスン参加」ボタンからのレッスン参加</li>
-            <li>Reading課題 → 教材閲覧が可能</li>
-            <li>Shadowing課題 → 課題ビデオ閲覧が可能</li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mb-2">
-            【現在一時的にご利用いただけない機能】
-          </h2>
-          <ul className="list-disc ml-6 mb-4">
-            <li>
-              <strong>録音機能（Reading／Shadowing共通）</strong>
-            </li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mb-2">
-            【Show and Tell コースをご受講中の方】
-          </h2>
-          <p className="mb-4">
-            課題文章はパソコンのテキストエディタ等に保存の上、レッスン前までに以下のメールアドレス宛に送信をお願いいたします：
-            <strong>online-help@edutainers.jp</strong>
-          </p>
-
-          <h2 className="text-xl font-semibold mb-2">
-            【リーディング課題について】
-          </h2>
-          <ul className="list-disc ml-6 mb-4">
-            <li>
-              Oxford Reading Tree：専用アプリ「Oxford Reading
-              Club」をご利用ください
-            </li>
-            <li>
-              Reading Triumphs（アメリカ教科書）：お手元の紙教材をご使用ください
-            </li>
-            <li>Blackcatシリーズ：お手元の教材をご使用ください</li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mb-2">
-            【Monsterの付与について】
-          </h2>
-          <p className="mb-4">
-            システム復旧後、対象の生徒様にMonster（ポイント）を正しく付与させていただきます。
-          </p>
-
-          <p className="mt-6">
-            皆様にはご不便をおかけし誠に申し訳ございません。安全を最優先に対応を進めてまいりますので、
-            引き続きどうぞよろしくお願いいたします。
-          </p>
-
-          <div className="mt-4 text-sm text-gray-600">
-            <p>
-              <strong>englibサポートチーム</strong>
-            </p>
-            <p>📧：online-help@edutainers.jp</p>
           </div>
         </div>
       </div>
