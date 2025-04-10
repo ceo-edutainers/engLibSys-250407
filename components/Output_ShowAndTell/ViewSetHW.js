@@ -631,27 +631,42 @@ const ViewSetHW = ({
     var courseName = cN
     // var storyNum = sN
     // alert(cN)
+    // if (courseName.indexOf('CourseA') !== -1) {
+    //   // var seriesName = 'Reading Triumphs'
+    //   var Url =
+    //     DB_CONN_URL +
+    //     '/get-reading-story-Reading-Triumphs-same-textbook/' +
+    //     readingLevel
+    // }
+    // if (courseName.indexOf('CourseB') !== -1) {
+    //   // var seriesName = 'Blackcat Series'
+    //   var Url =
+    //     DB_CONN_URL +
+    //     '/get-reading-story-Blackcat/' +
+    //     // bookNum +
+    //     // '&' +
+    //     readingLevel
+    // }
+    // if (courseName.indexOf('CourseZ') !== -1) {
+    //   // var seriesName = 'Oxford Reading Tree'
+    //   var Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
+    // }
+
+    var Url = ''
+
     if (courseName.indexOf('CourseA') !== -1) {
-      // var seriesName = 'Reading Triumphs'
-      var Url =
+      Url =
         DB_CONN_URL +
         '/get-reading-story-Reading-Triumphs-same-textbook/' +
         readingLevel
     }
     if (courseName.indexOf('CourseB') !== -1) {
-      // var seriesName = 'Blackcat Series'
-      var Url =
-        DB_CONN_URL +
-        '/get-reading-story-Blackcat/' +
-        // bookNum +
-        // '&' +
-        readingLevel
+      Url = DB_CONN_URL + '/get-reading-story-Blackcat/' + readingLevel
     }
     if (courseName.indexOf('CourseZ') !== -1) {
-      // var seriesName = 'Oxford Reading Tree'
-      var Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
+      Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
     }
-
+    alert(Url)
     const fetchData = async () => {
       try {
         axios.get(Url).then((response) => {
@@ -727,7 +742,6 @@ const ViewSetHW = ({
     // var bookNum = bN
     // var storyNum = sN
     // var courseName = cN
-    alert('11111')
 
     if (cN.indexOf('CourseA') !== -1) {
       // var seriesName = 'Reading Triumphs'
@@ -743,13 +757,14 @@ const ViewSetHW = ({
       // var seriesName = 'Oxford Reading Tree'
       var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
     }
-    // alert('Url:' + Url)
+    alert('Url:' + Url)
 
+    //この教材の全てのレベル
     const fetchData = async () => {
       try {
         axios.get(Url).then((response) => {
           // alert('length' + response.data.length)
-
+          alert('length>0' + response.data.message)
           if (response.data.length > 0) {
             // alert('length>0' + response.data.message)
             setReadingAllLevelInfo(response.data.response)
@@ -793,6 +808,7 @@ const ViewSetHW = ({
       try {
         axios.get(Url).then((response) => {
           // alert('length' + response.data.length)
+          alert(response.data.message)
 
           if (response.data.length > 0) {
             setReadingAllLevelInfo(response.data.response)
@@ -1798,39 +1814,6 @@ const ViewSetHW = ({
                 Please choose a new book at least two weeks before the start of
                 the next book.
                 <hr />
-                {/* {zaikoInfo?.map((val, key) => {
-                  return (
-                    <>
-                      <p>
-                        {val.seriesName}&nbsp;&nbsp;[{val.readingLevel}
-                        ]&nbsp;&nbsp;
-                        {val.zaiko < 1 ? (
-                          <span
-                            style={{
-                              fontSize: '15',
-                              fontWeight: 'bold',
-                              color: 'red',
-                            }}
-                          >
-                            [{val.zaiko}]
-                          </span>
-                        ) : (
-                          <span
-                            style={{
-                              fontSize: '15',
-                              fontWeight: 'bold',
-                              color: 'green',
-                            }}
-                          >
-                            [{val.zaiko}]
-                          </span>
-                        )}
-                        &nbsp;&nbsp;{val.bookTitle}
-                        
-                      </p>
-                    </>
-                  )
-                })} */}
                 <BookZaikoInfo
                   mbn={mbn}
                   tbn={tbn}
@@ -2122,7 +2105,7 @@ const ViewSetHW = ({
                               />
                             </span>
                             <p className="pt-1"></p>
-                            <span style={{ color: 'red' }}>Story</span>
+                            <span style={{ color: 'red' }}>Story~</span>
                             {/* &nbsp; selectedMainCourseHW:{selectedMainCourseHW} */}
                             &nbsp;
                             {selectedReadingTextbook == 'CourseB' ||

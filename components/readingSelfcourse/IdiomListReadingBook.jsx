@@ -497,7 +497,7 @@ export default function WordListReadingBookAForTutor({
         // alert('4')
 
         if (response.data.length > 0) {
-          alert(response.data.length)
+          // alert(response.data.length)
           setSelectedWords(response.data)
         }
         // alert('2')
