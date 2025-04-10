@@ -70,7 +70,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
       try {
         const response = await axios.get(Url)
 
-        alert(response.data)
+        // alert(response.data)
 
         setZaikoInfo(response.data)
         setZaikoInfoLength(response.data.length)
@@ -102,7 +102,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(Url)
-        alert('checkPreviouslyOrdered:' + response.data.message) //for test
+        // alert('checkPreviouslyOrdered:' + response.data.message) //for test
         console.log('test:', response.data)
         if (response.data.message == 'already-ordered') {
           //すでに注文をしたので、Alertを出す。
