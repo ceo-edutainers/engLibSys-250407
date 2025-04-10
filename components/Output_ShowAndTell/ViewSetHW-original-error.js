@@ -22,7 +22,7 @@ const ViewSetHW = ({
   subject,
 }) => {
   const router = useRouter() //使い方：router.replace('/')
-  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const DB_CONN_URL = process.env.DB_CONN_URL
   const [isNotReady, setIsNotReady] = useState(false)
 
   //今日の宿題・最初の設定
@@ -197,40 +197,21 @@ const ViewSetHW = ({
         axios.get(Url).then((response) => {
           // alert(Url)
           // alert('length' + response.data.length)
-
-          console.log('✅ response from backend:', response.data)
-
-          if (
-            response.data &&
-            response.data.status === true &&
-            Array.isArray(response.data.response) &&
-            response.data.response.length > 0
-          ) {
+          if (response.data.length > 0) {
             // alert('dbMemberSetInfo')
-            const hwInfo = response.data.response[0] // ✅ 여기!!
-            setDataMemberSetInfo(response.data.response)
-            setTodayHwReadingTextBook(hwInfo.textbookName)
-            setSelectedReadingTextbook(hwInfo.textbookName)
-            setTodayHwReadingLevel(hwInfo.courseLevel)
-            setSelectedReadingLevel(hwInfo.courseLevel)
-            setTodayHwReadingCourseName(hwInfo.courseName)
-            setTodayEnglibLevel(hwInfo.englibLevel)
-            setMainSubject(hwInfo.subject)
-            // setDataMemberSetInfo(response.data)
-            // setTodayHwReadingTextBook(response.data[0].textbookName)
-            // setSelectedReadingTextbook(response.data[0].textbookName)
-            // setTodayHwReadingLevel(response.data[0].courseLevel)
-            // setSelectedReadingLevel(response.data[0].courseLevel)
-            // setTodayHwReadingCourseName(response.data[0].courseName)
-            // setTodayEnglibLevel(response.data[0].englibLevel)
+            setDataMemberSetInfo(response.data)
+            setTodayHwReadingTextBook(response.data[0].textbookName)
+            setSelectedReadingTextbook(response.data[0].textbookName)
+            setTodayHwReadingLevel(response.data[0].courseLevel)
+            setSelectedReadingLevel(response.data[0].courseLevel)
+            setTodayHwReadingCourseName(response.data[0].courseName)
+            setTodayEnglibLevel(response.data[0].englibLevel)
 
-            // setMainSubject(response.data[0].subject)
+            setMainSubject(response.data[0].subject)
 
             //Get Reading Info
-            // var cN = response.data[0].courseName
-            var cN = hwInfo.courseName
-            // var rL = response.data[0].courseLevel //reading level
-            var rL = hwInfo.courseLevel //reading level
+            var cN = response.data[0].courseName
+            var rL = response.data[0].courseLevel //reading level
 
             // alert('courseName' + response.data[0].courseName)
 
@@ -245,8 +226,6 @@ const ViewSetHW = ({
             // var phLO = response.data[0].phonicsLessonOrder
             // getPhonicsInfo(phLO)
             // getConversationInfo()
-          } else {
-            console.warn('❌ No valid homework data:', response.data)
           }
         })
       } catch (error) {
@@ -455,6 +434,13 @@ const ViewSetHW = ({
             setShadowingMaterial(response.data[0].material_sort)
 
             if (response.data[0].material_sort == 'BOOK') {
+              //seriesName:English Power
+              // bookTitle:Power Listening in English
+              // bookNum:Section1
+              // storyNum:Unit1
+              // storyTitle:Conversation About Presentation Materials
+
+              // alert(response.data[0].homework_id)
               setHomeworkIDShadowing(response.data[0].homework_id)
               setshadowingLevel(response.data[0].shadowingLevel)
               setShadowSeriesName(response.data[0].seriesName)
@@ -608,6 +594,13 @@ const ViewSetHW = ({
   }
 
   function getBookShadowingHWAutoid(shL, seR, bookT, bookN, storyN) {
+    //mN-->autoid
+    // alert('Shadowig Level: ' + shL)
+    // alert('Series Name: ' + seR)
+    // alert('bookT: ' + bookT)
+    // alert('bookN: ' + bookN)
+    // alert('storyN: ' + storyN)
+
     var Url =
       DB_CONN_URL +
       '/get-book-shadowing-hw-autoid-info/' +
@@ -738,6 +731,11 @@ const ViewSetHW = ({
 
   //この教材の全てのレベル
   function getReadingALlLevelInfo(cN, rL) {
+    // var readingLevel = rL
+    // var bookNum = bN
+    // var storyNum = sN
+    // var courseName = cN
+
     if (cN.indexOf('CourseA') !== -1) {
       // var seriesName = 'Reading Triumphs'
       var Url =
@@ -760,12 +758,9 @@ const ViewSetHW = ({
           // alert('length' + response.data.length)
 
           if (response.data.length > 0) {
-            // alert('length>0' + response.data.message)
             setReadingAllLevelInfo(response.data.response)
             // setCourseName(cN)
             getReadingInfo(cN, rL)
-          } else {
-            // alert('length==0' + response.data.message)
           }
         })
       } catch (error) {
@@ -775,46 +770,46 @@ const ViewSetHW = ({
     fetchData()
   }
 
-  // //この教材の全てのレベル
-  // function getReadingALlLevelInfo2(cN) {
-  //   // var readingLevel = rL
-  //   // var bookNum = bN
-  //   // var storyNum = sN
-  //   // var courseName = cN
-  //   // alert('getReadingALlLevelInfo2', cN)
-  //   if (cN.indexOf('CourseA') !== -1) {
-  //     // var seriesName = 'Reading Triumphs'
-  //     var Url =
-  //       DB_CONN_URL +
-  //       '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseB') !== -1) {
-  //     // var seriesName = 'Blackcat Series'
-  //     var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseZ') !== -1) {
-  //     // var seriesName = 'Oxford Reading Tree'
-  //     var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
-  //   }
-  //   // alert('Url:' + Url)
+  //この教材の全てのレベル
+  function getReadingALlLevelInfo2(cN) {
+    // var readingLevel = rL
+    // var bookNum = bN
+    // var storyNum = sN
+    // var courseName = cN
+    // alert('getReadingALlLevelInfo2', cN)
+    if (cN.indexOf('CourseA') !== -1) {
+      // var seriesName = 'Reading Triumphs'
+      var Url =
+        DB_CONN_URL +
+        '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
+    }
+    if (cN.indexOf('CourseB') !== -1) {
+      // var seriesName = 'Blackcat Series'
+      var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
+    }
+    if (cN.indexOf('CourseZ') !== -1) {
+      // var seriesName = 'Oxford Reading Tree'
+      var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
+    }
+    // alert('Url:' + Url)
 
-  //   const fetchData = async () => {
-  //     try {
-  //       axios.get(Url).then((response) => {
-  //         // alert('length' + response.data.length)
+    const fetchData = async () => {
+      try {
+        axios.get(Url).then((response) => {
+          // alert('length' + response.data.length)
 
-  //         if (response.data.length > 0) {
-  //           setReadingAllLevelInfo(response.data.response)
-  //           // setCourseName(cN)
-  //           // getReadingInfo(cN, rL)
-  //         }
-  //       })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }
+          if (response.data.length > 0) {
+            setReadingAllLevelInfo(response.data.response)
+            // setCourseName(cN)
+            // getReadingInfo(cN, rL)
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }
 
   //Movie Shadowing Info of this Series
   function getShadowingLevelInfo() {
@@ -830,9 +825,6 @@ const ViewSetHW = ({
 
           if (response.data.length > 0) {
             setShadowingLevelInfo(response.data.response)
-            // alert(response.data.message)
-          } else {
-            // alert(response.data.message)
           }
         })
       } catch (error) {
@@ -925,6 +917,9 @@ const ViewSetHW = ({
     GBookTitle,
     grLO
   ) {
+    // alert('Phonics' + PhLO)
+    // var subject = 'GRAMMAR'
+    // var subject = subject
     var Url =
       DB_CONN_URL +
       '/get-grammar-book-info/' +
@@ -1112,6 +1107,10 @@ const ViewSetHW = ({
     } else if (newTextBook == 'Oxford Reading Tree') {
       var mcn = 'CourseZ'
     }
+    // setSelectedReadingTextbook(newTextBook)
+    // setMainCourseName(mcn)
+    // getReadingALlLevelInfo2(mcn)
+    // setSelectedReadingLevel() //selected reading levelのValueを削除
 
     const fetchData = async () => {
       try {
@@ -1158,6 +1157,13 @@ const ViewSetHW = ({
     fetchData()
   }
   function changeReadingLevel(newReadingLevel, cN) {
+    // alert('1' + newReadingLevel)
+    // alert('2' + cN)
+    // var rL = newReadingLevel
+    // setNewReadingLevel(rL)
+
+    // setSelectedReadingLevel(rL)
+    // getReadingInfo(cN, rL)
     const fetchData = async () => {
       try {
         var Url = DB_CONN_URL + '/change-new-reading-level'
@@ -1216,6 +1222,10 @@ const ViewSetHW = ({
   function changeBookShadowingLevel(thisValue) {
     const value_array = thisValue.split('/')
 
+    // setNewShadowingLevel(value_array[0])
+    // getBookShadowingInfo(value_array[0], value_array[1])
+    // getFirstAutoidByShadowingLevelBook(value_array[0])
+
     try {
       var Url = DB_CONN_URL + '/change-new-shadowing-level-BOOK'
       // alert('shadowingLevel: ' + value_array[0])
@@ -1254,7 +1264,6 @@ const ViewSetHW = ({
           // alert('length' + response.data.length)
 
           if (response.data.length > 0) {
-            // alert(response.data.message)
             setViewMyReadingHistoryList(response.data.response)
           }
         })
@@ -1284,6 +1293,43 @@ const ViewSetHW = ({
 
     fetchData()
   }, [])
+  // function handleOneMoreHW() {
+  //   setIsSetTheSameHW(false)
+  //   // alert('mainSubject' + mainSubject)
+  //   // alert('mainCourseName' + mainCourseName)
+  //   console.log('####:mbn', mbn)
+  //   console.log('####:name_eng', name_eng)
+  //   console.log('####:mainSubject', mainSubject)
+  //   console.log('####:mainCourseName', mainCourseName)
+  //   // var Url =
+  //   //   DB_CONN_URL +
+  //   //   '/Same-HW-SET' +
+  //   //   mbn +
+  //   //   '&' +
+  //   //   mainSubject +
+  //   //   '&' +
+  //   //   mainCourseName
+
+  //   // const fetchData = async () => {
+  //   //   try {
+  //   //     axios.get(Url).then((response) => {
+  //   //       // alert('length' + response.data.length)
+  //   //       // alert('1')
+  //   //       if (response.data.status) {
+  //   //         alert('Homework has been successfully set up!')
+  //   //       } else {
+  //   //         alert('status failed')
+  //   //       }
+  //   //     })
+  //   //   } catch (error) {
+  //   //     console.log(error)
+  //   //   }
+  //   // }
+  //   // fetchData()
+
+  //   // setCheckedOneMoreMaincourse(false)
+  //   setIsSuccessSetNewLesson(true)
+  // }
 
   function NextLessonDate(sort) {
     setIsFinishThisLesson(false)
@@ -1367,6 +1413,39 @@ const ViewSetHW = ({
       var url = url + '/HW-SET-NEW-READING-SH-BOOK'
     }
 
+    // console.log('shadowingMaterial', shadowingMaterial)
+    // console.log('doShadowingForThisCourse', doShadowingForThisCourse)
+    // console.log('nextLessonDate', nextLessonDate)
+    // console.log('homeworkIdMaincourse', homeworkIdMaincourse)
+    // console.log('homeworkIdShadowing', homeworkIdShadowing)
+    // console.log('sort', sort)
+    // console.log('mbn', mbn)
+    // console.log('name_eng', name_eng)
+    // console.log('copyHW', copyHW)
+    // console.log('main_course_subject', main_course_subject)
+    // console.log('newMainCourse', newMainCourse)
+    // console.log('oneMoreReading', oneMoreReading)
+    // console.log('whySameReadingReason', whySameReadingReason)
+    // console.log('whySameReadingReasonDetail', whySameReadingReasonDetail)
+    // console.log('selectedMainCourseHW', selectedMainCourseHW)
+    // console.log('selectedReadingTextbook', selectedReadingTextbook)
+    // console.log('selectedReadingLevel', selectedReadingLevel)
+    // // alert('selectedReadingLevel' + selectedReadingLevel)
+
+    // console.log('readingHWAmount', readingHWAmount)
+    // console.log('hw_page_start', hw_page_start)
+    // console.log('hw_page_end', hw_page_end)
+    // console.log('shadowingMaterial', shadowingMaterial)
+    // console.log('oneMoreShadowing', oneMoreShadowing)
+    // console.log('whySameShadowingReason', whySameShadowingReason)
+    // console.log('whySameShadowingReasonDetail', whySameShadowingReasonDetail)
+    // console.log('selectedShadowingHW', selectedShadowingHW)
+    // console.log('selectedShadowingLevel', selectedShadowingLevel)
+    // console.log('shadowingHWAmount', shadowingHWAmount)
+    // console.log('selectedPhonicsHW', selectedPhonicsHW)
+    // console.log('selectedConversationHW', selectedConversationHW)
+    // console.log('lessonMemoOnlyTeacher', lessonMemoOnlyTeacher)
+
     const fetchData = async () => {
       try {
         axios
@@ -1403,14 +1482,13 @@ const ViewSetHW = ({
             lessonMemoForMom: lessonMemoForMom,
           })
           .then((response) => {
-            if (response.data.message != 'Success') {
-              // alert(
-              //   'Some error occurred when setting the homework  ' +
-              //     response.data.message
-              // )
-              alert(JSON.stringify(response.data.error, null, 2))
+            // alert(response.data.message)
 
-              console.log('TEST-error:', response.data.error)
+            if (response.data.message != 'Success') {
+              alert(
+                'Some error occurred when setting the homework' +
+                  response.data.message
+              )
             } else {
               setIsSuccessSetNewLesson(true)
             }
@@ -1464,6 +1542,44 @@ const ViewSetHW = ({
     ) {
       var url = url + '/HW-SET-NEW-GRAMMAR'
     }
+
+    // alert(homeworkIdMaincourse)
+    // alert(homework_id)
+    console.log('doShadowingForThisCourse', doShadowingForThisCourse)
+    console.log('nextLessonDate', nextLessonDate)
+    console.log('homeworkIdMaincourse', homework_id)
+    console.log('homeworkIdShadowing', homeworkIdShadowing)
+    console.log('sort', sort)
+    console.log('mbn', mbn)
+    console.log('name_eng', name_eng)
+    console.log('main_course_subject', main_course_subject)
+    console.log('newMainCourse', newMainCourse)
+
+    console.log('grammarSeriesName', grammarSeriesName)
+    console.log('grammarBookTitle', grammarBookTitle)
+    console.log('grammarReadingLevel', grammarReadingLevel)
+    // console.log('grammarSupportListOrder', grammarSupportListOrder)
+    // console.log('grammarStoryNum', grammarStoryNum)
+
+    console.log('selectedGrammarBookHW', selectedGrammarBookHW)
+    console.log('selectedGrammarBookHW2', selectedGrammarBookHW2)
+
+    //Shadowing
+    console.log('shadowingMaterial', shadowingMaterial)
+    console.log('oneMoreShadowing', oneMoreShadowing)
+    console.log('whySameShadowingReason', whySameShadowingReason)
+    console.log('whySameShadowingReasonDetail', whySameShadowingReasonDetail)
+    console.log('selectedShadowingHW', selectedShadowingHW)
+    console.log('selectedShadowingLevel', selectedShadowingLevel)
+    console.log('shadowingHWAmount', shadowingHWAmount)
+    console.log('lessonMemoOnlyTeacher', lessonMemoOnlyTeacher)
+    console.log('lessonMemoForMom', lessonMemoForMom)
+
+    // var whySameShadowingReasonDetail = 'test1'
+    // var whySameShadowingReasonDetail = 'test2'
+    // var lessonMemoOnlyTeacher = 'test3'
+    // var lessonMemoForMom = 'test4'
+    // var doShadowingForThisCourse = 'yes'
 
     const fetchData = async () => {
       try {
@@ -1600,6 +1716,35 @@ const ViewSetHW = ({
                 <h1 style={{ fontSize: '30px', fontWeight: '600' }}>
                   HOMEWORK SETTING&nbsp;
                 </h1>
+                {/* <p
+                  className="pb-0 mb-0"
+                  style={{ color: 'red', fontSize: '13px' }}
+                >
+                  同じ課題は、練習ができてなくても2回までが課題設定制限となります。
+                </p> */}
+
+                {/* <h1 style={{ fontSize: '30px' }}>
+              <input
+                type="checkbox"
+                onClick={() => {
+                  setCheckedOneMoreAll(!checkedOneMoreAll)
+                  setCheckedOneMoreMaincourse(true)
+                  setCheckedOneMoreShadowing(true)
+                  setCheckedOneMorePhonics(true)
+                  setCheckedOneMoreQuestion(true)
+                }}
+                selected={checkedOneMoreAll && 'selected'}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  verticalAlign: 'sub',
+                }}
+              />
+              &nbsp; 全て変更なし
+            </h1>
+            checkedOneMoreAll:&nbsp;
+            {checkedOneMoreAll ? 'true' : 'false'}
+            <br /> */}
               </div>
               <div className="col-lg-2 col-md-12">&nbsp;</div>
               <div className="col-lg-8 col-md-12">
@@ -1652,6 +1797,39 @@ const ViewSetHW = ({
                 Please choose a new book at least two weeks before the start of
                 the next book.
                 <hr />
+                {/* {zaikoInfo?.map((val, key) => {
+                  return (
+                    <>
+                      <p>
+                        {val.seriesName}&nbsp;&nbsp;[{val.readingLevel}
+                        ]&nbsp;&nbsp;
+                        {val.zaiko < 1 ? (
+                          <span
+                            style={{
+                              fontSize: '15',
+                              fontWeight: 'bold',
+                              color: 'red',
+                            }}
+                          >
+                            [{val.zaiko}]
+                          </span>
+                        ) : (
+                          <span
+                            style={{
+                              fontSize: '15',
+                              fontWeight: 'bold',
+                              color: 'green',
+                            }}
+                          >
+                            [{val.zaiko}]
+                          </span>
+                        )}
+                        &nbsp;&nbsp;{val.bookTitle}
+                        
+                      </p>
+                    </>
+                  )
+                })} */}
                 <BookZaikoInfo
                   mbn={mbn}
                   tbn={tbn}
@@ -1694,6 +1872,12 @@ const ViewSetHW = ({
                               >
                                 {mainSubject}
                               </span>
+                              {/* &nbsp;
+                              <a href="#" target="_blank">
+                                <span className="btn btn-secondary">
+                                  Materials
+                                </span>
+                              </a> */}
                             </td>
                           </tr>
                           <tr>
@@ -1742,6 +1926,10 @@ const ViewSetHW = ({
                               </select>{' '}
                               から
                               <br />〜<br />
+                              {/* {selectedGrammarBookHW2}
+                              <br />
+                              grammarSupportListOrder2:
+                              {grammarSupportListOrder2} */}
                               <select
                                 style={{ width: '400px' }}
                                 onChange={(e) => {
@@ -1828,6 +2016,22 @@ const ViewSetHW = ({
                                 arrives on time for the student.
                               </p>
                             )}
+
+                            {/* <hr />
+                            <b>*copying a book</b>{' '}
+                            <span
+                              className="mt-5"
+                              style={{ marginRight: '10px' }}
+                            >
+                              {copyHW}
+                            </span>
+                            <br />
+                            {copyHW == 'ok' && (
+                              <>
+                                <b>*The number of pages to copy</b>
+                                {copyHWAmount}
+                              </>
+                            )} */}
                           </td>
                         </tr>
                         <tr>
@@ -1852,7 +2056,10 @@ const ViewSetHW = ({
                               }}
                               selected={checkedOneMoreMaincourse && 'selected'}
                             />{' '}
-                            Set the same story as the task one more time &nbsp;{' '}
+                            Set the same story as the task one more time
+                            {/* <br />
+                            setWhySameReadingReason:{whySameReadingReason} */}
+                            &nbsp;{' '}
                             <span
                               style={{
                                 display: checkedOneMoreMaincourse
@@ -1900,6 +2107,9 @@ const ViewSetHW = ({
                                   Others (Please enter texts)
                                 </option>
                               </select>
+                              {/* <br />
+                            setWhySameReadingReasonDetail:
+                            {whySameReadingReasonDetail} */}
                               &nbsp;
                               <input
                                 type="text"
@@ -1961,6 +2171,9 @@ const ViewSetHW = ({
                                       value={val2.autoid}
                                     >
                                       {markBook == 'ok' && '[*]'}
+                                      {/* {readingLevel == val2.readingLevel &&
+                                        storyNum == val2.storyNum &&
+                                        '*'} */}
                                       {val2.readingLevel}&nbsp;
                                       {val2.audio_pronounciation ==
                                         'American' && '[AM]'}
@@ -2021,6 +2234,13 @@ const ViewSetHW = ({
                                       } else {
                                         var markBook = ''
                                       }
+                                      // if (val2.wordCount != '') {
+                                      //   var cntData = val2.wordCount.split('/')
+                                      //   var wordCnt = cntData[0]
+                                      //   var pageCnt = cntData[1]
+                                      //   // alert(wordCnt)
+                                      //   // alert(pageCnt)
+                                      // }
                                     }
 
                                     if (val2.pageCountNew != '') {
@@ -2142,6 +2362,54 @@ const ViewSetHW = ({
                                   </span>
                                 </>
                               ))}
+                            {/* &nbsp;
+                            {readingHWAmount == 'second half' && (
+                              <>
+                                <input
+                                  type="number"
+                                  style={{ width: '60px' }}
+                                  onChange={(e) => {
+                                    sethw_page_start(e.target.value)
+                                  }}
+                                />
+                                &nbsp; p 〜 ストーリの最後{' '}
+                              </>
+                            )}
+                            {readingHWAmount == 'first half' && (
+                              <>
+                                &nbsp;<b>{hw_page_start}</b>p 〜
+                                <input
+                                  type="number"
+                                  style={{ width: '60px' }}
+                                  onChange={(e) => {
+                                    sethw_page_end(e.target.value)
+                                  }}
+                                />
+                                &nbsp; p
+                              </>
+                            )}{' '} */}
+                            {/* <span
+                              className="btn btn-danger ml-2"
+                              onClick={() => {
+                                setBookView(!bookView)
+                              }}
+                            >
+                              <FaEye size="20" />
+                              BOOK
+                            </span>
+                            <div
+                              style={{
+                                display: bookView ? 'block' : 'none',
+                              }}
+                            >
+
+                            </div> */}
+                            {/* <br />
+                            readingHWAmount:{readingHWAmount} */}
+                            {/* <br />
+                            　###sethw_page_start
+                            {hw_page_start}〜 ###sethw_page_end
+                            {hw_page_end} */}
                           </td>
                           <td rowSpan="2">
                             <span
@@ -2195,9 +2463,12 @@ const ViewSetHW = ({
                               }}
                             />
                             &nbsp;
-                            <span style={{ color: 'red' }}>
-                              Reading Level Change
-                            </span>
+                            <span style={{ color: 'red' }}>Level Change</span>
+                            {/* 
+                            selectedReadingTextbook：{selectedReadingTextbook}
+                            <br /> */}
+                            {/* <br />
+                            selectedReadingLevel:{selectedReadingLevel} */}
                             <div
                               className="pt-0 mt-0"
                               style={{
@@ -2206,7 +2477,13 @@ const ViewSetHW = ({
                                   : 'none',
                               }}
                             >
+                              {/* se:{selectedReadingLevel} */}
                               <select
+                                //  disabled={
+                                //     (checkedOneMoreMaincourse ||
+                                //     !checkedSetTextbook) && 'disabled'
+                                //   }
+
                                 disabled={
                                   checkedOneMoreMaincourse ||
                                   (!checkedSetReadingLevel && 'disabled')
@@ -2339,6 +2616,15 @@ const ViewSetHW = ({
                               </h5>
                             </div>
                           </td>
+                          {/* <td
+                            scope="col"
+                            style={{
+                              textAlign: 'left',
+                              // verticalAlign: 'middle',
+                            }}
+                          >
+                           
+                          </td> */}
                         </tr>
                       </tbody>
                     </table>
@@ -2588,6 +2874,16 @@ const ViewSetHW = ({
                                       'selected'
                                     }
                                     value={val2.autoid}
+
+                                    // value={() => {
+                                    //   shadowingLevel == val2.shadowingLevel &&
+                                    //   shadowSeriesName == val2.seriesName &&
+                                    //   shadowBookTitle == val2.bookTitle &&
+                                    //   shadowBookNum == val2.bookNum &&
+                                    //   shadowStoryNum == val2.storyNum
+                                    //     ? handleSetSelectedHWAutoid(val2.autoid)
+                                    //     : val2.autoid
+                                    // }}
                                   >
                                     [{val2.autoid}]
                                     {shadowingLevel == val2.shadowingLevel &&
@@ -2610,7 +2906,10 @@ const ViewSetHW = ({
                                 )
                               })}
                             </select>
-                            &nbsp; &nbsp;
+                            &nbsp;
+                            {/* <br />
+                          shadowingHWAmount:{shadowingHWAmount} */}
+                            &nbsp;
                             <select
                               onChange={(e) => {
                                 setShadowingHWAmount(e.target.value)
@@ -2625,7 +2924,45 @@ const ViewSetHW = ({
                               >
                                 全体(All)
                               </option>
+                              {/* <option
+                                value="first half"
+                                selected={
+                                  shadowingHWAmount == 'first half' &&
+                                  'selected'
+                                }
+                              >
+                                前半[first half]
+                              </option>
+                              <option
+                                value="second half"
+                                selected={
+                                  shadowingHWAmount == 'second half' &&
+                                  'selected'
+                                }
+                              >
+                                後半[second half]
+                              </option> */}
                             </select>
+                            {/* &nbsp;
+                          {shadowingHWAmount == 'second half' && (
+                            <>
+                              &nbsp;
+                              <select>
+                                <option>00:01</option>
+                              </select>{' '}
+                              〜 最後
+                            </>
+                          )}
+                          <br />
+                          {shadowingHWAmount == 'first half' && (
+                            <>
+                              最初 〜 &nbsp;
+                              <select>
+                                <option>00:01</option>
+                              </select>
+                              まで
+                            </>
+                          )} */}
                           </td>
                         </tr>
                       </tbody>
@@ -2835,10 +3172,7 @@ const ViewSetHW = ({
                               disabled={checkedOneMoreShadowing && 'disabled'}
                             />
                             &nbsp;
-                            <span style={{ color: 'red' }}>
-                              {' '}
-                              Shadowing Level Change
-                            </span>
+                            <span style={{ color: 'red' }}> Level Change</span>
                             <div
                               className="pt-0 mt-0"
                               style={{

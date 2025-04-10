@@ -59,19 +59,10 @@ const ViewSetHW = ({
   const [hw_page_start, sethw_page_start] = useState()
   const [hw_page_end, sethw_page_end] = useState()
 
-  // const [readingFirstAutoidByLevel, setReadingFirstAutoidByLevel] = useState()
-  // const [shadowingFirstAutoidByLevel, setShadowingFirstAutoidByLevel] =
-  //   useState()
-
   const [afterHWsetUrl, setAfterHWsetUrl] = useState()
 
   const [copyHW, setCopyHW] = useState()
   const [copyHWAmount, setCopyHWAmount] = useState()
-  //phonics もう一度
-  // const [checkedOneMorePhonics, setCheckedOneMorePhonics] = useState(false)
-
-  //Question　もう一度
-  // const [checkedOneMoreQuestion, setCheckedOneMoreQuestion] = useState(false)
 
   //shadowingもう一度
   const [checkedOneMoreShadowing, setCheckedOneMoreShadowing] = useState(false)
@@ -119,10 +110,6 @@ const ViewSetHW = ({
   const [grammarBookTitle, setGrammarBookTitle] = useState()
   const [grammarSeriesName, setGrammarSeriesName] = useState()
   const [grammarReadingLevel, setGrammarReadingLevel] = useState()
-  //One More Checkbox
-  // const [checkedOneMoreMaincourse, setCheckedOneMoreMaincourse] =
-  //   useState(false)
-  // const [checkedOneMoreShadowing, setCheckedOneMoreShadowing] = useState(false)
 
   const [dataInfo, setDataInfo] = useState([])
 
@@ -168,91 +155,70 @@ const ViewSetHW = ({
   const [shadowBookNum, setShadowBookNum] = useState()
   const [shadowStoryNum, setShadowStoryNum] = useState()
   const [shadowStoryTitle, setShadowStoryTitle] = useState()
-
   const [shadowingSpeed, setshadowingSpeed] = useState()
   const [dictationStart, setdictationStart] = useState()
   const [dictationSecond, setdictationSecond] = useState()
 
-  const [newShadowingLevel, setNewShadowingLevel] = useState()
-  const [newReadingLevel, setNewReadingLevel] = useState()
-  // //無限ループしない
-  // const bar2 = {}
-  //SHADOWING INFO
+  // const [newShadowingLevel, setNewShadowingLevel] = useState()
+  // const [newReadingLevel, setNewReadingLevel] = useState()
 
   const [viewMyReadingHistory, setViewMyReadingHistory] = useState(false)
 
   //processing popup
   const [processingPopup, setProcessingPopup] = useState(false)
 
+  // useEffect(() => {
+  //   if (mbn && subject) {
+  //     dbMemberSetInfo()
+  //   } else {
+  //     console.log('mbn or subject is undefined')
+  //   }
+  // }, [mbn, subject])
   useEffect(() => {
-    dbMemberSetInfo()
+    console.log('🔥 TEST-useEffect 실행됨', { mbn, subject })
+    if (mbn && subject) {
+      dbMemberSetInfo()
+    } else {
+      console.log('⛔ TEST-mbn or subject is undefined', { mbn, subject })
+    }
   }, [mbn, subject])
 
   function dbMemberSetInfo() {
-    // var subject = 'READING'
-
     var Url = DB_CONN_URL + '/get-member-set-info/' + mbn + '&' + subject
+    console.log('Url:', Url) // Url이 잘 생성되는지 확인
+
     const fetchData2 = async () => {
       try {
-        axios.get(Url).then((response) => {
-          // alert(Url)
-          // alert('length' + response.data.length)
+        const response = await axios.get(Url)
+        // alert('Url: ' + Url)
+        // alert(JSON.stringify(response.data, null, 2))
+        if (response.data.length > 0) {
+          setDataMemberSetInfo(response.data)
+          setTodayHwReadingTextBook(response.data[0].textbookName)
+          setSelectedReadingTextbook(response.data[0].textbookName)
+          setTodayHwReadingLevel(response.data[0].courseLevel)
+          setSelectedReadingLevel(response.data[0].courseLevel)
+          setTodayHwReadingCourseName(response.data[0].courseName)
+          setTodayEnglibLevel(response.data[0].englibLevel)
 
-          console.log('✅ response from backend:', response.data)
+          setMainSubject(response.data[0].subject)
 
-          if (
-            response.data &&
-            response.data.status === true &&
-            Array.isArray(response.data.response) &&
-            response.data.response.length > 0
-          ) {
-            // alert('dbMemberSetInfo')
-            const hwInfo = response.data.response[0] // ✅ 여기!!
-            setDataMemberSetInfo(response.data.response)
-            setTodayHwReadingTextBook(hwInfo.textbookName)
-            setSelectedReadingTextbook(hwInfo.textbookName)
-            setTodayHwReadingLevel(hwInfo.courseLevel)
-            setSelectedReadingLevel(hwInfo.courseLevel)
-            setTodayHwReadingCourseName(hwInfo.courseName)
-            setTodayEnglibLevel(hwInfo.englibLevel)
-            setMainSubject(hwInfo.subject)
-            // setDataMemberSetInfo(response.data)
-            // setTodayHwReadingTextBook(response.data[0].textbookName)
-            // setSelectedReadingTextbook(response.data[0].textbookName)
-            // setTodayHwReadingLevel(response.data[0].courseLevel)
-            // setSelectedReadingLevel(response.data[0].courseLevel)
-            // setTodayHwReadingCourseName(response.data[0].courseName)
-            // setTodayEnglibLevel(response.data[0].englibLevel)
+          var cN = response.data[0].courseName
+          var rL = response.data[0].courseLevel
 
-            // setMainSubject(response.data[0].subject)
-
-            //Get Reading Info
-            // var cN = response.data[0].courseName
-            var cN = hwInfo.courseName
-            // var rL = response.data[0].courseLevel //reading level
-            var rL = hwInfo.courseLevel //reading level
-
-            // alert('courseName' + response.data[0].courseName)
-
-            if (subject == 'READING') {
-              getReadingInfo(cN, rL) //setReadingListInfo
-              getReadingALlLevelInfo(cN, rL)
-            }
-
-            getShadowingLevelInfo()
-            getShadowingBookLevelInfo()
-
-            // var phLO = response.data[0].phonicsLessonOrder
-            // getPhonicsInfo(phLO)
-            // getConversationInfo()
-          } else {
-            console.warn('❌ No valid homework data:', response.data)
+          if (subject === 'READING') {
+            getReadingInfo(cN, rL)
+            getReadingALlLevelInfo(cN, rL)
           }
-        })
+
+          getShadowingLevelInfo()
+          getShadowingBookLevelInfo()
+        }
       } catch (error) {
         console.log(error)
       }
     }
+
     fetchData2()
   }
 
@@ -261,8 +227,19 @@ const ViewSetHW = ({
     var Url = DB_CONN_URL + '/get-hw-lesson/' + mbn + '&' + subject
   }
 
+  // useEffect(() => {
+  //   dbMainDataInfo()
+  //   console.log('TESTHERE-', mbn)
+  //   console.log('TESTHERE-', subject)
+  // }, [mbn, subject])
   useEffect(() => {
-    dbMainDataInfo()
+    if (mbn && subject) {
+      console.log('✅ TESTHERE-mbn & subject available:', mbn, subject)
+      dbMemberSetInfo()
+      dbMainDataInfo()
+    } else {
+      console.log('⛔ TESTHERE-아직 값이 없음:', { mbn, subject })
+    }
   }, [mbn, subject])
 
   function dbMainDataInfo() {
@@ -455,6 +432,8 @@ const ViewSetHW = ({
             setShadowingMaterial(response.data[0].material_sort)
 
             if (response.data[0].material_sort == 'BOOK') {
+              //seriesName:English Power
+
               setHomeworkIDShadowing(response.data[0].homework_id)
               setshadowingLevel(response.data[0].shadowingLevel)
               setShadowSeriesName(response.data[0].seriesName)
@@ -639,56 +618,96 @@ const ViewSetHW = ({
 
   //All Reading Stories of this book
   function getReadingInfo(cN, rL) {
-    // alert('cL' + cN)
-    // alert('rL' + rL)
-    var readingLevel = rL
-    // var bookNum = bN
-    var courseName = cN
-    // var storyNum = sN
-    // alert(cN)
+    //  alert('here')
+
+    // const readingLevel = rL
+    // const courseName = cN
+
+    // let Url = '' // ✅ 초기화만 하고...
+
+    // if (courseName.indexOf('CourseA') !== -1) {
+    //   Url =
+    //     DB_CONN_URL +
+    //     '/get-reading-story-Reading-Triumphs-same-textbook/' +
+    //     readingLevel
+    // } else if (courseName.indexOf('CourseB') !== -1) {
+    //   Url =
+    //     DB_CONN_URL +
+    //     '/get-reading-story-Blackcat/' +
+    //     readingLevel
+    // } else if (courseName.indexOf('CourseZ') !== -1) {
+    //   Url =
+    //     DB_CONN_URL +
+    //     '/get-reading-story-ORT/' +
+    //     readingLevel
+    // }
+    alert('here')
+
+    const readingLevel = rL
+    const courseName = cN
+
+    let Url = '' // ✅ 초기화만 하고...
+
     if (courseName.indexOf('CourseA') !== -1) {
-      // var seriesName = 'Reading Triumphs'
-      var Url =
+      Url =
         DB_CONN_URL +
         '/get-reading-story-Reading-Triumphs-same-textbook/' +
         readingLevel
+    } else if (courseName.indexOf('CourseB') !== -1) {
+      Url = DB_CONN_URL + '/get-reading-story-Blackcat/' + readingLevel
+    } else if (courseName.indexOf('CourseZ') !== -1) {
+      Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
     }
-    if (courseName.indexOf('CourseB') !== -1) {
-      // var seriesName = 'Blackcat Series'
-      var Url =
-        DB_CONN_URL +
-        '/get-reading-story-Blackcat/' +
-        // bookNum +
-        // '&' +
-        readingLevel
-    }
-    if (courseName.indexOf('CourseZ') !== -1) {
-      // var seriesName = 'Oxford Reading Tree'
-      var Url = DB_CONN_URL + '/get-reading-story-ORT/' + readingLevel
-    }
-    // alert('Url:' + Url)
 
+    // var Url = ''
+
+    //   const fetchData = async () => {
+    //     try {
+    //       axios.get(Url).then((response) => {
+    //         // alert('length' + response.data.length)
+    //         // alert('1')
+    //         alert(response.data.message)
+    //         if (response.data.length > 0) {
+    //           setReadingListInfo(response.data.response)
+    //           if (
+    //             courseName.indexOf('CourseZ') !== -1 ||
+    //             courseName.indexOf('CourseB') !== -1 ||
+    //             courseName.indexOf('CourseA') !== -1
+    //           ) {
+    //             getReadingHistoryInfo(cN, rL)
+    //           }
+    //           // alert('2')
+    //         }
+    //       })
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   }
+    //   fetchData()
+    // }
+    // ✅ 이제 Url이 잘 들어간 상태
     const fetchData = async () => {
       try {
-        axios.get(Url).then((response) => {
-          // alert('length' + response.data.length)
-          // alert('1')
-          if (response.data.length > 0) {
-            setReadingListInfo(response.data.response)
-            if (
-              courseName.indexOf('CourseZ') !== -1 ||
-              courseName.indexOf('CourseB') !== -1 ||
-              courseName.indexOf('CourseA') !== -1
-            ) {
-              getReadingHistoryInfo(cN, rL)
-            }
-            // alert('2')
+        const response = await axios.get(Url)
+        alert(response.data.message)
+        if (response.data.length > 0) {
+          console.log('getReadingInfo 응답 데이터:', response.data.response)
+
+          setReadingListInfo(response.data.response)
+
+          if (
+            courseName.indexOf('CourseZ') !== -1 ||
+            courseName.indexOf('CourseB') !== -1 ||
+            courseName.indexOf('CourseA') !== -1
+          ) {
+            getReadingHistoryInfo(cN, rL)
           }
-        })
+        }
       } catch (error) {
         console.log(error)
       }
     }
+
     fetchData()
   }
 
@@ -738,6 +757,51 @@ const ViewSetHW = ({
 
   //この教材の全てのレベル
   function getReadingALlLevelInfo(cN, rL) {
+    // var readingLevel = rL
+    // var bookNum = bN
+    // var storyNum = sN
+    // var courseName = cN
+
+    if (cN.indexOf('CourseA') !== -1) {
+      // var seriesName = 'Reading Triumphs'
+      var Url =
+        DB_CONN_URL +
+        '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
+    }
+    if (cN.indexOf('CourseB') !== -1) {
+      // var seriesName = 'Blackcat Series'
+      var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
+    }
+    if (cN.indexOf('CourseZ') !== -1) {
+      // var seriesName = 'Oxford Reading Tree'
+      var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
+    }
+    alert('Url:' + Url)
+
+    //この教材の全てのレベル
+    const fetchData = async () => {
+      try {
+        axios.get(Url).then((response) => {
+          // alert('length' + response.data.length)
+          alert('length>0' + response.data.message)
+          if (response.data.length > 0) {
+            // alert('length>0' + response.data.message)
+            setReadingAllLevelInfo(response.data.response)
+            // setCourseName(cN)
+            getReadingInfo(cN, rL)
+          } else {
+            // alert('length==0' + response.data.message)
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }
+
+  //この教材の全てのレベル
+  function getReadingALlLevelInfo2(cN) {
     if (cN.indexOf('CourseA') !== -1) {
       // var seriesName = 'Reading Triumphs'
       var Url =
@@ -758,14 +822,12 @@ const ViewSetHW = ({
       try {
         axios.get(Url).then((response) => {
           // alert('length' + response.data.length)
+          alert(response.data.message)
 
           if (response.data.length > 0) {
-            // alert('length>0' + response.data.message)
             setReadingAllLevelInfo(response.data.response)
             // setCourseName(cN)
-            getReadingInfo(cN, rL)
-          } else {
-            // alert('length==0' + response.data.message)
+            // getReadingInfo(cN, rL)
           }
         })
       } catch (error) {
@@ -774,47 +836,6 @@ const ViewSetHW = ({
     }
     fetchData()
   }
-
-  // //この教材の全てのレベル
-  // function getReadingALlLevelInfo2(cN) {
-  //   // var readingLevel = rL
-  //   // var bookNum = bN
-  //   // var storyNum = sN
-  //   // var courseName = cN
-  //   // alert('getReadingALlLevelInfo2', cN)
-  //   if (cN.indexOf('CourseA') !== -1) {
-  //     // var seriesName = 'Reading Triumphs'
-  //     var Url =
-  //       DB_CONN_URL +
-  //       '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseB') !== -1) {
-  //     // var seriesName = 'Blackcat Series'
-  //     var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseZ') !== -1) {
-  //     // var seriesName = 'Oxford Reading Tree'
-  //     var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
-  //   }
-  //   // alert('Url:' + Url)
-
-  //   const fetchData = async () => {
-  //     try {
-  //       axios.get(Url).then((response) => {
-  //         // alert('length' + response.data.length)
-
-  //         if (response.data.length > 0) {
-  //           setReadingAllLevelInfo(response.data.response)
-  //           // setCourseName(cN)
-  //           // getReadingInfo(cN, rL)
-  //         }
-  //       })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }
 
   //Movie Shadowing Info of this Series
   function getShadowingLevelInfo() {
@@ -936,8 +957,6 @@ const ViewSetHW = ({
       '&' +
       subject
 
-    // alert('Url:' + Url)
-    // alert(grLO)
     const fetchData = async () => {
       try {
         axios.get(Url).then((response) => {
@@ -1218,8 +1237,7 @@ const ViewSetHW = ({
 
     try {
       var Url = DB_CONN_URL + '/change-new-shadowing-level-BOOK'
-      // alert('shadowingLevel: ' + value_array[0])
-      // alert('shadowingCourseName: ' + value_array[1])
+
       axios
         .post(Url, {
           mbn: mbn,
@@ -1335,18 +1353,14 @@ const ViewSetHW = ({
     ////START undefined 設定////////////////////
     //////////////////////////////////////////
     if (checkedOneMoreMaincourse == true) {
-      // alert('checkedOneMoreMaincourse' + checkedOneMoreMaincourse)
       var oneMoreReading = 'ok'
     } else {
-      // alert('checkedOneMoreMaincourse' + checkedOneMoreMaincourse)
       var oneMoreReading = 'no'
     }
 
     if (checkedOneMoreShadowing == true) {
       var oneMoreShadowing = 'ok'
-      // alert('checkedOneMoreShadowing' + checkedOneMoreShadowing)
     } else {
-      // alert('checkedOneMoreShadowing' + checkedOneMoreShadowing)
       var oneMoreShadowing = 'no'
     }
 
@@ -1404,10 +1418,10 @@ const ViewSetHW = ({
           })
           .then((response) => {
             if (response.data.message != 'Success') {
-              // alert(
-              //   'Some error occurred when setting the homework  ' +
-              //     response.data.message
-              // )
+              alert(
+                'Some error occurred when setting the homework  ' +
+                  response.data.message
+              )
               alert(JSON.stringify(response.data.error, null, 2))
 
               console.log('TEST-error:', response.data.error)
@@ -1429,9 +1443,6 @@ const ViewSetHW = ({
 
   //GRAMMAR,SCHOOL ENGLISH
   function saveNewHWSupport(nextLessonDate, sort) {
-    // alert(nextLessonDate)
-    // alert(sort)
-
     //sort: new or modify
     setIsFinishThisLesson(false)
 
@@ -1694,6 +1705,12 @@ const ViewSetHW = ({
                               >
                                 {mainSubject}
                               </span>
+                              {/* &nbsp;
+                              <a href="#" target="_blank">
+                                <span className="btn btn-secondary">
+                                  Materials
+                                </span>
+                              </a> */}
                             </td>
                           </tr>
                           <tr>
@@ -1742,6 +1759,10 @@ const ViewSetHW = ({
                               </select>{' '}
                               から
                               <br />〜<br />
+                              {/* {selectedGrammarBookHW2}
+                              <br />
+                              grammarSupportListOrder2:
+                              {grammarSupportListOrder2} */}
                               <select
                                 style={{ width: '400px' }}
                                 onChange={(e) => {
@@ -1852,7 +1873,10 @@ const ViewSetHW = ({
                               }}
                               selected={checkedOneMoreMaincourse && 'selected'}
                             />{' '}
-                            Set the same story as the task one more time &nbsp;{' '}
+                            Set the same story as the task one more time
+                            {/* <br />
+                            setWhySameReadingReason:{whySameReadingReason} */}
+                            &nbsp;{' '}
                             <span
                               style={{
                                 display: checkedOneMoreMaincourse
@@ -1900,6 +1924,9 @@ const ViewSetHW = ({
                                   Others (Please enter texts)
                                 </option>
                               </select>
+                              {/* <br />
+                            setWhySameReadingReasonDetail:
+                            {whySameReadingReasonDetail} */}
                               &nbsp;
                               <input
                                 type="text"
@@ -1911,7 +1938,7 @@ const ViewSetHW = ({
                               />
                             </span>
                             <p className="pt-1"></p>
-                            <span style={{ color: 'red' }}>Story</span>
+                            <span style={{ color: 'red' }}>Story~</span>
                             {/* &nbsp; selectedMainCourseHW:{selectedMainCourseHW} */}
                             &nbsp;
                             {selectedReadingTextbook == 'CourseB' ||
@@ -1933,6 +1960,7 @@ const ViewSetHW = ({
                                 >
                                   =======Please Select Story======
                                 </option>
+
                                 {readingListInfo?.map((val2, key2) => {
                                   //Blackcat読んだ本チェック
 
@@ -1961,6 +1989,9 @@ const ViewSetHW = ({
                                       value={val2.autoid}
                                     >
                                       {markBook == 'ok' && '[*]'}
+                                      {/* {readingLevel == val2.readingLevel &&
+                                        storyNum == val2.storyNum &&
+                                        '*'} */}
                                       {val2.readingLevel}&nbsp;
                                       {val2.audio_pronounciation ==
                                         'American' && '[AM]'}
@@ -2021,6 +2052,13 @@ const ViewSetHW = ({
                                       } else {
                                         var markBook = ''
                                       }
+                                      // if (val2.wordCount != '') {
+                                      //   var cntData = val2.wordCount.split('/')
+                                      //   var wordCnt = cntData[0]
+                                      //   var pageCnt = cntData[1]
+                                      //   // alert(wordCnt)
+                                      //   // alert(pageCnt)
+                                      // }
                                     }
 
                                     if (val2.pageCountNew != '') {
@@ -2288,47 +2326,51 @@ const ViewSetHW = ({
                                   changeReadingTextbook(e.target.value)
                                 }}
                               >
-                                {dataMemberSetInfo?.map((val2, key2) => {
-                                  return (
-                                    <>
-                                      <option
-                                        value="Reading Triumphs"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Reading Triumphs' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Reading Triumphs' && '*'}
-                                        Reading Triumphs
-                                      </option>
-                                      {/* // )} */}
+                                {Array.isArray(dataMemberSetInfo.response) &&
+                                  dataMemberSetInfo.response.map(
+                                    (val2, key2) => {
+                                      return (
+                                        <>
+                                          <option
+                                            value="Reading Triumphs"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Reading Triumphs' && 'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Reading Triumphs' && '*'}
+                                            Reading Triumphs
+                                          </option>
+                                          {/* // )} */}
 
-                                      <option
-                                        value="Blackcat Series"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Blackcat Series' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Blackcat Series' && '*'}
-                                        Blackcat Series
-                                      </option>
-                                      <option
-                                        value="Oxford Reading Tree"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Oxford Reading Tree' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Oxford Reading Tree' && '*'}
-                                        Oxford Reading Tree
-                                      </option>
-                                    </>
-                                  )
-                                })}
+                                          <option
+                                            value="Blackcat Series"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Blackcat Series' && 'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Blackcat Series' && '*'}
+                                            Blackcat Series
+                                          </option>
+                                          <option
+                                            value="Oxford Reading Tree"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Oxford Reading Tree' &&
+                                              'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Oxford Reading Tree' && '*'}
+                                            Oxford Reading Tree
+                                          </option>
+                                        </>
+                                      )
+                                    }
+                                  )}
                               </select>
                               <br />
                               <h5
@@ -2568,6 +2610,8 @@ const ViewSetHW = ({
                             </div>
                           </td>
                           <td style={{ width: '33%' }}>
+                            {/* selectedShadowingHW:{selectedShadowingHW}/
+                            <br /> */}
                             <span style={{ color: 'red' }}>Book Shadowing</span>
                             <select
                               disabled={checkedOneMoreShadowing && 'disabled'}
@@ -2610,7 +2654,10 @@ const ViewSetHW = ({
                                 )
                               })}
                             </select>
-                            &nbsp; &nbsp;
+                            &nbsp;
+                            {/* <br />
+                          shadowingHWAmount:{shadowingHWAmount} */}
+                            &nbsp;
                             <select
                               onChange={(e) => {
                                 setShadowingHWAmount(e.target.value)
@@ -2681,7 +2728,10 @@ const ViewSetHW = ({
                               }}
                               selected={checkedOneMoreShadowing && 'selected'}
                             />{' '}
-                            SET THE SAME VIDEO ONE MORE TIME &nbsp;{' '}
+                            SET THE SAME VIDEO ONE MORE TIME
+                            {/* <br />
+                          setWhySameShadowingReason:{whySameShadowingReason} */}
+                            &nbsp;{' '}
                             <span
                               style={{
                                 display: checkedOneMoreShadowing
@@ -3054,27 +3104,8 @@ const ViewSetHW = ({
                       />
                     </div>
                   </div>
-                  {/* <p style={{ color: 'red' }}>
-                    ＊課題設定は必ずレッスンが終わってから行って下さい。レッスンの途中で課題を設定するとレッスンページが次の課題に変わります。
-                  </p> */}
+
                   <div className="container mb-5">
-                    {/* <div
-                      className="col-lg-6 col-md-12 pb-1"
-                      style={{ textAlign: 'left' }}
-                    >
-                      <span
-                        className="btn btn-primary mt-2 mb-5"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          saveNewHW('modify')
-                        }}
-                      >
-                        <b>MODIFY LATEST H.W</b>
-                        <br />
-                        このボタンを押して次の課題を修正
-                        /修正はここでやらない、別のページでやる
-                      </span>
-                    </div> */}
                     <div className="row" style={{ textAlign: 'center' }}>
                       <div
                         className="col-lg-4 col-md-12  pb-1"
@@ -3086,8 +3117,6 @@ const ViewSetHW = ({
                             style={{ fontSize: '25px', width: '90%' }}
                             onClick={() => {
                               setIsLeaveEarly(true)
-                              // setNewLesson(true)
-                              // setIsSetTheSameHW(true)
                             }}
                           >
                             <b>Leave Early</b>
@@ -3144,37 +3173,6 @@ const ViewSetHW = ({
                         </h1>
                       </div>
 
-                      {/* <div
-                          className="col-lg-4 col-md-12  pb-1"
-                          style={{ textAlign: 'center' }}
-                        >
-                          <h1>
-                            <span
-                              className="btn btn-danger mt-2 mb-3"
-                              style={{ fontSize: '25px', width: '90%' }}
-                              onClick={() => {
-                                setIsSetTheSameHW(true)
-                              }}
-                            >
-                              <b>SAME H.W SET</b>
-                              <p
-                                style={{
-                                  fontSize: '15px',
-                                  // fontWeight: 'bold',
-                                  color: 'white',
-                                }}
-                              >
-                                This lesson finished without any problems.
-                                <br />
-                                このボタンを押すと、
-                                <br />
-                                上記で変更があっても、反映されません。
-                                <br />
-                                現在の課題と同じ課題が設定されます。
-                              </p>
-                            </span>{' '}
-                          </h1>
-                        </div> */}
                       <div
                         className="col-lg-4 col-md-12  pb-1"
                         style={{ textAlign: 'left' }}
@@ -3196,8 +3194,6 @@ const ViewSetHW = ({
                                 color: 'white',
                               }}
                             >
-                              {/* This lesson finished without any problems.
-                              <br /> */}
                               上記で設定された通りに課題が設定されます。同じ課題を設定する場合その理由を必ず選択して下さい。
                               <br />
                               Click this to set new homework as selected above.
@@ -3295,10 +3291,6 @@ const ViewSetHW = ({
         title="Created a new homework successfully."
         show={isSuccessSetNewLesson}
         onConfirm={() => router.push('/tutor/upcoming?tbn=' + tbn)}
-        // onConfirm={() => funcGoAfterSetUrl()}
-        // onCancel={() => {
-        //   setIsSuccessSetNewLesson(false)
-        // }}
         confirmBtnText="OK"
         // cancelBtnText="No"
         showCancel={false}

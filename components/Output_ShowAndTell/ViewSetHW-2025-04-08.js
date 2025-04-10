@@ -197,40 +197,21 @@ const ViewSetHW = ({
         axios.get(Url).then((response) => {
           // alert(Url)
           // alert('length' + response.data.length)
-
-          console.log('✅ response from backend:', response.data)
-
-          if (
-            response.data &&
-            response.data.status === true &&
-            Array.isArray(response.data.response) &&
-            response.data.response.length > 0
-          ) {
+          if (response.data.length > 0) {
             // alert('dbMemberSetInfo')
-            const hwInfo = response.data.response[0] // ✅ 여기!!
-            setDataMemberSetInfo(response.data.response)
-            setTodayHwReadingTextBook(hwInfo.textbookName)
-            setSelectedReadingTextbook(hwInfo.textbookName)
-            setTodayHwReadingLevel(hwInfo.courseLevel)
-            setSelectedReadingLevel(hwInfo.courseLevel)
-            setTodayHwReadingCourseName(hwInfo.courseName)
-            setTodayEnglibLevel(hwInfo.englibLevel)
-            setMainSubject(hwInfo.subject)
-            // setDataMemberSetInfo(response.data)
-            // setTodayHwReadingTextBook(response.data[0].textbookName)
-            // setSelectedReadingTextbook(response.data[0].textbookName)
-            // setTodayHwReadingLevel(response.data[0].courseLevel)
-            // setSelectedReadingLevel(response.data[0].courseLevel)
-            // setTodayHwReadingCourseName(response.data[0].courseName)
-            // setTodayEnglibLevel(response.data[0].englibLevel)
+            setDataMemberSetInfo(response.data)
+            setTodayHwReadingTextBook(response.data[0].textbookName)
+            setSelectedReadingTextbook(response.data[0].textbookName)
+            setTodayHwReadingLevel(response.data[0].courseLevel)
+            setSelectedReadingLevel(response.data[0].courseLevel)
+            setTodayHwReadingCourseName(response.data[0].courseName)
+            setTodayEnglibLevel(response.data[0].englibLevel)
 
-            // setMainSubject(response.data[0].subject)
+            setMainSubject(response.data[0].subject)
 
             //Get Reading Info
-            // var cN = response.data[0].courseName
-            var cN = hwInfo.courseName
-            // var rL = response.data[0].courseLevel //reading level
-            var rL = hwInfo.courseLevel //reading level
+            var cN = response.data[0].courseName
+            var rL = response.data[0].courseLevel //reading level
 
             // alert('courseName' + response.data[0].courseName)
 
@@ -245,8 +226,6 @@ const ViewSetHW = ({
             // var phLO = response.data[0].phonicsLessonOrder
             // getPhonicsInfo(phLO)
             // getConversationInfo()
-          } else {
-            console.warn('❌ No valid homework data:', response.data)
           }
         })
       } catch (error) {
@@ -455,6 +434,13 @@ const ViewSetHW = ({
             setShadowingMaterial(response.data[0].material_sort)
 
             if (response.data[0].material_sort == 'BOOK') {
+              //seriesName:English Power
+              // bookTitle:Power Listening in English
+              // bookNum:Section1
+              // storyNum:Unit1
+              // storyTitle:Conversation About Presentation Materials
+
+              // alert(response.data[0].homework_id)
               setHomeworkIDShadowing(response.data[0].homework_id)
               setshadowingLevel(response.data[0].shadowingLevel)
               setShadowSeriesName(response.data[0].seriesName)
@@ -608,6 +594,13 @@ const ViewSetHW = ({
   }
 
   function getBookShadowingHWAutoid(shL, seR, bookT, bookN, storyN) {
+    //mN-->autoid
+    // alert('Shadowig Level: ' + shL)
+    // alert('Series Name: ' + seR)
+    // alert('bookT: ' + bookT)
+    // alert('bookN: ' + bookN)
+    // alert('storyN: ' + storyN)
+
     var Url =
       DB_CONN_URL +
       '/get-book-shadowing-hw-autoid-info/' +
@@ -738,6 +731,11 @@ const ViewSetHW = ({
 
   //この教材の全てのレベル
   function getReadingALlLevelInfo(cN, rL) {
+    // var readingLevel = rL
+    // var bookNum = bN
+    // var storyNum = sN
+    // var courseName = cN
+
     if (cN.indexOf('CourseA') !== -1) {
       // var seriesName = 'Reading Triumphs'
       var Url =
@@ -775,46 +773,46 @@ const ViewSetHW = ({
     fetchData()
   }
 
-  // //この教材の全てのレベル
-  // function getReadingALlLevelInfo2(cN) {
-  //   // var readingLevel = rL
-  //   // var bookNum = bN
-  //   // var storyNum = sN
-  //   // var courseName = cN
-  //   // alert('getReadingALlLevelInfo2', cN)
-  //   if (cN.indexOf('CourseA') !== -1) {
-  //     // var seriesName = 'Reading Triumphs'
-  //     var Url =
-  //       DB_CONN_URL +
-  //       '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseB') !== -1) {
-  //     // var seriesName = 'Blackcat Series'
-  //     var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
-  //   }
-  //   if (cN.indexOf('CourseZ') !== -1) {
-  //     // var seriesName = 'Oxford Reading Tree'
-  //     var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
-  //   }
-  //   // alert('Url:' + Url)
+  //この教材の全てのレベル
+  function getReadingALlLevelInfo2(cN) {
+    // var readingLevel = rL
+    // var bookNum = bN
+    // var storyNum = sN
+    // var courseName = cN
+    // alert('getReadingALlLevelInfo2', cN)
+    if (cN.indexOf('CourseA') !== -1) {
+      // var seriesName = 'Reading Triumphs'
+      var Url =
+        DB_CONN_URL +
+        '/get-reading-story-Reading-Triumphs-same-textbook-All-Level'
+    }
+    if (cN.indexOf('CourseB') !== -1) {
+      // var seriesName = 'Blackcat Series'
+      var Url = DB_CONN_URL + '/get-reading-story-Blackcat-All-Level'
+    }
+    if (cN.indexOf('CourseZ') !== -1) {
+      // var seriesName = 'Oxford Reading Tree'
+      var Url = DB_CONN_URL + '/get-reading-story-ORT-All-Level'
+    }
+    // alert('Url:' + Url)
 
-  //   const fetchData = async () => {
-  //     try {
-  //       axios.get(Url).then((response) => {
-  //         // alert('length' + response.data.length)
+    const fetchData = async () => {
+      try {
+        axios.get(Url).then((response) => {
+          // alert('length' + response.data.length)
 
-  //         if (response.data.length > 0) {
-  //           setReadingAllLevelInfo(response.data.response)
-  //           // setCourseName(cN)
-  //           // getReadingInfo(cN, rL)
-  //         }
-  //       })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }
+          if (response.data.length > 0) {
+            setReadingAllLevelInfo(response.data.response)
+            // setCourseName(cN)
+            // getReadingInfo(cN, rL)
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }
 
   //Movie Shadowing Info of this Series
   function getShadowingLevelInfo() {
