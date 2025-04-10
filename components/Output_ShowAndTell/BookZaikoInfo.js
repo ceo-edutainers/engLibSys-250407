@@ -58,7 +58,6 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
     }
     fetchData()
   }
-
   useEffect(() => {
     checkZaiko()
     memberInfoFunc(mbn)
@@ -70,6 +69,8 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(Url)
+
+        alert(response.data)
 
         setZaikoInfo(response.data)
         setZaikoInfoLength(response.data.length)
@@ -101,7 +102,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(Url)
-        // alert(response.data.message)
+        alert('checkPreviouslyOrdered:' + response.data.message) //for test
         console.log('test:', response.data)
         if (response.data.message == 'already-ordered') {
           //すでに注文をしたので、Alertを出す。
@@ -132,7 +133,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
         tbn: tbn,
       })
       .then((response) => {
-        // setTutorInfo(response.data)
+        // alert('handleGetTutorList:' + response.data.message) //for test
         setTutorInfoEmail(response.data.response[0].email)
         // console.log('TEST-email:', response.data.response[0].email)
 
@@ -140,33 +141,85 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
       })
   }
 
+  // function memberInfoFunc(mbn) {
+  //   var Url = DB_CONN_URL + '/member_info_mbn'
+  //   // alert('memberMbn' + memberMbn)
+  //   alert('mbn:' + mbn)
+
+  //   axios
+  //     .post(Url, {
+  //       mbn: mbn,
+  //     })
+  //     .then((response) => {
+  //       if (!response.data.status) {
+  //         alert(
+  //           'memberInfoFunc: mbn from backend:' +
+  //             response.data.mbn +
+  //             '/response.data.message'
+  //         )
+  //       } else {
+  //         setMemberInfo(response.data.response)
+  //         setEmailStudent(response.data.response[0].email)
+
+  //         setStudentName(response.data.response[0].name_eng)
+  //         setZip(response.data.response[0].zip)
+
+  //         setPref(response.data.response[0].pref)
+  //         setCity(response.data.response[0].city)
+  //         setAddr(response.data.response[0].addr)
+  //         setPhone(response.data.response[0].mobilephone)
+  //       }
+  //     })
+  // }
   function memberInfoFunc(mbn) {
-    var Url = DB_CONN_URL + '/member_info_mbn'
-    // alert('memberMbn' + memberMbn)
+    // mbn이 없으면 함수 종료
+    if (!mbn || mbn.trim() === '') {
+      console.log('mbn 값이 없음. 요청 중단')
+      return
+    }
+
+    const Url = DB_CONN_URL + '/member_info_mbn'
 
     axios
       .post(Url, {
         mbn: mbn,
       })
       .then((response) => {
+        // alert(
+        //   'memberInfoFunc: mbn from backend: ' +
+        //     response.data.mbn +
+        //     '/response.data.message'
+        // )
         if (!response.data.status) {
-          // alert(response.data.message) //for test
         } else {
           setMemberInfo(response.data.response)
           setEmailStudent(response.data.response[0].email)
-
-          // if (response.data.response[0].email_urgent1 != '') {
-          //   setEmailUrgent(response.data.response[0].email_urgent1)
-          // }
           setStudentName(response.data.response[0].name_eng)
           setZip(response.data.response[0].zip)
-
           setPref(response.data.response[0].pref)
           setCity(response.data.response[0].city)
           setAddr(response.data.response[0].addr)
           setPhone(response.data.response[0].mobilephone)
         }
       })
+    // axios
+    //   .post(
+    //     Url,
+    //     { mbn: mbn },
+    //     {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     alert('백엔드 응답:' + JSON.stringify(response.data, null, 2))
+    //     console.log('백엔드 응답:', response.data)
+    //   })
+    //   .catch((error) => {
+    //     console.error('axios 에러:', error) // 여기에서 이유 알 수 있음
+    //     alert('axios 오류: ' + error.message)
+    //   })
   }
 
   //orderした時には管理者へのみメールを送る。生徒さんにはShippedのみ送るから、ここでは送らなくて大丈夫。
@@ -277,7 +330,7 @@ const BookZaikoInfo = ({ mbn, tbn, teacher_name }) => {
                 orderdNewBook()
                 checkZaiko()
                 sendingEmail()
-                alert(response.data.message)
+                // alert(response.data.message)
               } else if (response.data.message == 'no stock') {
                 // alert(
                 //   'We are sorry. Another order came in just a bit sooner, so the stock ran out before we could notify you. Please choose another item. / 申し訳ございません。他の注文が少しだけ早く入ったため、お知らせする間もなく在庫がなくなってしまいました。他の教材をお選び下さい。'

@@ -1964,14 +1964,14 @@ const READINGA = () => {
 
         <div className="col-lg-12 col-md-12" style={{ textAlign: 'right' }}>
           <div style={{ width: '100%', display: hwSetView ? 'block' : 'none' }}>
-            {/* <ViewSetHW
+            <ViewSetHW
               mbn={mbn}
               name_eng={nameEng}
               tbn={tbn}
               teacher_name={tutorNameEng}
               homework_id={homework_id}
               subject={subJ}
-            /> */}
+            />
             {doShadowingForThisCourse == 'no' ? (
               <ViewSetHWNoShadowing
                 mbn={mbn}

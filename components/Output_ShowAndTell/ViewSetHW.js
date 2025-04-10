@@ -184,53 +184,6 @@ const ViewSetHW = ({
   //processing popup
   const [processingPopup, setProcessingPopup] = useState(false)
 
-  // useEffect(() => {
-  //   dbMemberSetInfo()
-  // }, [mbn, subject])
-
-  // function dbMemberSetInfo() {
-  //   // var subject = 'READING'
-
-  //   var Url = DB_CONN_URL + '/get-member-set-info/' + mbn + '&' + subject
-  //   // alert(Url)
-  //   const fetchData2 = async () => {
-  //     try {
-  //       axios.get(Url).then((response) => {
-  //         alert('Url:' + Url)
-  //         // alert('message' + response.data.message)
-  //         if (response.data.length > 0) {
-
-  //           setDataMemberSetInfo(response.data)
-  //           setTodayHwReadingTextBook(response.data[0].textbookName)
-  //           setSelectedReadingTextbook(response.data[0].textbookName)
-  //           setTodayHwReadingLevel(response.data[0].courseLevel)
-  //           setSelectedReadingLevel(response.data[0].courseLevel)
-  //           setTodayHwReadingCourseName(response.data[0].courseName)
-  //           setTodayEnglibLevel(response.data[0].englibLevel)
-
-  //           setMainSubject(response.data[0].subject)
-
-  //           //Get Reading Info
-  //           var cN = response.data[0].courseName
-  //           var rL = response.data[0].courseLevel
-
-  //           if (subject == 'READING') {
-  //             getReadingInfo(cN, rL)
-  //             getReadingALlLevelInfo(cN, rL)
-  //           }
-
-  //           getShadowingLevelInfo()
-  //           getShadowingBookLevelInfo()
-
-  //         }
-  //       })
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData2()
-  // }
-
   useEffect(() => {
     if (mbn && subject) {
       dbMemberSetInfo()
@@ -246,8 +199,8 @@ const ViewSetHW = ({
     const fetchData2 = async () => {
       try {
         const response = await axios.get(Url)
-        alert('Url: ' + Url)
-
+        // alert('Url: ' + Url)
+        // alert(JSON.stringify(response.data, null, 2))
         if (response.data.length > 0) {
           setDataMemberSetInfo(response.data)
           setTodayHwReadingTextBook(response.data[0].textbookName)
@@ -478,12 +431,7 @@ const ViewSetHW = ({
 
             if (response.data[0].material_sort == 'BOOK') {
               //seriesName:English Power
-              // bookTitle:Power Listening in English
-              // bookNum:Section1
-              // storyNum:Unit1
-              // storyTitle:Conversation About Presentation Materials
 
-              // alert(response.data[0].homework_id)
               setHomeworkIDShadowing(response.data[0].homework_id)
               setshadowingLevel(response.data[0].shadowingLevel)
               setShadowSeriesName(response.data[0].seriesName)
@@ -2415,54 +2363,6 @@ const ViewSetHW = ({
                                   </span>
                                 </>
                               ))}
-                            {/* &nbsp;
-                            {readingHWAmount == 'second half' && (
-                              <>
-                                <input
-                                  type="number"
-                                  style={{ width: '60px' }}
-                                  onChange={(e) => {
-                                    sethw_page_start(e.target.value)
-                                  }}
-                                />
-                                &nbsp; p 〜 ストーリの最後{' '}
-                              </>
-                            )}
-                            {readingHWAmount == 'first half' && (
-                              <>
-                                &nbsp;<b>{hw_page_start}</b>p 〜
-                                <input
-                                  type="number"
-                                  style={{ width: '60px' }}
-                                  onChange={(e) => {
-                                    sethw_page_end(e.target.value)
-                                  }}
-                                />
-                                &nbsp; p
-                              </>
-                            )}{' '} */}
-                            {/* <span
-                              className="btn btn-danger ml-2"
-                              onClick={() => {
-                                setBookView(!bookView)
-                              }}
-                            >
-                              <FaEye size="20" />
-                              BOOK
-                            </span>
-                            <div
-                              style={{
-                                display: bookView ? 'block' : 'none',
-                              }}
-                            >
-
-                            </div> */}
-                            {/* <br />
-                            readingHWAmount:{readingHWAmount} */}
-                            {/* <br />
-                            　###sethw_page_start
-                            {hw_page_start}〜 ###sethw_page_end
-                            {hw_page_end} */}
                           </td>
                           <td rowSpan="2">
                             <span
@@ -2519,11 +2419,6 @@ const ViewSetHW = ({
                             <span style={{ color: 'red' }}>
                               Reading Level Change
                             </span>
-                            {/* 
-                            selectedReadingTextbook：{selectedReadingTextbook}
-                            <br /> */}
-                            {/* <br />
-                            selectedReadingLevel:{selectedReadingLevel} */}
                             <div
                               className="pt-0 mt-0"
                               style={{
@@ -2532,13 +2427,7 @@ const ViewSetHW = ({
                                   : 'none',
                               }}
                             >
-                              {/* se:{selectedReadingLevel} */}
                               <select
-                                //  disabled={
-                                //     (checkedOneMoreMaincourse ||
-                                //     !checkedSetTextbook) && 'disabled'
-                                //   }
-
                                 disabled={
                                   checkedOneMoreMaincourse ||
                                   (!checkedSetReadingLevel && 'disabled')
@@ -2620,47 +2509,60 @@ const ViewSetHW = ({
                                   changeReadingTextbook(e.target.value)
                                 }}
                               >
-                                {dataMemberSetInfo?.map((val2, key2) => {
-                                  return (
-                                    <>
-                                      <option
-                                        value="Reading Triumphs"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Reading Triumphs' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Reading Triumphs' && '*'}
-                                        Reading Triumphs
+                                {/* {Array.isArray(dataMemberSetInfo.response) &&
+                                  dataMemberSetInfo.response.map(
+                                    (val2, key2) => (
+                                      <option key={key2} value={val2.autoid}>
+                                        {val2.sort}
                                       </option>
-                                      {/* // )} */}
+                                    )
+                                  )} */}
+                                {/* {dataMemberSetInfo?.map((val2, key2) =>  */}
+                                {Array.isArray(dataMemberSetInfo.response) &&
+                                  dataMemberSetInfo.response.map(
+                                    (val2, key2) => {
+                                      return (
+                                        <>
+                                          <option
+                                            value="Reading Triumphs"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Reading Triumphs' && 'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Reading Triumphs' && '*'}
+                                            Reading Triumphs
+                                          </option>
+                                          {/* // )} */}
 
-                                      <option
-                                        value="Blackcat Series"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Blackcat Series' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Blackcat Series' && '*'}
-                                        Blackcat Series
-                                      </option>
-                                      <option
-                                        value="Oxford Reading Tree"
-                                        selected={
-                                          val2.textbookName ==
-                                            'Oxford Reading Tree' && 'selected'
-                                        }
-                                      >
-                                        {todayHwReadingTextBook ==
-                                          'Oxford Reading Tree' && '*'}
-                                        Oxford Reading Tree
-                                      </option>
-                                    </>
-                                  )
-                                })}
+                                          <option
+                                            value="Blackcat Series"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Blackcat Series' && 'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Blackcat Series' && '*'}
+                                            Blackcat Series
+                                          </option>
+                                          <option
+                                            value="Oxford Reading Tree"
+                                            selected={
+                                              val2.textbookName ==
+                                                'Oxford Reading Tree' &&
+                                              'selected'
+                                            }
+                                          >
+                                            {todayHwReadingTextBook ==
+                                              'Oxford Reading Tree' && '*'}
+                                            Oxford Reading Tree
+                                          </option>
+                                        </>
+                                      )
+                                    }
+                                  )}
                               </select>
                               <br />
                               <h5
