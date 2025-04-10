@@ -247,18 +247,6 @@ const ViewToMomAdd = ({
             fontSize: '14px',
           }}
         >
-          {/* <TextareaAutosize
-            className="tour-step2 tour-step5 mb-3 p-2"
-            aria-label="minimum height"
-            minRows={10}
-            onChange={(e) => {
-              setMomMessage(e.target.value)
-            }}
-            type="text"
-            style={{ width: '60%', verticalAlign: 'middle' }}
-            disabled={checkAlreadyMomChecked == 'ok' && 'disabled'}
-            // placeholder=""
-          /> */}
           <textarea
             spellcheck="false"
             id="story"
