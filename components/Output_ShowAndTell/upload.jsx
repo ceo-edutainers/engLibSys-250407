@@ -13,6 +13,8 @@ function Upload({
   thisSubject,
 }) {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+
   const [fileMindmap, setFileMindmap] = useState('')
   const fileInput = useRef()
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
@@ -202,9 +204,11 @@ function Upload({
           if (!response.data.length) {
             setFileMindmap('')
           } else {
-            var filemindmap =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              response.data.response[0].fileName
+            // var filemindmap =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   response.data.response[0].fileName
+            const filemindmap = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${response.data.response[0].fileName}`
+
             // imgRefresh(filemindmap)
             setFileMindmap(filemindmap)
             console.log('fileMindmap:', fileMindmap)
@@ -241,9 +245,12 @@ function Upload({
             // alert(response.data.message)
             // alert(response.data.length)
 
-            var filemindmap =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              response.data.response[0].fileName
+            // var filemindmap =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   response.data.response[0].fileName
+
+            const filemindmap = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${response.data.response[0].fileName}`
+
             // imgRefresh(filemindmap)
             setFileMindmap(filemindmap)
             console.log('fileMindmap:', fileMindmap)
@@ -279,7 +286,7 @@ function Upload({
                     {/* <br />
                     更新するためには、新たにアップロードしてください。 */}
                   </p>
-
+                  {/* {fileMindmap} */}
                   <img
                     src={fileMindmap}
                     style={{
@@ -300,106 +307,6 @@ function Upload({
                 width: '100%',
               }}
             >
-              {/* <div
-                className="col-lg-7 col-md-7"
-                style={{ textAlign: 'center' }}
-              > */}
-              {/* <div>
-                  <label
-                    className="btn btn-warning"
-                    style={{
-                      position: 'relative',
-                      overflow: 'hidden',
-                      fontAlign: 'center',
-                      width: '100%',
-                      height: '70px',
-                      paddingTop: '14px',
-                      fontSize: '18px',
-                      borderRadius: '10px',
-                      fontWeight: '600',
-                    }}
-                  >
-                    マインドマップを選択
-                    <input
-                      type="file"
-                      ref={fileInput}
-                      accept=".jpg, .jpeg, .png"
-                      onChange={() => {
-                        setIsFileAru(true)
-                      }}
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        margin: 0,
-                        padding: 0,
-                        fontSize: '20px',
-                        cursor: 'pointer',
-                        opacity: 0,
-                      }}
-                    />
-                    <p
-                      style={{
-                        fontSize: '10px',
-                        color: 'black',
-                        paddingTop: 0,
-                      }}
-                    >
-                      jpg/png形式のみ
-                    </p>
-                  </label>
-                </div> */}
-
-              {/* {isFileAru ? (
-                  <>
-                    <button
-                      style={{
-                        fontWeight: '600',
-                        padding: '10px',
-                        color: 'black',
-                        fontSize: '18px',
-                        borderRadius: '10px',
-                        backgroundColor: '#ececec',
-                        verticalAlign: 'middle',
-                        width: '100%',
-                        marginLeft: 0,
-                        marginRight: 0,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <img
-                        src="/images/homework-upload.png"
-                        style={{ height: '50px', width: 'auto' }}
-                      />
-                      アップロード
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      style={{
-                        fontWeight: '600',
-                        padding: '10px',
-                        color: 'black',
-                        fontSize: '18px',
-                        borderRadius: '10px',
-                        backgroundColor: '#F0E5F7',
-                        verticalAlign: 'middle',
-                        width: '100%',
-                        marginLeft: 0,
-                        marginRight: 0,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <img
-                        src="/images/homework-upload.png"
-                        style={{ height: '50px', width: 'auto' }}
-                      />
-                      アップロード
-                    </button>
-                  </>
-                )} */}
-              {/* </div> */}
               <div
                 className="col-lg-12 col-md-12 "
                 style={{ textAlign: 'center' }}
@@ -412,11 +319,11 @@ function Upload({
                       padding: '4px',
                     }}
                   >
-                    {/* <p>{qrLinkBookQuestion}</p> */}
                     <QrcodeGenerator
                       url={qrLinkBookQuestion}
                       title="課題アップロード"
                     />
+                    {/* {qrLinkBookQuestion} */}
                     <p style={{ color: 'blue', fontSize: '13px' }}>
                       スマホ
                       <ruby>
@@ -428,7 +335,7 @@ function Upload({
                       </ruby>
                       アップロード
                       <br />
-                      (QRコードをスマホにかざす)
+                      (QRコードをスマホにかざす.)
                     </p>
                   </p>
                   {/* <p style={{ color: 'red', fontSize: '12px' }}>

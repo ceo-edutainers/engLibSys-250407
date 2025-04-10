@@ -13,6 +13,7 @@ function Upload({
   thisSubject,
 }) {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [fileMindmap, setFileMindmap] = useState('')
   const fileInput = useRef()
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
@@ -221,6 +222,7 @@ function Upload({
             var filemindmap =
               'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
               response.data.response[0].fileName
+
             // imgRefresh(filemindmap)
             setFileMindmap(filemindmap)
             console.log('fileMindmap:', fileMindmap)
@@ -257,9 +259,12 @@ function Upload({
             // alert(response.data.message)
             // alert(response.data.length)
 
-            var filemindmap =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              response.data.response[0].fileName
+            // var filemindmap =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   response.data.response[0].fileName
+
+            const filemindmap = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${response.data.response[0].fileName}`
+
             // imgRefresh(filemindmap)
             setFileMindmap(filemindmap)
             console.log('fileMindmap:', fileMindmap)
@@ -286,6 +291,7 @@ function Upload({
               //   __html: imgRefresh(fileMindmap),
               // }}
             >
+              {' '}
               {(fileMindmap || newFileName) && (
                 <>
                   <p

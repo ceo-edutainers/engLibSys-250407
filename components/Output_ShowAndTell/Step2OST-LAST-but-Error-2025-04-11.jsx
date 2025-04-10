@@ -322,41 +322,55 @@ const Step2OST = () => {
   //DBからデーターを持ってくる + ゲームのスタート情報をDBへ入れる
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
-
   useEffect(() => {
-    const mbn = localStorage.getItem('MypageMbn')
-    const url = `${DB_CONN_URL}/get-hw-show-and-tell-writing-info/${mbn}&${HWID}&${currentStep}`
+    var mbn = localStorage.getItem('MypageMbn')
+
+    var url = DB_CONN_URL + '/get-hw-show-and-tell-writing-info/'
+    var Url = url + mbn + '&' + HWID + '&' + currentStep
 
     const fetchData = async () => {
-      setLoading(true)
       setError(false)
+      setLoading(true)
 
       try {
-        const response = await axios.get(url)
+        const response = await axios.get(Url)
 
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          const data = response.data[0]
+        if (response.data.length > 0) {
+          setOutlineBody(response.data[0].outline_body.trim())
 
-          setOutlineBody(data.outline_body?.trim() || '')
           setOutlineBodyWordLength(
-            data.outline_body?.trim().split(' ').length || 0
+            response.data[0].outline_body.trim().split(' ').length
           )
 
-          const total =
-            (data.outline_topic?.trim().split(' ').length || 0) +
-            (data.outline_introduction?.trim().split(' ').length || 0) +
-            (data.outline_body?.trim().split(' ').length || 0) +
-            (data.outline_conclusion?.trim().split(' ').length || 0)
+          var sum = parseInt(
+            response.data[0].outline_topic.trim().split(' ').length +
+              response.data[0].outline_introduction.trim().split(' ').length +
+              response.data[0].outline_body.trim().split(' ').length +
+              response.data[0].outline_conclusion.trim().split(' ').length
+          )
 
-          setWordsum(total)
+          if (
+            response.data[0].outline_topic.trim() == '' &&
+            response.data[0].outline_introduction.trim() == '' &&
+            response.data[0].outline_body.trim() == '' &&
+            response.data[0].outline_conclusion.trim() == ''
+          ) {
+            // alert('here1')
+            setWordsum(0)
+          } else {
+            // alert('here2')
+            setWordsum(sum)
+          }
         } else {
-          // 배열이 비어 있거나 아닌 경우
           setOutlineBody('')
+
           setOutlineBodyWordLength(0)
+
           setWordsum(0)
         }
       } catch (error) {
-        console.error('❌ fetchData 에러:', error)
+        // alert('3')
+        console.log(error)
         setError(true)
       }
 

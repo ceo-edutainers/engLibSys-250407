@@ -3,111 +3,119 @@ import Link from '@/utils/ActiveLink'
 import S3 from 'react-aws-s3'
 import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
-import { useRouter } from 'next/router' // //get값이 넘어왔을 경우
+import { useRouter } from 'next/router'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
-// import ViewUploadFile from '@/components/readingSelfcourse/viewUploadFile'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faMicrophone,
+  faTimes,
+  faSave,
+  faBullseye,
+  faTrashAlt,
+  faStop,
+  faTrash,
+  faLockOpen,
+  faArrowCircleRight,
+  faArrowAltCircleRight,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import IdeaBox from '@/components/Output_ShowAndTell/IdeaBox'
+
 function App() {
   const [fileMindmap, setFileMindmap] = useState([])
+  const [mbn, setMyMbn] = useState('')
+  const [homework_id, setHomework_id] = useState('')
+  const [thisSubject, setThisSubject] = useState('')
+  const [practiceTempId, setPracticeTempId] = useState('')
+  const [currentStep, setCurrentStep] = useState('')
+  const [stepStatus, setStepStatus] = useState('')
+  const [pointKeyNum, setPointKeyNum] = useState('')
+  const [fileDetail, setFileDetail] = useState('')
+  const [pti, setPti] = useState('')
+  const [expiredHW, setExpiredHW] = useState(false)
+  const fileInput = useRef(null)
+  const [afterFileSelected, setAfterFileSelected] = useState(false)
+  const [isFileAru, setIsFileAru] = useState(false)
+  const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
+  const [isPermettedFile, setIsPermettedFile] = useState(false)
+  const [isFileSelected, setIsFileSelected] = useState(false)
+  const [isFileDeleted, setIsFileDeleted] = useState(false)
+  const [newFileName, setNewFileName] = useState('')
+  const [fileName, setFileName] = useState('')
+  const [fileLength, setFileLength] = useState(0)
+  const [mindmapView, setMindmapView] = useState(false)
 
-  const [mbn, setMyMbn] = useState()
-  const [homework_id, setHomework_id] = useState()
-  const [thisSubject, setThisSubject] = useState()
-  const [practiceTempId, setPracticeTempId] = useState()
-  const [currentStep, setCurrentStep] = useState()
-  const [stepStatus, setStepStatus] = useState()
-  const [pointKeyNum, setPointKeyNum] = useState()
-  const [fileDetail, setFileDetail] = useState()
-
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const router = useRouter()
   const { query } = useRouter()
 
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     // Code using query
-  //     console.log('router.query', router.query)
-  //     setMyMbn(router.query.m)
-  //     setHomework_id(router.query.hid)
-  //     setThisSubject(router.query.sb)
-  //     setPracticeTempId(router.query.pti)
-  //     setCurrentStep(router.query.cstep)
-  //     setStepStatus(router.query.sS)
-  //     setPointKeyNum(router.query.pntKN)
-  //     setFileDetail(router.query.fD)
-  //     console.log('###mbn', router.query.m)
-  //     console.log('###hid', router.query.hid)
-  //   }
-  // }, [router.isReady])
-
   useEffect(() => {
     if (router.isReady && router.query) {
-      // Code using query
-      console.log('router.query', router.query)
-      setMyMbn(router.query.m)
-      setHomework_id(router.query.hid)
-      setThisSubject(router.query.sb)
-      setPracticeTempId(router.query.pti)
-      setCurrentStep(router.query.cstep)
-      setStepStatus(router.query.sS)
-      setPointKeyNum(router.query.pntKN)
-      setFileDetail(router.query.fD)
-      console.log('###mbn', router.query.m)
-      console.log('###hid', router.query.hid)
-      console.log('###thisSubject', router.query.sb) // 추가된 디버깅용 콘솔 로그
+      const myMbn = router.query.m
+      const myHomeworkId = router.query.hid
+      const myThisSubject = router.query.sb
+      const myPracticeTempId = router.query.pti
+      const myCurrentStep = router.query.cstep
+      const myStepStatus = router.query.sS
+      const myPointKeyNum = router.query.pntKN
+      const myFileDetail = router.query.fD
+
+      setMyMbn(myMbn)
+      setHomework_id(myHomeworkId)
+      setThisSubject(myThisSubject)
+      setPracticeTempId(myPracticeTempId)
+      setCurrentStep(myCurrentStep)
+      setStepStatus(myStepStatus)
+      setPointKeyNum(myPointKeyNum)
+      setFileDetail(myFileDetail)
+
+      // 모든 상태 값이 설정된 후에 reloadImage 호출
+      reloadImage(myMbn, myThisSubject, myHomeworkId, myCurrentStep)
+
+      // 숙제가 만료되었는지 확인하는 코드 추가
+      const checkExpiredHW = async () => {
+        try {
+          const url = `${DB_CONN_URL}/check-hw-finished/${myMbn}&${myHomeworkId}`
+          const response = await axios.get(url)
+          if (response.data.message === 'expired hw') {
+            setExpiredHW(true)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      checkExpiredHW()
     }
-  }, [router.isReady, router.query]) // 의존성 배열에 router.query 추가
+  }, [router.isReady, router.query])
 
-  console.log('###mbn'.mbn)
-  console.log('###hwid', homework_id)
-
-  const [pti, setPti] = useState()
-
-  const refreshLink =
-    '/upload/hwupShowandtellMindmap?m=' +
-    mbn +
-    '&sb=' +
-    thisSubject +
-    '&hid=' +
-    homework_id +
-    '&pti=' +
-    '&cstep=' +
-    currentStep +
-    '&sS=' +
-    stepStatus +
-    '&pntKN=' +
-    pointKeyNum +
-    '&fD=' +
-    fileDetail
+  const closeWindow = () => {
+    window.open('about:blank', '_self')
+    window.close()
+  }
+  const afterDeleteImgReload = () => {
+    setIsFileDeleted(false)
+    reloadImage(mbn, thisSubject, homework_id, currentStep)
+  }
 
   useEffect(() => {
-    if (practiceTempId == '') {
+    if (practiceTempId === '') {
       setPti('from mobile')
     } else {
       setPti(practiceTempId)
     }
-  }, [])
+  }, [practiceTempId])
 
-  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-  const fileInput = useRef()
-  const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
-  const [isPermettedFile, setIsPermettedFile] = useState(false)
-  const [isFileAru, setIsFileAru] = useState(false)
-  const [newFileName, setNewFileName] = useState('')
-  const [isFileSelected, setIsFileSelected] = useState(false)
-  const [afterFileSelected, setAfterFileSelected] = useState(false)
-  const [expiredHW, setExpiredHW] = useState(false)
-
-  function closeWindow() {
-    window.open('about:blank', '_self')
-    window.close()
+  const handleClick = (event) => {
+    event.preventDefault()
+    let newArr = fileInput.current.files
+    for (let i = 0; i < newArr.length; i++) {
+      handleUpload(newArr[i], i)
+    }
   }
 
   const insertPointToDB = () => {
-    var url = DB_CONN_URL + '/sys-point-member-history-insert'
-
-    alert('1')
+    const url = `${DB_CONN_URL}/sys-point-member-history-insert`
     axios
       .post(url, {
         mbn: mbn,
@@ -117,18 +125,15 @@ function App() {
         practiceTempId: pti,
       })
       .then((response) => {
-        console.log('TEST-point insert:', response.data.message)
         if (!response.data.status) {
+          console.error('Failed to insert point to DB')
         } else {
+          console.log('Point inserted to DB successfully')
         }
       })
-  }
-  const handleClick = (event) => {
-    event.preventDefault()
-    let newArr = fileInput.current.files
-    for (let i = 0; i < newArr.length; i++) {
-      handleUpload(newArr[i], i)
-    }
+      .catch((error) => {
+        console.error('Error inserting point to DB:', error)
+      })
   }
 
   const hwHistoryUpdate = (
@@ -137,102 +142,50 @@ function App() {
     homework_id,
     pti,
     thisSubject,
-    newFileName,
+    newfilename,
     fileDetail
   ) => {
-    var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
+    const url = `${DB_CONN_URL}/update-sys-hw-history-uploadFile/${mbn}&${homework_id}&${pti}&${currentStep}&${stepStatus}&${thisSubject}&${newfilename}&${fileDetail}`
     axios
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          pti +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject +
-          '&' +
-          newFileName +
-          '&' +
-          fileDetail
-      )
-
+      .put(url)
       .then((response) => {
-        alert(response.data.message)
         localStorage.setItem('rediriectPageView', 'finished')
         reloadImage()
       })
+      .catch((error) => {
+        console.error('Failed to update homework history:', error)
+      })
   }
 
-  useEffect(() => {
-    if (router.isReady) {
-      setMyMbn(router.query.m)
-      setHomework_id(router.query.hid)
-
-      var Url =
-        DB_CONN_URL +
-        '/check-hw-finished/' +
-        router.query.m +
-        '&' +
-        router.query.hid
-
-      const fetchData2 = async () => {
-        try {
-          axios.get(Url).then((response) => {
-            // alert('length' + response.data.length)
-            if (response.data.message == 'expired hw') {
-              //すでに終わっている宿題/期間切れのリンク
-              setExpiredHW(true)
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
-      }
-
-      fetchData2()
-    }
-  }, [router.isReady])
-
   const handleUpload = (file, i) => {
-    var parts = []
-    parts = fileInput.current.files[0].name.split('.')
+    var parts = file.name.split('.')
     var ext = parts[1]
-    // alert('ext' + ext)
+
     if (
       ext !== 'jpg' &&
       ext !== 'jpeg' &&
       ext !== 'png' &&
       ext !== 'JPG' &&
       ext !== 'JPEG' &&
-      ext != 'PNG'
+      ext !== 'PNG'
     ) {
       setIsPermettedFile(true)
       return false
     }
 
     var dateVariable = new Date()
+    var fileTime = nowDate + nowTime
     var nowDate = dateVariable.getDate()
     var nowTime = dateVariable.getTime()
-    var fileTime = nowDate + nowTime
 
     let newfilename =
-      'showandtell_Mindmap_' +
-      homework_id +
-      '_' + //readingSelfCourse_
-      fileTime +
-      '.' +
-      ext
+      'showandtell_Mindmap_' + homework_id + '_' + fileTime + '.' + ext
+
     setNewFileName(newfilename)
-    console.log('newFileName:', newFileName)
 
     const config = {
-      bucketName: process.env.S3_REACT_APP_BUCKET_NAME /**いつもenglib */,
-      dirName: process.env.S3_REACT_APP_DIR_NAME2 /* optional */,
+      bucketName: process.env.S3_REACT_APP_BUCKET_NAME,
+      dirName: process.env.S3_REACT_APP_DIR_NAME2,
       region: process.env.S3_REACT_APP_REGION,
       accessKeyId: process.env.S3_REACT_APP_ACCESS_ID,
       secretAccessKey: process.env.S3_REACT_APP_ACCESS_KEY,
@@ -253,114 +206,12 @@ function App() {
 
         setIsOpenBackMypage(true)
         setAfterFileSelected(false)
-        // setUploadCompleted(true)
         insertPointToDB()
       } else {
+        console.error('Failed to upload file:', data)
       }
     })
   }
-
-  const [mindmapView, setMindmapView] = useState(false) //IdeaView
-  // const [fileBookQuestion, setFileBookQuestion] = useState([])
-  const [fileName, setFileName] = useState()
-  const [isFileDeleted, setIsFileDeleted] = useState(false)
-  const [fileLength, setFileLength] = useState()
-
-  const refreshPage = () => {
-    window.location.reload()
-  }
-  const deleteFileInfo = (id, homework_id, pointStep) => {
-    var homework_id = homework_id
-    var pointStep = currentStep
-
-    var url = DB_CONN_URL + '/upload-reading-file-delete/'
-    var Url = url + id + '&' + homework_id + '&' + pointStep
-    //console.log(Url)
-
-    const fetchData = async () => {
-      try {
-        await axios.get(Url).then((response) => {})
-      } catch (error) {
-        // alert('delete error!')
-      }
-    }
-    // s3download(params)
-
-    if (fileLength == 1) {
-      setIsFileDeleted(true)
-      refreshPage()
-    } else {
-      reloadImage()
-      setIsFileDeleted(true)
-    }
-    fetchData()
-  }
-
-  const afterDeleteImgReload = () => {
-    // alert('test')
-    setIsFileDeleted(false)
-    reloadImage()
-  }
-
-  // useEffect(() => {
-  //   reloadImage()
-  // }, [])
-
-  // useEffect(() => {
-  //   if (router.isReady && router.query) {
-  //     // Code using query
-  //     console.log('router.query', router.query)
-  //     setMyMbn(router.query.m)
-  //     setHomework_id(router.query.hid)
-  //     setThisSubject(router.query.sb)
-  //     setPracticeTempId(router.query.pti)
-  //     setCurrentStep(router.query.cstep)
-  //     setStepStatus(router.query.sS)
-  //     setPointKeyNum(router.query.pntKN)
-  //     setFileDetail(router.query.fD)
-  //     console.log('###mbn', router.query.m)
-  //     console.log('###hid', router.query.hid)
-  //     console.log('###thisSubject', router.query.sb)
-
-  //     // 모든 상태 값이 설정된 후에 reloadImage 호출
-  //     reloadImage(
-  //       router.query.m,
-  //       router.query.sb,
-  //       router.query.hid,
-  //       router.query.cstep
-  //     )
-  //   }
-  // }, [router.isReady, router.query])
-
-  useEffect(() => {
-    if (router.isReady && router.query) {
-      // 상태 값 설정
-      const myMbn = router.query.m
-      const myHomeworkId = router.query.hid
-      const myThisSubject = router.query.sb
-      const myPracticeTempId = router.query.pti
-      const myCurrentStep = router.query.cstep
-      const myStepStatus = router.query.sS
-      const myPointKeyNum = router.query.pntKN
-      const myFileDetail = router.query.fD
-
-      setMyMbn(myMbn)
-      setHomework_id(myHomeworkId)
-      setThisSubject(myThisSubject)
-      setPracticeTempId(myPracticeTempId)
-      setCurrentStep(myCurrentStep)
-      setStepStatus(myStepStatus)
-      setPointKeyNum(myPointKeyNum)
-      setFileDetail(myFileDetail)
-
-      console.log('###mbn', myMbn)
-      console.log('###hid', myHomeworkId)
-      console.log('###thisSubject', myThisSubject)
-
-      // 모든 상태 값이 설정된 후에 reloadImage 호출
-      reloadImage(myMbn, myThisSubject, myHomeworkId, myCurrentStep)
-    }
-  }, [router.isReady, router.query])
 
   const reloadImage = (mbn, thisSubject, homework_id, currentStep) => {
     if (localStorage.getItem('loginStatus') === 'true') {
@@ -377,30 +228,30 @@ function App() {
             '&' +
             currentStep
 
-          alert(Url)
+          // alert(Url)
           const response = await axios.get(Url)
 
-          // 데이터 구조를 디버깅하기 위한 로그
           console.log('response.data:', response.data)
 
           if (!response.data.length) {
             setFileMindmap([])
           } else {
-            console.log('response.data.response:', response.data.response) // 응답 데이터 구조 확인
+            console.log('response.data.response:', response.data.response)
 
             const filemindmapArray = response.data.response
               .map((item) => {
-                console.log('item:', item) // 각 항목의 구조 확인
+                console.log('item:', item)
                 if (!item.fileName) {
                   console.error('Missing fileName in item:', item)
                   return null
                 }
-                return (
-                  'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-                  item.fileName
-                )
+                return {
+                  fileName: item.fileName,
+                  autoid: item.autoid,
+                  homework_id: item.homework_id,
+                }
               })
-              .filter(Boolean) // null 값 제거
+              .filter(Boolean)
 
             if (filemindmapArray.length === 0) {
               console.error(
@@ -423,141 +274,35 @@ function App() {
     }
   }
 
-  // const reloadImage = (mbn, thisSubject, homework_id, currentStep) => {
-  //   if (localStorage.getItem('loginStatus') === 'true') {
-  //     const fetchData2 = async () => {
-  //       try {
-  //         const url = DB_CONN_URL + '/get-mindmap-sys-hw-history/'
-  //         const Url =
-  //           url +
-  //           mbn +
-  //           '&' +
-  //           thisSubject +
-  //           '&' +
-  //           homework_id +
-  //           '&' +
-  //           currentStep
+  const deleteFileInfo = (id, homework_id, pointStep) => {
+    var homework_id = homework_id
+    var pointStep = currentStep
 
-  //         alert(Url)
-  //         const response = await axios.get(Url)
+    var url = DB_CONN_URL + '/upload-reading-file-delete/'
+    var Url = url + id + '&' + homework_id + '&' + pointStep
 
-  //         // 데이터 구조를 디버깅하기 위한 로그
-  //         console.log('response.data:', response.data)
+    const fetchData = async () => {
+      try {
+        await axios.get(Url).then((response) => {})
+      } catch (error) {
+        // alert('delete error!')
+      }
+    }
 
-  //         if (!response.data.length) {
-  //           setFileMindmap([])
-  //         } else {
-  //           const filemindmapArray = response.data.response
-  //             .map((item) => {
-  //               if (!item.fileName) {
-  //                 console.error('Missing fileName in item:', item)
-  //                 return null
-  //               }
-  //               return (
-  //                 'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-  //                 item.fileName
-  //               )
-  //             })
-  //             .filter(Boolean) // null 값 제거
+    if (fileLength === 1) {
+      setIsFileDeleted(true)
+      refreshPage()
+    } else {
+      reloadImage()
+      setIsFileDeleted(true)
+    }
+    fetchData()
+  }
 
-  //           if (filemindmapArray.length === 0) {
-  //             console.error(
-  //               'No valid file names found in response:',
-  //               response.data.response
-  //             )
-  //             setFileMindmap([])
-  //           } else {
-  //             setFileMindmap(filemindmapArray)
-  //             console.log('fileMindmap:', filemindmapArray)
-  //           }
-  //         }
-  //       } catch (error) {
-  //         console.log(error)
-  //         alert(error)
-  //       }
-  //     }
-
-  //     fetchData2()
-  //   }
-  // }
-
-  // const reloadImage = (mbn, thisSubject, homework_id, currentStep) => {
-  //   if (localStorage.getItem('loginStatus') == 'true') {
-  //     const fetchData2 = async () => {
-  //       try {
-  //         var url = DB_CONN_URL + '/get-mindmap-sys-hw-history/'
-  //         var Url =
-  //           url +
-  //           mbn +
-  //           '&' +
-  //           thisSubject +
-  //           '&' +
-  //           homework_id +
-  //           '&' +
-  //           currentStep
-
-  //         // alert('url' + Url)
-  //         const response = await axios.get(Url)
-  //         if (!response.data.length) {
-  //           setFileMindmap([])
-  //         } else {
-  //           var filemindmap =
-  //             'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-  //             response.data.response[0].fileName
-  //           setFileMindmap([filemindmap]) // 배열로 설정
-  //           console.log('fileMindmap:', fileMindmap)
-  //         }
-  //       } catch (error) {
-  //         console.log(error)
-  //         alert(error)
-  //       }
-  //     }
-
-  //     fetchData2()
-  //   }
-  // }
-
-  // const reloadImage = () => {
-  //   if (localStorage.getItem('loginStatus') == 'true') {
-  //     var mbn = localStorage.getItem('MypageMbn')
-  //     const fetchData2 = async () => {
-  //       try {
-  //         var url = DB_CONN_URL + '/get-mindmap-sys-hw-history/'
-  //         var Url =
-  //           url +
-  //           mbn +
-  //           '&' +
-  //           thisSubject +
-  //           '&' +
-  //           homework_id +
-  //           '&' +
-  //           currentStep
-
-  //         alert(Url)
-  //         const response = await axios.get(Url)
-  //         if (!response.data.length) {
-  //           setFileMindmap([])
-  //         } else {
-  //           var filemindmap =
-  //             'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-  //             response.data.response[0].fileName
-  //           setFileMindmap([filemindmap]) // 배열로 설정
-  //           console.log('fileMindmap:', fileMindmap)
-  //         }
-  //       } catch (error) {
-  //         console.log(error)
-  //         alert(error)
-  //       }
-  //     }
-
-  //     fetchData2()
-  //   }
-  // }
   return (
     <>
       <div>
         <center>
-          {/* expiredHW:{expiredHW ? 'true' : 'false'} */}
           {!expiredHW ? (
             <>
               <form className="upload-steps" onSubmit={handleClick}>
@@ -583,7 +328,6 @@ function App() {
                       fontWeight: 'bold',
                     }}
                   >
-                    {/* {thisSubject} */}
                     SHOW AND TELL
                   </h1>
                   <h5 style={{ color: 'red' }}>Mindmap Upload</h5>
@@ -599,8 +343,6 @@ function App() {
                 <div
                   className="row mt-3  mb-1"
                   style={{
-                    // border: '1px solid #b0c4de',
-                    // borderRadius: '10px',
                     padding: '10px',
                     width: '100%',
                   }}
@@ -616,7 +358,7 @@ function App() {
                         overflow: 'hidden',
                         fontAlign: 'center',
                         width: '100%',
-                        height: '70px',
+                        height: '100px',
                         paddingTop: '14px',
                         fontSize: '18px',
                         border: '1px solid orange',
@@ -625,6 +367,8 @@ function App() {
                       }}
                     >
                       ファイルを選択
+                      <br />
+                      (マインドマップは一枚にしてアップロードしてください)
                       <input
                         type="file"
                         ref={fileInput}
@@ -736,23 +480,12 @@ function App() {
                 </div>
               </form>
 
-              {/* <ViewUploadFile
-                currentStep={currentStep}
-                stepStatus={stepStatus}
-                HWID={homework_id}
-                thisSubject={thisSubject}
-                fileDetail={fileDetail}
-                mbn={mbn}
-              /> */}
               <span style={{ cursor: 'pointer' }}>
                 <h5
                   style={{
-                    // width: '100%',
                     width: '100%',
                     fontSize: '18px',
                     padding: '20px',
-                    // border: '1px solid #FCD2CF',
-                    // borderRadius: '10px',
                     backgroundColor: '#F9EBEA',
                     marginTop: '20px',
                     marginBottom: '15px',
@@ -761,34 +494,27 @@ function App() {
                     cursor: 'pointer',
                   }}
                   onClick={() => {
-                    reloadImage()
+                    reloadImage(mbn, thisSubject, homework_id, currentStep)
                     setMindmapView(!mindmapView)
                   }}
                 >
-                  {/* <img
-                    src="/images/icon-mouseclick.png"
-                    style={{ height: '40px', width: 'auto' }}
-                  /> */}
-                  アップロードされたファイル
-                  {/* {mindmapView ? '隠す' : '更新して見る'} */}
+                  クリックしてアップロードされたファイルを見る
                 </h5>
               </span>
               <div className="col-lg-12 col-md-12">
-                {/* <h5>
-                  <strong>TOTAL:{fileLength > 0 ? fileLength : 0}</strong>
-                </h5> */}
-                {
-                  // mindmapView &&
-                  //   isFileAru &&
-                  fileMindmap?.map((val, key) => {
+                <h5>
+                  <strong>
+                    TOTAL:{fileMindmap.length > 0 ? fileMindmap.length : 0}
+                  </strong>
+                </h5>
+                {Array.isArray(fileMindmap) &&
+                  fileMindmap.map((val, key) => {
                     var uploadfile =
                       'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
                       val.fileName
                     return (
                       <>
-                        {' '}
-                        {uploadfile}
-                        <p>
+                        <p key={key}>
                           <img
                             src={uploadfile}
                             style={{
@@ -799,7 +525,6 @@ function App() {
                               maxWidth: '800px',
                             }}
                           />
-
                           <br />
                           <span
                             style={{
@@ -816,7 +541,6 @@ function App() {
                               )
                             }}
                           >
-                            {/* {currentStep} */}
                             <FontAwesomeIcon
                               icon={faTrash}
                               size="2x"
@@ -828,8 +552,7 @@ function App() {
                         </p>
                       </>
                     )
-                  })
-                }
+                  })}
                 <h6>
                   {!isFileAru && 'アップロードされたファイルがありません。'}
                 </h6>
@@ -863,21 +586,13 @@ function App() {
           showCancel={false}
           reverseButtons={false}
           style={{ width: '600px' }}
-        >
-          {/* <p>
-            次のステップに行く前に途中でやめると、このステップでゲットしたポイントは消えてしまいます。
-          </p> */}
-        </SweetAlert>
+        ></SweetAlert>
 
         <SweetAlert
           title="許可されてないファイル形式です。"
           show={isPermettedFile}
           onConfirm={() => setIsPermettedFile(false)}
-          // onCancel={() => {
-          //   setIsPermettedFile(false)
-          // }}
           confirmBtnText="OK"
-          // cancelBtnText="NO"
           showCancel={false}
           reverseButtons={true}
           style={{ width: '500px' }}
@@ -890,32 +605,17 @@ function App() {
           font-ize="15px"
           show={isFileSelected}
           onConfirm={() => setIsFileSelected(false)}
-          // onCancel={() => {
-          //   setIsPermettedFile(false)
-          // }}
           confirmBtnText="OK"
-          // cancelBtnText="NO"
           showCancel={false}
           reverseButtons={true}
           style={{ width: '500px' }}
-        >
-          {/* <p>
-            アップロード可能なファイルは、jpg/jpeg/png/pdfファイルのみです。
-          </p> */}
-        </SweetAlert>
+        ></SweetAlert>
         <SweetAlert
           title="削除完了"
           font-ize="15px"
           show={isFileDeleted}
-          onConfirm={() =>
-            // setIsFileDeleted(false)
-            afterDeleteImgReload()
-          }
-          // onCancel={() => {
-          //   setIsPermettedFile(false)
-          // }}
+          onConfirm={() => afterDeleteImgReload()}
           confirmBtnText="OK"
-          // cancelBtnText="NO"
           showCancel={false}
           reverseButtons={true}
           style={{ width: '500px' }}

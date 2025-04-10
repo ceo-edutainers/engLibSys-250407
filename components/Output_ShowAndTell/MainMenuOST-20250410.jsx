@@ -140,28 +140,57 @@ function MainMenuOST() {
     fetchData4()
   }
 
-  const nextStepCheck = (nStep) => {
-    //Show and Tellでは最後のhw_historyのstepStatus="holding"の場合(休んだ場合)、そのStepに飛ぶ、そうではない場合は最初のstep1に行く。
+  // const nextStepCheck = (nStep) => {
+  //   //Show and Tellでは最後のhw_historyのstepStatus="holding"の場合(休んだ場合)、そのStepに飛ぶ、そうではない場合は最初のstep1に行く。
 
+  //   var homework_id = HWID
+  //   // var nextStep = 'Step1OST'
+  //   var nextStep = nStep
+  //   //alert(thisSubject)//SHOW AND TELL
+  //   //alert(nextStep) //Step1OST
+  //   var url = DB_CONN_URL + '/get-step-sys-hw-history-holding/'
+  //   var Url = url + myMbn + '&' + homework_id + '&' + thisSubject
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(Url)
+
+  //       //alert(response.data.response[0].stepStatus)
+  //       if (response.data.length > 0) {
+  //         if (response.data.response[0].stepStatus == 'holding') {
+  //           //alert(response.data.response[0].stepStatus)
+  //           var thisStep = response.data.response[0].step
+  //         } else {
+  //           //holdingではない場合、最初のstep1ページへ行く。
+  //           var thisStep = 'Step1OST'
+  //         }
+  //       } else {
+  //         var thisStep = 'Step1OST'
+  //       }
+  //       practiceStart(thisStep)
+  //       console.log('thisStep:', thisStep)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }
+
+  //for backend mysql2용
+  const nextStepCheck = (nStep) => {
     var homework_id = HWID
-    // var nextStep = 'Step1OST'
     var nextStep = nStep
-    //alert(thisSubject)//SHOW AND TELL
-    //alert(nextStep) //Step1OST
     var url = DB_CONN_URL + '/get-step-sys-hw-history-holding/'
-    var Url = url + myMbn + '&' + homework_id + '&' + thisSubject
+    var Url = url + myMbn + '/' + homework_id + '/' + thisSubject // '&'를 '/'로 수정
 
     const fetchData = async () => {
       try {
         const response = await axios.get(Url)
 
-        //alert(response.data.response[0].stepStatus)
         if (response.data.length > 0) {
           if (response.data.response[0].stepStatus == 'holding') {
-            //alert(response.data.response[0].stepStatus)
             var thisStep = response.data.response[0].step
           } else {
-            //holdingではない場合、最初のstep1ページへ行く。
             var thisStep = 'Step1OST'
           }
         } else {

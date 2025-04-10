@@ -109,16 +109,6 @@ const ViewToMomAdd = ({
         var Url = url + mbn + '&' + homework_id
 
         axios.get(Url).then((response) => {
-          // alert(response.data.message)
-          // alert(response.data.response[0].email1)
-          // alert(response.data.response[0].email2)
-          // alert(response.data.response[0].course)
-          // alert(response.data.response[0].courseName)
-          // alert(response.data.response[0].yoyakuWeekday)
-          // alert(response.data.response[0].yoyakuDate)
-          // alert(response.data.response[0].yoyakuTime)
-          // alert(response.data.response[0].teacher_name)
-
           var email1 = response.data.response[0].email1
 
           if (response.data.response[0].email2 == '') {

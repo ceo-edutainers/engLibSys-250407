@@ -1,4 +1,4 @@
-// ✅ Cloudflare R2 버전 (DB 저장 정상 작동하도록 수정)
+// ✅ Cloudflare R2 버전
 import React, { useState, useEffect, useRef } from 'react'
 import Link from '@/utils/ActiveLink'
 import axios from 'axios'
@@ -46,7 +46,6 @@ function App() {
   const [mindmapView, setMindmapView] = useState(false)
 
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const router = useRouter()
 
   useEffect(() => {
@@ -63,6 +62,8 @@ function App() {
       setFileDetail(fD)
 
       reloadImage(m, sb, hid, cstep)
+
+      alert(m + '/' + sb + '/' + hid + '/' + cstep)
 
       const checkExpiredHW = async () => {
         try {
@@ -106,7 +107,7 @@ function App() {
         },
       })
 
-      await hwHistoryUpdate(
+      hwHistoryUpdate(
         currentStep,
         stepStatus,
         homework_id,
@@ -115,35 +116,25 @@ function App() {
         newfilename,
         fileDetail
       )
-      await insertPointToDB()
-
       setIsOpenBackMypage(true)
       setAfterFileSelected(false)
+      insertPointToDB()
     } catch (err) {
       console.error('Upload failed:', err)
     }
   }
 
   const insertPointToDB = () => {
-    var url = DB_CONN_URL + '/sys-point-member-history-insert'
-
-    axios
-      .post(url, {
-        mbn: mbn,
-        homework_id: homework_id,
-        pointKeyNum: pointKeyNum,
-        pointStep: currentStep,
-        practiceTempId: pti,
-      })
-      .then((response) => {
-        // console.log('TEST-point insert:', response.data.message)
-        if (!response.data.status) {
-        } else {
-        }
-      })
+    axios.post(`${DB_CONN_URL}/sys-point-member-history-insert`, {
+      mbn,
+      homework_id,
+      pointKeyNum,
+      pointStep: currentStep,
+      practiceTempId: pti,
+    })
   }
 
-  const hwHistoryUpdate = async (
+  const hwHistoryUpdate = (
     currentStep,
     stepStatus,
     homework_id,
@@ -152,49 +143,115 @@ function App() {
     newfilename,
     fileDetail
   ) => {
-    try {
-      const response = await axios.post(
-        `${DB_CONN_URL}/update-sys-hw-history-uploadFile`,
-        {
-          mbn,
-          homework_id,
-          practiceTempId: pti,
-          currentStep,
-          stepStatus,
-          thisSubject,
-          newfilename,
-          fileDetail,
-        }
-      )
-
-      if (response.data.status) {
-        console.log('✅ DB insert success:', response.data.message)
-        reloadImage(mbn, thisSubject, homework_id, currentStep)
-      } else {
-        console.warn('⚠️ DB insert failed:', response.data.message)
-      }
-    } catch (error) {
-      console.error('❌ Failed to update homework history:', error)
-    }
+    const url = `${DB_CONN_URL}/update-sys-hw-history-uploadFile/${mbn}&${homework_id}&${pti}&${currentStep}&${stepStatus}&${thisSubject}&${newfilename}&${fileDetail}`
+    axios
+      .put(url)
+      .then((response) => {
+        alert(response.data.message)
+        localStorage.setItem('rediriectPageView', 'finished')
+        reloadImage()
+      })
+      .catch((error) => {
+        console.error('Failed to update homework history:', error)
+      })
   }
 
+  // const hwHistoryUpdate = (
+  //   currentStep,
+  //   stepStatus,
+  //   homework_id,
+  //   pti,
+  //   thisSubject,
+  //   newfilename,
+  //   fileDetail
+  // ) => {
+  //   axios
+  //     .put(
+  //       `${DB_CONN_URL}/update-sys-hw-history-uploadFile/${mbn}&${homework_id}&${pti}&${currentStep}&${stepStatus}&${thisSubject}&${newfilename}&${fileDetail}`
+  //     )
+  //     .then(() => reloadImage(mbn, thisSubject, homework_id, currentStep))
+  //     .catch((error) =>
+  //       console.error('Failed to update homework history:', error)
+  //     )
+  // }
+
+  // const reloadImage = (mbn, thisSubject, homework_id, currentStep) => {
+  //   const url = `${DB_CONN_URL}/get-mindmap-sys-hw-history/${mbn}&${thisSubject}&${homework_id}&${currentStep}`
+  //   axios.get(url).then((response) => {
+  //     const filemindmapArray =
+  //       response.data.response
+  //         ?.map(
+  //           (item) =>
+  //             item?.fileName && {
+  //               fileName: item.fileName,
+  //               autoid: item.autoid,
+  //               homework_id: item.homework_id,
+  //             }
+  //         )
+  //         .filter(Boolean) || []
+  //     setFileMindmap(filemindmapArray)
+  //     setFileLength(filemindmapArray.length)
+  //   })
+  // }
+
   const reloadImage = (mbn, thisSubject, homework_id, currentStep) => {
-    const url = `${DB_CONN_URL}/get-mindmap-sys-hw-history/${mbn}&${thisSubject}&${homework_id}&${currentStep}`
-    axios.get(url).then((response) => {
-      const filemindmapArray =
-        response.data.response
-          ?.map(
-            (item) =>
-              item?.fileName && {
-                fileName: item.fileName,
-                autoid: item.autoid,
-                homework_id: item.homework_id,
-              }
-          )
-          .filter(Boolean) || []
-      setFileMindmap(filemindmapArray)
-      setFileLength(filemindmapArray.length)
-    })
+    if (localStorage.getItem('loginStatus') === 'true') {
+      const fetchData2 = async () => {
+        try {
+          const url = DB_CONN_URL + '/get-mindmap-sys-hw-history/'
+          const Url =
+            url +
+            mbn +
+            '&' +
+            thisSubject +
+            '&' +
+            homework_id +
+            '&' +
+            currentStep
+
+          const response = await axios.get(Url)
+          alert(response.data.message)
+          console.log('response.data:', response.data)
+
+          if (!response.data.length) {
+            setFileMindmap([])
+          } else {
+            console.log('response.data.response:', response.data.response)
+
+            const filemindmapArray = response.data.response
+              .map((item) => {
+                console.log('item:', item)
+                if (!item.fileName) {
+                  console.error('Missing fileName in item:', item)
+                  return null
+                }
+                return {
+                  fileName: item.fileName,
+                  autoid: item.autoid,
+                  homework_id: item.homework_id,
+                }
+              })
+              .filter(Boolean)
+
+            if (filemindmapArray.length === 0) {
+              console.error(
+                'No valid file names found in response:',
+                response.data.response
+              )
+              setFileMindmap([])
+            } else {
+              setFileMindmap(filemindmapArray)
+              console.log('fileMindmap:', filemindmapArray)
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          alert(error)
+        }
+      }
+
+      fetchData2()
+    }
   }
 
   const handleClick = (e) => {
@@ -229,7 +286,7 @@ function App() {
       </form>
       <div>
         {fileMindmap.map((val, key) => {
-          const uploadfile = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
+          const uploadfile = `https://pub-xxxx.r2.dev/uploadhw/${val.fileName}`
           return (
             <div key={key}>
               <img src={uploadfile} style={{ width: '300px' }} />
