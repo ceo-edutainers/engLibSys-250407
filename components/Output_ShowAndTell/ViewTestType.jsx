@@ -11,6 +11,8 @@ function ViewMindmapForTutor({
   stTitle,
 }) {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [fileMindmap, setFileMindmap] = useState('')
   const [newFileName, setNewFileName] = useState('')
 

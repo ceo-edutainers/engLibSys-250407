@@ -81,15 +81,15 @@ const LoginFormNewGroup = () => {
 
   return (
     <div className="container">
-      <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
+      {/* <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
         <h1 className="text-2xl font-bold mb-4 text-center">
           重要なお知らせ：システム復旧に関するおしらせ
           <br />
           <h2>以下の内容を必ずご確認してください。</h2>
         </h1>
-      </div>
+      </div> */}
 
-      <div className="pt-5">
+      {/* <div className="pt-5">
         <div className="pl-5 pr-5 pt-5 pb-5 max-w-4xl mx-auto bg-white shadow rounded-xl">
           <h2 className="text-xl font-semibold mb-2">
             【現時点でご利用可能な機能】
@@ -130,7 +130,7 @@ const LoginFormNewGroup = () => {
             <p>📧：online-help@edutainers.jp</p>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="row mt-5">
         <div className="col-lg-12 col-md-12  text-center">
           <h2 style={{ fontWeight: 'bold' }}>Login</h2>

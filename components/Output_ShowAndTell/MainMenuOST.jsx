@@ -356,6 +356,9 @@ function MainMenuOST() {
         <h1 className="mb-1" style={{ fontWeight: '900' }}>
           SHOW AND TELL
         </h1>
+        <h4>
+          システムが復旧されました。引き続き課題をシステム上で進めてください。
+        </h4>
         <p style={{ color: 'white' }}>{userName}</p>
         <h4
           style={{

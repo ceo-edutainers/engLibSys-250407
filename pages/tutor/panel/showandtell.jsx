@@ -489,7 +489,7 @@ const SHOWANDTELL = () => {
             >
               Finish this Lesson
             </span>
-            <span className=" p-1 mr-2" style={{ fontSize: '25px' }}>
+            <span className=" p-1 mr-2" style={{ fontSize: '15px' }}>
               <input
                 type="checkbox"
                 value="adult"
@@ -503,8 +503,9 @@ const SHOWANDTELL = () => {
                   marginRight: '5px',
                 }}
               />
-              Use this assignment again
+              Use this h.w again
             </span>
+            <br />
             {!isCheckedAbsentBtn ? (
               <span
                 className="btn btn-danger ml-3"

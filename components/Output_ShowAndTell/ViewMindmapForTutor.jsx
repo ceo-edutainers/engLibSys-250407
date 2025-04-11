@@ -9,6 +9,8 @@ function ViewMindmapForTutor({
   thisOsusumeLetterSumOutline,
 }) {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [fileMindmap, setFileMindmap] = useState('')
   const [newFileName, setNewFileName] = useState('')
 
@@ -56,9 +58,12 @@ function ViewMindmapForTutor({
             console.log('length', response.data.length)
             // if (response.data.response[0].fileName != '') {
             //'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/showandtell_Mindmap_undefined_1652239665351.jpg
-            https: var filemindmap =
-              'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-              response.data.response[0].fileName
+            // https: var filemindmap =
+            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
+            //   response.data.response[0].fileName
+
+            https: var filemindmap = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${response.data.response[0].fileName}`
+
             // imgRefresh(filemindmap)
             setFileMindmap(filemindmap)
             //alert('here')
