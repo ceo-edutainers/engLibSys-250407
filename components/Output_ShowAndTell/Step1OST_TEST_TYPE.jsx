@@ -176,43 +176,83 @@ const Step1OST = () => {
     localStorage.setItem('holdTempIdOST', practiceTempId)
     hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
   }
-  const hwHistoryUpdate = (
+
+  // const hwHistoryUpdate = (
+  //   currentStep,
+  //   stepStatus,
+  //   homework_id,
+  //   practiceTempId,
+  //   nextStep
+  // ) => {
+  //   var mbn = localStorage.getItem('MypageMbn')
+  //   //alert(stepStatus)
+  //   //alert(practiceTempId)
+  //   var url = DB_CONN_URL + '/update-sys-hw-history/'
+  //   axios
+
+  //     .put(
+  //       url +
+  //         mbn +
+  //         '&' +
+  //         homework_id +
+  //         '&' +
+  //         practiceTempId +
+  //         '&' +
+  //         currentStep +
+  //         '&' +
+  //         stepStatus +
+  //         '&' +
+  //         thisSubject
+  //     )
+
+  //     .then((response) => {
+  //       if (stepStatus == 'holding') {
+  //         router.reload('/outputShowAndTellCourse') // ここでリロード
+  //       } else if (stepStatus == 'end') {
+  //         setPageView(nextStep)
+  //       }
+  //     })
+  // }
+
+  const hwHistoryUpdate = async (
     currentStep,
     stepStatus,
     homework_id,
     practiceTempId,
     nextStep
   ) => {
-    var mbn = localStorage.getItem('MypageMbn')
-    //alert(stepStatus)
-    //alert(practiceTempId)
-    var url = DB_CONN_URL + '/update-sys-hw-history/'
-    axios
+    const mbn = localStorage.getItem('MypageMbn')
 
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          practiceTempId +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject
+    try {
+      const response = await axios.post(
+        `${DB_CONN_URL}/update-sys-hw-history`,
+        {
+          mbn,
+          homework_id,
+          practiceTempId,
+          currentStep,
+          stepStatus,
+          thisSubject, // thisSubject는 컴포넌트 내에서 선언된 상태값으로 유지
+        }
       )
 
-      .then((response) => {
-        if (stepStatus == 'holding') {
-          router.reload('/outputShowAndTellCourse') // ここでリロード
-        } else if (stepStatus == 'end') {
+      if (response.data.status) {
+        // alert('here1-1', response.data.message)
+        if (stepStatus === 'holding') {
+          addWriting()
+          router.reload('/outputShowAndTellCourse')
+        } else if (stepStatus === 'end') {
+          addWriting()
+          insertPointToDB()
           setPageView(nextStep)
         }
-      })
+      } else {
+        console.warn('⚠️ DB update failed:', response.data.message)
+      }
+    } catch (error) {
+      console.error('❌ Failed to update hwHistory:', error)
+    }
   }
-
   const nextStepCheck = (option, arrayNum) => {
     setIsGoNextPage(true)
   }

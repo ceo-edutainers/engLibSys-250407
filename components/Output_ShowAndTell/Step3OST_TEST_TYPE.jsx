@@ -188,42 +188,45 @@ const Step3OST = () => {
         })
     }
   }
-  const hwHistoryUpdate = (
+
+  const hwHistoryUpdate = async (
     currentStep,
     stepStatus,
     homework_id,
     practiceTempId,
     nextStep
   ) => {
-    var mbn = localStorage.getItem('MypageMbn')
-    var url = DB_CONN_URL + '/update-sys-hw-history/'
-    axios
+    const mbn = localStorage.getItem('MypageMbn')
 
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          practiceTempId +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject
+    try {
+      const response = await axios.post(
+        `${DB_CONN_URL}/update-sys-hw-history`,
+        {
+          mbn,
+          homework_id,
+          practiceTempId,
+          currentStep,
+          stepStatus,
+          thisSubject, // thisSubject는 컴포넌트 내에서 선언된 상태값으로 유지
+        }
       )
 
-      .then((response) => {
-        if (stepStatus == 'holding') {
+      if (response.data.status) {
+        // alert('here1-1', response.data.message)
+        if (stepStatus === 'holding') {
           addWriting()
-          router.reload('/outputShowAndTellCourse') // ここでリロード
-        } else if (stepStatus == 'end') {
+          router.reload('/outputShowAndTellCourse')
+        } else if (stepStatus === 'end') {
           addWriting()
           insertPointToDB()
           setPageView(nextStep)
         }
-      })
+      } else {
+        console.warn('⚠️ DB update failed:', response.data.message)
+      }
+    } catch (error) {
+      console.error('❌ Failed to update hwHistory:', error)
+    }
   }
 
   const addWriting = () => {

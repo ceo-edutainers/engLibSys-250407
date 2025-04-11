@@ -165,42 +165,82 @@ const Step2OST = () => {
     localStorage.setItem('holdTempIdOST', practiceTempId)
     hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
   }
-  const hwHistoryUpdate = (
+  // const hwHistoryUpdate = (
+  //   currentStep,
+  //   stepStatus,
+  //   homework_id,
+  //   practiceTempId,
+  //   nextStep
+  // ) => {
+  //   var mbn = localStorage.getItem('MypageMbn')
+  //   var url = DB_CONN_URL + '/update-sys-hw-history/'
+  //   axios
+
+  //     .put(
+  //       url +
+  //         mbn +
+  //         '&' +
+  //         homework_id +
+  //         '&' +
+  //         practiceTempId +
+  //         '&' +
+  //         currentStep +
+  //         '&' +
+  //         stepStatus +
+  //         '&' +
+  //         thisSubject
+  //     )
+
+  //     .then((response) => {
+  //       if (stepStatus == 'holding') {
+  //         addWriting()
+  //         router.reload('/outputShowAndTellCourse') // ここでリロード
+  //       } else if (stepStatus == 'end') {
+  //         addWriting()
+  //         insertPointToDB()
+  //         setPageView(nextStep)
+  //       }
+  //     })
+  // }
+
+  const hwHistoryUpdate = async (
     currentStep,
     stepStatus,
     homework_id,
     practiceTempId,
     nextStep
   ) => {
-    var mbn = localStorage.getItem('MypageMbn')
-    var url = DB_CONN_URL + '/update-sys-hw-history/'
-    axios
+    const mbn = localStorage.getItem('MypageMbn')
 
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          practiceTempId +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject
+    try {
+      const response = await axios.post(
+        `${DB_CONN_URL}/update-sys-hw-history`,
+        {
+          mbn,
+          homework_id,
+          practiceTempId,
+          currentStep,
+          stepStatus,
+          thisSubject, // thisSubject는 컴포넌트 내에서 선언된 상태값으로 유지
+        }
       )
 
-      .then((response) => {
-        if (stepStatus == 'holding') {
+      if (response.data.status) {
+        // alert('here1-1', response.data.message)
+        if (stepStatus === 'holding') {
           addWriting()
-          router.reload('/outputShowAndTellCourse') // ここでリロード
-        } else if (stepStatus == 'end') {
+          router.reload('/outputShowAndTellCourse')
+        } else if (stepStatus === 'end') {
           addWriting()
           insertPointToDB()
           setPageView(nextStep)
         }
-      })
+      } else {
+        console.warn('❌ DB update failed:', response.data.message)
+      }
+    } catch (error) {
+      console.error('❌ Failed to update hwHistory:', error)
+    }
   }
   const addWriting = () => {
     var mbn = localStorage.getItem('MypageMbn')
@@ -230,7 +270,8 @@ const Step2OST = () => {
         // outline_conclusion: outlineConclusion,
       })
       .then((response) => {
-        //console.log(response.data.message)
+        console.log('❌ TEST-response-1:', response.data.message)
+
         if (!response.data.status) {
           //alert(response.data.message)
         } else {
@@ -241,25 +282,16 @@ const Step2OST = () => {
   const nextStepCheck = (option, arrayNum) => {
     //check word total <200
 
-    // alert(wordsum)
-    // if (wordsum < outlineLimitWords) {
-    //   setIsCantGoNextPage(true)
-    // } else {
     setIsGoNextPage(true)
-    // }
   }
   const nextStep = (option, arrayNum) => {
     const fetchData = async () => {
       try {
-        // const response =
-        // await axios.get(Url).then((response) => {
         var stepStatus = 'end'
         var nextStep = 'Step3OST'
         hwHistoryUpdate(currentStep, stepStatus, HWID, practiceTempId, nextStep)
 
         practiceStart(nextStep)
-
-        // })
       } catch (error) {
         alert('select error!')
       }
@@ -301,17 +333,6 @@ const Step2OST = () => {
   }
 
   const wordTotalSum = () => {
-    // console.log('#outlineTopicWordLength', outlineTopicWordLength)
-    // console.log('#outlineIntroductionWordLength', outlineIntroductionWordLength)
-    // console.log('#outlineBodyWordLength', outlineBodyWordLength)
-    // console.log('#outlineConclusionWordLength', outlineConclusionWordLength)
-
-    // var ws = parseInt(
-    //   outlineTopic.split(' ').length +
-    //     outlineIntroduction.split(' ').length +
-    //     outlineBody.split(' ').length +
-    //     outlineConclusion.split(' ').length
-    // )
     var ws = parseInt(
       outlineTopicWordLength +
         outlineIntroductionWordLength +
@@ -341,12 +362,6 @@ const Step2OST = () => {
       .then((response) => {
         // alert(response.data.status)
         if (!response.data.status) {
-          // alert(response.data.message) //for test
-          //alert('ポイントゲット!!!')
-          // console.log('##pointKeyNum', pointKeyNum)
-          // console.log('##HWID', HWID)
-          // console.log('##currentStep', currentStep)
-          // console.log('##practiceTempId', practiceTempId)
         } else {
           // alert(response.data.message)
         }
@@ -357,11 +372,94 @@ const Step2OST = () => {
   //DBからデーターを持ってくる + ゲームのスタート情報をDBへ入れる
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
-  useEffect(() => {
-    var mbn = localStorage.getItem('MypageMbn')
 
-    var url = DB_CONN_URL + '/get-hw-show-and-tell-writing-info/'
-    var Url = url + mbn + '&' + HWID + '&' + currentStep
+  // useEffect(() => {
+  //   var mbn = localStorage.getItem('MypageMbn')
+
+  //   // var url = DB_CONN_URL + '/get-hw-show-and-tell-writing-info/'
+  //   // var Url = url + mbn + '&' + HWID + '&' + currentStep
+
+  //   const Url = `${DB_CONN_URL}/get-hw-show-and-tell-writing-info?mbn=${mbn}&hwid=${HWID}&step=${currentStep}`
+
+  //   const fetchData = async () => {
+  //     setError(false)
+  //     setLoading(true)
+
+  //     try {
+  //       const response = await axios.get(Url)
+
+  //       if (response.data.length > 0) {
+  //         //setHWWritingInfo(response.data)
+  //         setOutlineTopic(response.data[0].outline_topic.trim())
+
+  //         // setOutlineTopic(response.data[0].outline_topic.trim())
+  //         setOutlineIntroduction(response.data[0].outline_introduction.trim())
+  //         setOutlineBody(response.data[0].outline_body.trim())
+  //         setOutlineConclusion(response.data[0].outline_conclusion.trim())
+  //         // alert('here2')
+  //         setOutlineTopicWordLength(
+  //           response.data[0].outline_topic.trim().split(' ').length
+  //         )
+  //         setOutlineIntroductionWordLength(
+  //           response.data[0].outline_introduction.trim().split(' ').length
+  //         )
+  //         setOutlineBodyWordLength(
+  //           response.data[0].outline_body.trim().split(' ').length
+  //         )
+  //         setOutlineConclusionWordLength(
+  //           response.data[0].outline_conclusion.trim().split(' ').length
+  //         )
+
+  //         var sum = parseInt(
+  //           response.data[0].outline_topic.trim().split(' ').length +
+  //             response.data[0].outline_introduction.trim().split(' ').length +
+  //             response.data[0].outline_body.trim().split(' ').length +
+  //             response.data[0].outline_conclusion.trim().split(' ').length
+  //         )
+
+  //         if (
+  //           response.data[0].outline_topic.trim() == '' &&
+  //           response.data[0].outline_introduction.trim() == '' &&
+  //           response.data[0].outline_body.trim() == '' &&
+  //           response.data[0].outline_conclusion.trim() == ''
+  //         ) {
+  //           // alert('here1')
+  //           setWordsum(0)
+  //         } else {
+  //           // alert('here2')
+  //           setWordsum(sum)
+  //         }
+  //       } else {
+  //         setOutlineTopic('')
+
+  //         // setOutlineTopic(response.data[0].outline_topic.trim())
+  //         setOutlineIntroduction('')
+  //         setOutlineBody('')
+  //         setOutlineConclusion('')
+  //         // alert('here2')
+  //         setOutlineTopicWordLength(0)
+  //         setOutlineIntroductionWordLength(0)
+  //         setOutlineBodyWordLength(0)
+  //         setOutlineConclusionWordLength(0)
+  //         setWordsum(0)
+  //       }
+  //       // alert(sum)
+  //     } catch (error) {
+  //       // alert('3')
+  //       console.log(error)
+  //       setError(true)
+  //     }
+
+  //     setLoading(false)
+  //   }
+
+  //   fetchData()
+  // }, [])
+
+  useEffect(() => {
+    const mbn = localStorage.getItem('MypageMbn')
+    // const Url = `${DB_CONN_URL}/get-hw-show-and-tell-writing-info?mbn=${mbn}&hwid=${HWID}&step=${currentStep}`
+    const Url = `${DB_CONN_URL}/get-hw-show-and-tell-writing-info/${mbn}&${HWID}&${currentStep}`
 
     const fetchData = async () => {
       setError(false)
@@ -369,66 +467,51 @@ const Step2OST = () => {
 
       try {
         const response = await axios.get(Url)
+        console.log('❌ message', response.data.message)
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          console.log('❌ length', response.data.length)
+          const data = response.data[0]
 
-        if (response.data.length > 0) {
-          //setHWWritingInfo(response.data)
-          setOutlineTopic(response.data[0].outline_topic.trim())
+          const topic = data.outline_topic?.trim() || ''
+          const intro = data.outline_introduction?.trim() || ''
+          const body = data.outline_body?.trim() || ''
+          const concl = data.outline_conclusion?.trim() || ''
 
-          // setOutlineTopic(response.data[0].outline_topic.trim())
-          setOutlineIntroduction(response.data[0].outline_introduction.trim())
-          setOutlineBody(response.data[0].outline_body.trim())
-          setOutlineConclusion(response.data[0].outline_conclusion.trim())
-          // alert('here2')
-          setOutlineTopicWordLength(
-            response.data[0].outline_topic.trim().split(' ').length
-          )
-          setOutlineIntroductionWordLength(
-            response.data[0].outline_introduction.trim().split(' ').length
-          )
-          setOutlineBodyWordLength(
-            response.data[0].outline_body.trim().split(' ').length
-          )
-          setOutlineConclusionWordLength(
-            response.data[0].outline_conclusion.trim().split(' ').length
-          )
+          setOutlineTopic(topic)
+          setOutlineIntroduction(intro)
+          setOutlineBody(body)
+          setOutlineConclusion(concl)
 
-          var sum = parseInt(
-            response.data[0].outline_topic.trim().split(' ').length +
-              response.data[0].outline_introduction.trim().split(' ').length +
-              response.data[0].outline_body.trim().split(' ').length +
-              response.data[0].outline_conclusion.trim().split(' ').length
-          )
+          setOutlineTopicWordLength(topic.split(' ').length)
+          setOutlineIntroductionWordLength(intro.split(' ').length)
+          setOutlineBodyWordLength(body.split(' ').length)
+          setOutlineConclusionWordLength(concl.split(' ').length)
 
-          if (
-            response.data[0].outline_topic.trim() == '' &&
-            response.data[0].outline_introduction.trim() == '' &&
-            response.data[0].outline_body.trim() == '' &&
-            response.data[0].outline_conclusion.trim() == ''
-          ) {
-            // alert('here1')
+          const sum =
+            topic.split(' ').length +
+            intro.split(' ').length +
+            body.split(' ').length +
+            concl.split(' ').length
+
+          if (topic === '' && intro === '' && body === '' && concl === '') {
             setWordsum(0)
           } else {
-            // alert('here2')
             setWordsum(sum)
           }
         } else {
+          // 데이터가 없을 때 초기화
           setOutlineTopic('')
-
-          // setOutlineTopic(response.data[0].outline_topic.trim())
           setOutlineIntroduction('')
           setOutlineBody('')
           setOutlineConclusion('')
-          // alert('here2')
           setOutlineTopicWordLength(0)
           setOutlineIntroductionWordLength(0)
           setOutlineBodyWordLength(0)
           setOutlineConclusionWordLength(0)
           setWordsum(0)
         }
-        // alert(sum)
       } catch (error) {
-        // alert('3')
-        console.log(error)
+        console.error('❌ fetchData error:', error)
         setError(true)
       }
 
@@ -437,6 +520,7 @@ const Step2OST = () => {
 
     fetchData()
   }, [])
+
   // alert(isError)
   if (isError) return <h1>Error, try again! step..2 </h1>
   if (isLoading) return <h1>Loading Page..........................</h1>
