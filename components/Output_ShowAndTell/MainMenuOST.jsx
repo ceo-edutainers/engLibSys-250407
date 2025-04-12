@@ -236,38 +236,25 @@ function MainMenuOST() {
   return (
     <>
       {messageNoBeforeLessonData ? (
-        <>
-          {/*前回の課題の履歴がない場合、*/}
-          {/* <div
-            className="MenuBig mt-5 p-5"
-            style={{
-              backgroundColor: '#FFB533',
-              color: 'white',
-              height: 'auto',
-            }}
-          >
-            <h1 className="mb-1" style={{ fontWeight: '900' }}>
-              前回レッスンの復習 (Review)
-            </h1>
-            <p style={{ color: 'white' }}>{userName}</p>
-            <h4
-              style={{
-                border: '1px solid white',
-                borderRadius: '10px',
-                padding: '20px',
-                marginTop: '20px',
-                fontWeight: '600',
-              }}
-            >
-              前回のレッスン履歴がありません。
-            </h4>
-          </div> */}
-        </>
+        <></>
       ) : (
         <div
-          className="MenuBig mt-5 p-5"
+          className="MenuBig mt-5  p-3"
           style={{ backgroundColor: '#FFB533', color: 'white', height: 'auto' }}
         >
+          {/* <Link href="/mytopGroup">
+            <span
+              className="btn btn-info"
+              style={{
+                fontWeight: '900',
+                color: 'white',
+                cursor: 'pointer',
+                marginBottom: '15px',
+              }}
+            >
+              トップページへ戻る
+            </span>
+          </Link> */}
           <h2 className="mb-1" style={{ fontWeight: '900' }}>
             前回レッスンの復習 (REVIEW)
           </h2>
@@ -406,7 +393,7 @@ function MainMenuOST() {
             className="btn btn-danger mt-4"
             style={{ fontWeight: '900', color: 'white', marginTop: '10px' }}
           >
-            BEN TOPへ
+            トップページへ戻る
           </button>
         </Link>
         <SweetAlert
