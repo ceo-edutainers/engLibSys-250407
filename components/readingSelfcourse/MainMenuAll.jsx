@@ -695,7 +695,7 @@ function MainMenuB() {
           </div>
         </div>
       </div>
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-lg-12 col-md-12 pl-20 pr-20 text-center">
             <center>
@@ -707,7 +707,6 @@ function MainMenuB() {
                   marginBottom: 0,
                 }}
               >
-                {/* あなたに出されたアップロードする課題{' '} */}
                 <hr />
                 現在、課題アップロード機能の点検作業を行っており、その機能は只今ご利用いただけない状況です。
                 <br />
@@ -719,7 +718,7 @@ function MainMenuB() {
             </center>
           </div>
         </div>
-      </div>
+      </div> */}
       <div
         className="MenuBig p-3"
         style={{

@@ -147,6 +147,49 @@ function Upload({
     })
   }
 
+  // const hwHistoryUpdate = (
+  //   currentStep,
+  //   stepStatus,
+  //   HWID,
+  //   practiceTempId,
+  //   thisSubject,
+  //   newFileName,
+  //   fileDetail
+  // ) => {
+  //   console.log('TEST-;', currentStep)
+  //   console.log('TEST-HWID;', HWID)
+
+  //   var mbn = localStorage.getItem('MypageMbn')
+  //   var homework_id = HWID
+  //   // alert(newFileName)
+
+  //   var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
+  //   axios
+  //     .put(
+  //       url +
+  //         mbn +
+  //         '&' +
+  //         homework_id +
+  //         '&' +
+  //         practiceTempId +
+  //         '&' +
+  //         currentStep +
+  //         '&' +
+  //         stepStatus +
+  //         '&' +
+  //         thisSubject +
+  //         '&' +
+  //         newFileName +
+  //         '&' +
+  //         fileDetail
+  //     )
+
+  //     .then((response) => {
+
+  //       reloadImage()
+  //     })
+  // }
+
   const hwHistoryUpdate = (
     currentStep,
     stepStatus,
@@ -156,35 +199,29 @@ function Upload({
     newFileName,
     fileDetail
   ) => {
-    console.log('test;', currentStep)
+    console.log('TEST-;', currentStep)
+    console.log('TEST-HWID;', HWID)
 
-    var mbn = localStorage.getItem('MypageMbn')
-    var homework_id = HWID
-    // alert(newFileName)
-    var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
+    const mbn = localStorage.getItem('MypageMbn')
+    const url = DB_CONN_URL + '/update-sys-hw-history-uploadFile'
+
     axios
-
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          practiceTempId +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject +
-          '&' +
-          newFileName +
-          '&' +
-          fileDetail
-      )
-
+      .post(url, {
+        mbn: mbn,
+        homework_id: HWID,
+        practiceTempId: practiceTempId,
+        currentStep: currentStep,
+        stepStatus: stepStatus,
+        thisSubject: thisSubject,
+        newfilename: newFileName,
+        fileDetail: fileDetail,
+      })
       .then((response) => {
+        console.log('📥 HW Upload Success:', response.data)
         reloadImage()
+      })
+      .catch((error) => {
+        console.error('❌ HW Upload Failed:', error)
       })
   }
 

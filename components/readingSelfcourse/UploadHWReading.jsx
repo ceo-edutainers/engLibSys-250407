@@ -28,15 +28,6 @@ const UploadHWReading = ({}) => {
         }}
       >
         <div className="col-lg-12 col-md-12">
-          {/* <p>
-            {qrLinkBookQuestion}
-            <br />
-            {HWID}
-            <br />
-            {copyHW}
-            <br />
-          </p> */}
-
           <Upload
             // mbn={myMbn}
             // homework_id={HWID}

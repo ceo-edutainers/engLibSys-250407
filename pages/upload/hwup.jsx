@@ -199,31 +199,65 @@ function App() {
     newFileName,
     fileDetail
   ) => {
-    var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
+    const mbn = localStorage.getItem('MypageMbn') // ← 이 부분도 필요합니다
+    const url = DB_CONN_URL + '/update-sys-hw-history-uploadFile'
+
     axios
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          pti +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject +
-          '&' +
-          newFileName +
-          '&' +
-          fileDetail
-      )
+      .post(url, {
+        mbn: mbn,
+        homework_id: homework_id,
+        practiceTempId: pti,
+        currentStep: currentStep,
+        stepStatus: stepStatus,
+        thisSubject: thisSubject,
+        newfilename: newFileName,
+        fileDetail: fileDetail,
+      })
       .then((response) => {
+        console.log('XXX-:', response.data.message)
         localStorage.setItem('rediriectPageView', 'finished')
         reloadImage()
       })
+      .catch((error) => {
+        console.error('❌ HW Upload Failed:', error)
+      })
   }
+
+  // const hwHistoryUpdate = (
+  //   currentStep,
+  //   stepStatus,
+  //   homework_id,
+  //   pti,
+  //   thisSubject,
+  //   newFileName,
+  //   fileDetail
+  // ) => {
+  //   var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
+  //   axios
+  //     .put(
+  //       url +
+  //         mbn +
+  //         '&' +
+  //         homework_id +
+  //         '&' +
+  //         pti +
+  //         '&' +
+  //         currentStep +
+  //         '&' +
+  //         stepStatus +
+  //         '&' +
+  //         thisSubject +
+  //         '&' +
+  //         newFileName +
+  //         '&' +
+  //         fileDetail
+  //     )
+  //     .then((response) => {
+  //       console.log('XXX-:', response.data.message)
+  //       localStorage.setItem('rediriectPageView', 'finished')
+  //       reloadImage()
+  //     })
+  // }
 
   const reloadImage = () => {
     const fetchData2 = async () => {
