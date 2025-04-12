@@ -302,7 +302,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                 style={{ textAlign: 'center' }}
               >
                 <center>
-                  <h1
+                  <h2
                     style={{
                       color: '#5719E5',
                       fontSize: '20px',
@@ -311,7 +311,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                     }}
                   >
                     あなたに出されたアップロードする課題{' '}
-                  </h1>
+                  </h2>
                   <h5 style={{ color: 'red' }}>
                     <ruby>
                       単語帳<rt>たんごちょう</rt>

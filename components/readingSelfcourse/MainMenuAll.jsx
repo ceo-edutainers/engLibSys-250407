@@ -695,6 +695,31 @@ function MainMenuB() {
           </div>
         </div>
       </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12 col-md-12 pl-20 pr-20 text-center">
+            <center>
+              <h2
+                style={{
+                  color: '#5719E5',
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  marginBottom: 0,
+                }}
+              >
+                {/* あなたに出されたアップロードする課題{' '} */}
+                <hr />
+                現在、課題アップロード機能の点検作業を行っており、その機能は只今ご利用いただけない状況です。
+                <br />
+                大変ご不便をおかけいたしますが、課題ファイルを以下のメールの方にお願いします。
+                <br />
+                online-help@edutainers.jp
+                <hr />
+              </h2>
+            </center>
+          </div>
+        </div>
+      </div>
       <div
         className="MenuBig p-3"
         style={{
