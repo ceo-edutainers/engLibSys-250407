@@ -135,15 +135,11 @@ const Step1OST = () => {
     setIsOpenBackMypage(false)
 
     var nextStep = ''
-    // alert('in handlePracticeRest')
-    // alert(stepStatus)
-    // alert('currentStep')
-    // alert(currentStep)
-    // alert('nextStep')
-    // alert(nextStep)
+
     localStorage.setItem('holdTempIdOST', practiceTempId)
     hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
   }
+  ///////////////////////////////
   // const hwHistoryUpdate = (
   //   currentStep,
   //   stepStatus,
