@@ -128,7 +128,7 @@ function MainMenuOST() {
         })
 
         if (!response.data.status) {
-          alert(response.data.message) //for test
+          // alert(response.data.message) //for test
         } else {
           setRecordFileList(response.data.result)
           setRecordListView(true)

@@ -157,11 +157,11 @@ function outputShowAndTellCourse() {
         try {
           var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
           var Url = url + mbn
-          alert(Url)
+          // alert(Url)
           const response = await axios.get(Url)
 
           //setHWbookInfo(response.data)
-          alert(response.data[0].homework_id)
+          // alert(response.data[0].homework_id)
 
           setHWID(response.data[0].homework_id)
           // setUserName(response.data.name_eng)
