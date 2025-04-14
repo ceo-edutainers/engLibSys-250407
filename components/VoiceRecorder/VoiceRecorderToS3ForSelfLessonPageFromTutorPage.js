@@ -109,6 +109,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
 
       // ✅ 백엔드 응답 확인
       console.log('📥 tutor-record-during-lesson 응답:', response.data)
+      console.log('📥 tutor-record-during-lesson 응답:', response.data)
 
       // 실패한 경우 메시지 출력
       if (!response.data.status) {
