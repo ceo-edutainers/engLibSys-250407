@@ -238,9 +238,10 @@ const Step1OST = () => {
   const nextStep = (option, arrayNum) => {
     const fetchData = async () => {
       // alert(selectedWriting)
-      alert(HWID)
+
       try {
         var mbn = localStorage.getItem('MypageMbn')
+        // alert(mbn)
         // alert(HWID)
         // const response =
         // await axios.get(Url).then((response) => {
@@ -341,7 +342,7 @@ const Step1OST = () => {
         <div className="row">
           <div className="col-lg-12 col-md-6">
             <MonsterGet />
-            HWID:{HWID}
+            {/* HWID:{HWID} */}
           </div>
         </div>
       </div>

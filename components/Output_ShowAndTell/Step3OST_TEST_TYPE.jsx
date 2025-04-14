@@ -350,14 +350,6 @@ const Step3OST = () => {
           setWholeScript(response.data[0].script)
           setWholeScriptWordLength(response.data[0].script.split(' ').length)
 
-          //ページloading時の計算
-          //  var sum = parseInt(
-          //    response.data[0].outline_topic.split(' ').length +
-          //      response.data[0].outline_introduction.split(' ').length +
-          //      response.data[0].outline_body.split(' ').length +
-          //      response.data[0].outline_conclusion.split(' ').length
-          //  )
-
           var sum = parseInt(response.data[0].script.split(' ').length)
           setWordsum(sum)
           // setWordsum(response.data[0].script.split(' ').length - 1)
@@ -394,14 +386,31 @@ const Step3OST = () => {
       setError(false)
       setLoading(true)
 
+      // try {
+      //   const response = await axios.get(Url)
+
+      //   setHWbookInfo(response.data)
+      //   setGoogleDocLink(response.data[0].google_doc_link)
+      //   // alert(googleDocLink)
+      // } catch (error) {
+      //   console.log(error)
+      //   setError(true)
+      // }
+
       try {
         const response = await axios.get(Url)
 
-        setHWbookInfo(response.data)
-        setGoogleDocLink(response.data[0].google_doc_link)
-        // alert(googleDocLink)
+        if (response.data.status && response.data.result.length > 0) {
+          const hwData = response.data.result[0]
+          setHWbookInfo(response.data.result)
+          setGoogleDocLink(hwData.google_doc_link)
+        } else {
+          console.warn('❗ no data or status false')
+          setHWbookInfo([])
+          setGoogleDocLink('')
+        }
       } catch (error) {
-        console.log(error)
+        console.log('❌ fetch error:', error)
         setError(true)
       }
 

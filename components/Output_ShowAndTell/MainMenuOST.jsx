@@ -221,13 +221,24 @@ function MainMenuOST() {
       try {
         const response = await axios.get(Url)
 
-        if (response.data.length > 0) {
-          // alert('response.data:' + response.data)
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          const first = response.data[0]
           setMyHistoryList(response.data)
           setHWID(homework_id)
+
+          // ✅ google_doc_link를 바로 사용할 경우
+          console.log('Google Link:', first.google_doc_link)
         } else {
-          // alert(response.data.message)
+          console.warn('No result found for this homework_id')
         }
+
+        // if (response.data.length > 0) {
+        //   // alert('response.data:' + response.data)
+        //   setMyHistoryList(response.data)
+        //   setHWID(homework_id)
+        // } else {
+        //   // alert(response.data.message)
+        // }
       } catch (error) {
         console.log(error)
       }
@@ -244,19 +255,6 @@ function MainMenuOST() {
           className="MenuBig mt-5  p-3"
           style={{ backgroundColor: '#FFB533', color: 'white', height: 'auto' }}
         >
-          {/* <Link href="/mytopGroup">
-            <span
-              className="btn btn-info"
-              style={{
-                fontWeight: '900',
-                color: 'white',
-                cursor: 'pointer',
-                marginBottom: '15px',
-              }}
-            >
-              トップページへ戻る
-            </span>
-          </Link> */}
           <h2 className="mb-1" style={{ fontWeight: '900' }}>
             前回レッスンの復習 (REVIEW)
           </h2>
@@ -282,9 +280,11 @@ function MainMenuOST() {
           )}
           {recordListView &&
             recordFileList.map((val, key) => {
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
+
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
 
               return (
                 <>
@@ -315,6 +315,7 @@ function MainMenuOST() {
               return (
                 <>
                   <a href={val2.google_doc_link} target="_blank">
+                    {val2.google_doc_link}
                     <span
                       className="btn btn-danger mt-4"
                       style={{
