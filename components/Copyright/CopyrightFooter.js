@@ -11,7 +11,7 @@ const CopyrightFooter = () => {
             className="col-lg-12 col-md-12"
             style={{ color: '#666666', textAlign: 'center' }}
           >
-            Copyright © 2024 by engLib
+            Copyright © 2025 by engLib
           </div>
         </div>
       </div>

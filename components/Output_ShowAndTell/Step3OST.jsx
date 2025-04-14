@@ -148,12 +148,7 @@ const Step3OST = () => {
     setIsOpenBackMypage(false)
 
     var nextStep = ''
-    // alert('in handlePracticeRest')
-    // alert(stepStatus)
-    // alert('currentStep')
-    // alert(currentStep)
-    // alert('nextStep')
-    // alert(nextStep)
+
     localStorage.setItem('holdTempIdOST', practiceTempId)
     hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
   }
@@ -173,56 +168,12 @@ const Step3OST = () => {
         })
         .then((response) => {
           if (!response.data.status) {
-            // alert(response.data.message) //for test
-            //alert('ポイントゲット!!!')
-            // console.log('##pointKeyNum', pointKeyNum)
-            // console.log('##HWID', HWID)
-            // console.log('##currentStep', currentStep)
-            // console.log('##practiceTempId', practiceTempId)
           } else {
             //alert(response.data.message)
           }
         })
     }
   }
-
-  // const hwHistoryUpdate = (
-  //   currentStep,
-  //   stepStatus,
-  //   homework_id,
-  //   practiceTempId,
-  //   nextStep
-  // ) => {
-  //   var mbn = localStorage.getItem('MypageMbn')
-  //   var url = DB_CONN_URL + '/update-sys-hw-history/'
-  //   axios
-
-  //     .put(
-  //       url +
-  //         mbn +
-  //         '&' +
-  //         homework_id +
-  //         '&' +
-  //         practiceTempId +
-  //         '&' +
-  //         currentStep +
-  //         '&' +
-  //         stepStatus +
-  //         '&' +
-  //         thisSubject
-  //     )
-
-  //     .then((response) => {
-  //       if (stepStatus == 'holding') {
-  //         addWriting()
-  //         router.reload('/outputShowAndTellCourse') // ここでリロード
-  //       } else if (stepStatus == 'end') {
-  //         addWriting()
-  //         insertPointToDB()
-  //         setPageView(nextStep)
-  //       }
-  //     })
-  // }
 
   const hwHistoryUpdate = async (
     currentStep,
@@ -439,8 +390,8 @@ const Step3OST = () => {
       try {
         const response = await axios.get(Url)
 
-        setHWbookInfo(response.data)
-        setGoogleDocLink(response.data[0].google_doc_link)
+        setHWbookInfo(response.data.result)
+        setGoogleDocLink(response.data.result[0].google_doc_link)
         // alert(googleDocLink)
       } catch (error) {
         console.log(error)

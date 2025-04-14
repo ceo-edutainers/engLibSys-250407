@@ -217,7 +217,7 @@ function App() {
 
   return (
     <div>
-      <form className="upload-steps" onSubmit={handleClick}>
+      <form className="upload-steps pt-5 pl-2 pr-2" onSubmit={handleClick}>
         <input
           type="file"
           ref={fileInput}
@@ -225,9 +225,9 @@ function App() {
           multiple
           onChange={() => setAfterFileSelected(true)}
         />
-        <button type="submit">アップロード</button>
+        <button type="submit">UPLOAD</button>
       </form>
-      <div>
+      <div className="upload-steps pt-2 pl-2 pr-2">
         {fileMindmap.map((val, key) => {
           const uploadfile = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
           return (

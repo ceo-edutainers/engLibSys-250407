@@ -315,7 +315,7 @@ function MainMenuOST() {
               return (
                 <>
                   <a href={val2.google_doc_link} target="_blank">
-                    {val2.google_doc_link}
+                    {/* {val2.google_doc_link} */}
                     <span
                       className="btn btn-danger mt-4"
                       style={{
