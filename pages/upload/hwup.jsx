@@ -155,11 +155,6 @@ function App() {
         fileType: file.type,
       })
 
-      // const response = await axios.post(`${DB_CONN_URL}/r2/sign-url`, {
-      //   fileName: `${file.name}`, // 경로를 uploadhw로 변경
-      //   fileType: file.type,
-      // })
-
       const { signedUrl, key, publicUrl } = response.data.data
 
       // ③ presigned URL로 파일 업로드
@@ -199,7 +194,8 @@ function App() {
     newFileName,
     fileDetail
   ) => {
-    const mbn = localStorage.getItem('MypageMbn') // ← 이 부분도 필요합니다
+    // const mbn = localStorage.getItem('MypageMbn') // ← 이 부분도 필요합니다
+    const mbn = router.query.m
     const url = DB_CONN_URL + '/update-sys-hw-history-uploadFile'
 
     axios
