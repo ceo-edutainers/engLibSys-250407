@@ -391,7 +391,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
   handleDelFileR2 = async (filename) => {
     try {
-      const res = await fetch('/r2/delete', {
+      const res = await fetch(`${DB_CONN_URL}/r2/delete-uploadrecording`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

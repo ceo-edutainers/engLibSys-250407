@@ -97,7 +97,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
         const selectUrl = `${DB_CONN_URL}/record-select/${id}`
         const selectRes = await axios.get(selectUrl)
         const filename = selectRes.data.result[0].filename
-        await fetch('/r2/delete', {
+        await fetch(`${DB_CONN_URL}/r2/delete-uploadrecording`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ filename }),

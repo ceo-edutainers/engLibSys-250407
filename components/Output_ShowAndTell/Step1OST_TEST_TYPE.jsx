@@ -161,68 +161,47 @@ const Step1OST = () => {
     setShowandtellTitle_Level,
   } = useContext(QuizContext)
 
-  const handlePracticeRest = () => {
-    //練習をやめる時
+  // const handlePracticeRest = () => {
+  //   //練習をやめる時
 
+  //   setIsOpenBackMypage(false)
+
+  //   var nextStep = ''
+
+  //   localStorage.setItem('holdTempIdOST', practiceTempId)
+  //   hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
+  // }
+
+  const handlePracticeRest = () => {
     setIsOpenBackMypage(false)
 
-    var nextStep = ''
-    // alert('in handlePracticeRest')
-    // alert(stepStatus)
-    // alert('currentStep')
-    // alert(currentStep)
-    // alert('nextStep')
-    // alert(nextStep)
+    const nextStep = ''
     localStorage.setItem('holdTempIdOST', practiceTempId)
-    hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
+
+    hwHistoryUpdate(
+      currentStep,
+      'holding',
+      HWID,
+      practiceTempId,
+      nextStep,
+      true
+    )
   }
-
-  // const hwHistoryUpdate = (
-  //   currentStep,
-  //   stepStatus,
-  //   homework_id,
-  //   practiceTempId,
-  //   nextStep
-  // ) => {
-  //   var mbn = localStorage.getItem('MypageMbn')
-  //   //alert(stepStatus)
-  //   //alert(practiceTempId)
-  //   var url = DB_CONN_URL + '/update-sys-hw-history/'
-  //   axios
-
-  //     .put(
-  //       url +
-  //         mbn +
-  //         '&' +
-  //         homework_id +
-  //         '&' +
-  //         practiceTempId +
-  //         '&' +
-  //         currentStep +
-  //         '&' +
-  //         stepStatus +
-  //         '&' +
-  //         thisSubject
-  //     )
-
-  //     .then((response) => {
-  //       if (stepStatus == 'holding') {
-  //         router.reload('/outputShowAndTellCourse') // ここでリロード
-  //       } else if (stepStatus == 'end') {
-  //         setPageView(nextStep)
-  //       }
-  //     })
-  // }
 
   const hwHistoryUpdate = async (
     currentStep,
     stepStatus,
     homework_id,
     practiceTempId,
-    nextStep
+    nextStep,
+    goToMypage // ← 새 파라미터 추가
   ) => {
     const mbn = localStorage.getItem('MypageMbn')
-
+    // console.log('TEST-homework_id', homework_id)
+    // console.log('TEST-practiceTempId', practiceTempId)
+    // console.log('TEST-currentStep', currentStep)
+    // console.log('TEST-stepStatus', stepStatus)
+    // console.log('TEST-thisSubject', thisSubject)
     try {
       const response = await axios.post(
         `${DB_CONN_URL}/update-sys-hw-history`,
@@ -237,10 +216,16 @@ const Step1OST = () => {
       )
 
       if (response.data.status) {
-        // alert('here1-1', response.data.message)
+        // alert('here1-1', response.data.status)
         if (stepStatus === 'holding') {
           addWriting()
-          router.reload('/outputShowAndTellCourse')
+          // router.reload('/outputShowAndTellCourse')
+          if (goToMypage) {
+            // alert('1')
+            router.push('/outputShowAndTellCourse') // ← router.reload에서 push로 변경
+          } else {
+            // alert('2')
+          }
         } else if (stepStatus === 'end') {
           addWriting()
           insertPointToDB()
@@ -735,7 +720,7 @@ const Step1OST = () => {
             <>
               <div className="row">
                 {/* <MediaQuery query="(min-width: 767px)"> */}
-                <div className="col-lg-6 col-md-12">
+                {/* <div className="col-lg-6 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}
@@ -750,13 +735,13 @@ const Step1OST = () => {
                         className="btn btn-info mt-0 mb-2"
                         id="nextStep"
                       >
-                        一旦休憩する
+                        一旦休憩する--
                       </button>
                     </a>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-lg-6 col-md-12">
+                <div className="col-lg-12 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}

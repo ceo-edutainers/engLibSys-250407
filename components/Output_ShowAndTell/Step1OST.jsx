@@ -139,43 +139,6 @@ const Step1OST = () => {
     localStorage.setItem('holdTempIdOST', practiceTempId)
     hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
   }
-  ///////////////////////////////
-  // const hwHistoryUpdate = (
-  //   currentStep,
-  //   stepStatus,
-  //   homework_id,
-  //   practiceTempId,
-  //   nextStep
-  // ) => {
-  //   var mbn = localStorage.getItem('MypageMbn')
-  //   //alert(stepStatus)
-  //   //alert(practiceTempId)
-  //   var url = DB_CONN_URL + '/update-sys-hw-history/'
-  //   axios
-
-  //     .put(
-  //       url +
-  //         mbn +
-  //         '&' +
-  //         homework_id +
-  //         '&' +
-  //         practiceTempId +
-  //         '&' +
-  //         currentStep +
-  //         '&' +
-  //         stepStatus +
-  //         '&' +
-  //         thisSubject
-  //     )
-
-  //     .then((response) => {
-  //       if (stepStatus == 'holding') {
-  //         router.reload('/outputShowAndTellCourse') // ここでリロード
-  //       } else if (stepStatus == 'end') {
-  //         setPageView(nextStep)
-  //       }
-  //     })
-  // }
 
   const hwHistoryUpdate = async (
     currentStep,
@@ -402,7 +365,7 @@ const Step1OST = () => {
             <>
               <div className="row">
                 {/* <MediaQuery query="(min-width: 767px)"> */}
-                <div className="col-lg-6 col-md-12">
+                {/* <div className="col-lg-6 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}
@@ -421,9 +384,9 @@ const Step1OST = () => {
                       </button>
                     </a>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-lg-6 col-md-12">
+                <div className="col-lg-12 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}

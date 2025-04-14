@@ -820,7 +820,7 @@ const Step2OST = () => {
             <>
               <div className="row">
                 {/* <MediaQuery query="(min-width: 767px)"> */}
-                <div className="col-lg-6 col-md-12">
+                {/* <div className="col-lg-6 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}
@@ -839,9 +839,9 @@ const Step2OST = () => {
                       </button>
                     </a>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-lg-6 col-md-12">
+                <div className="col-lg-12 col-md-12">
                   <div
                     className="banner-content"
                     style={{ paddingTop: '20px' }}
