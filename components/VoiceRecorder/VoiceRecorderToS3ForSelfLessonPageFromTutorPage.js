@@ -97,18 +97,20 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       // 🔹 ③ DB에 insert 요청
       // alert(this.state.tutorNameEng)
       console.log(this.state.tutorNameEng)
-      var tutorNE = this.state.tutorNameEng
+
+      // if (this.state.tutorNameEng != '') {
       const response = await axios.post(
         DB_CONN_URL + '/tutor-record-during-lesson',
         {
           mbn: this.state.mbn,
           tbn: this.state.tbn,
-          tutorNameEng: tutorNE,
+          tutorNameEng: this.state.tutorNameEng,
           fileName: fileName,
           homework_id: this.state.homework_id,
           length_second: duration,
         }
       )
+      // }
 
       // ✅ 백엔드 응답 확인
       console.log('📥 tutor-record-during-lesson 응답:', response.data)
