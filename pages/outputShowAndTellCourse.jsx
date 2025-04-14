@@ -159,23 +159,30 @@ function outputShowAndTellCourse() {
           var Url = url + mbn
           // alert(Url)
           const response = await axios.get(Url)
+          // alert(response.data.status)
+          // setHWbookInfo(response.data)
+          // alert('homework_id' + response.data[0].homework_id)
+          // alert(response.data.result[0].homework_id)
 
-          //setHWbookInfo(response.data)
-          // alert(response.data[0].homework_id)
-
-          setHWID(response.data[0].homework_id)
+          setHWID(response.data.result[0].homework_id)
           // setUserName(response.data.name_eng)
-          setYoyakuDate(response.data[0].yoyakuDate)
-          setYoyakuTime(response.data[0].yoyakuTime)
-          setTeacherName(response.data[0].teacher_name)
-          setTbn(response.data[0].teacher_barcode_num)
-          setOutlineLimitWords(response.data[0].showandtell_outline_limit_words)
-          setScriptLimitWords(response.data[0].showandtell_script_limit_words)
-          setShowandtell_type(response.data[0].showandtell_type)
-          setShowandtellTitle(response.data[0].showandtellTitle)
-          setShowandtellTitle_Level(response.data[0].showandtellTitle_Level)
+          setYoyakuDate(response.data.result[0].yoyakuDate)
+          setYoyakuTime(response.data.result[0].yoyakuTime)
+          setTeacherName(response.data.result[0].teacher_name)
+          setTbn(response.data.result[0].teacher_barcode_num)
+          setOutlineLimitWords(
+            response.data.result[0].showandtell_outline_limit_words
+          )
+          setScriptLimitWords(
+            response.data.result[0].showandtell_script_limit_words
+          )
+          setShowandtell_type(response.data.result[0].showandtell_type)
+          setShowandtellTitle(response.data.result[0].showandtellTitle)
+          setShowandtellTitle_Level(
+            response.data.result[0].showandtellTitle_Level
+          )
           setShowandtellTitle_yourLanguage(
-            response.data[0].showandtellTitle_yourLanguage
+            response.data.result[0].showandtellTitle_yourLanguage
           )
           // alert(response.data[0].showandtell_type)
         } catch (error) {
