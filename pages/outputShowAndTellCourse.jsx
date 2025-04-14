@@ -117,7 +117,6 @@ function outputShowAndTellCourse() {
   // }, [])
 
   //無限ループしない
-  const bar = {}
 
   useEffect(() => {
     if (localStorage.getItem('loginStatus') == 'true') {
@@ -146,8 +145,9 @@ function outputShowAndTellCourse() {
 
       fetchData1()
     }
-  }, [bar])
-  const bar2 = {}
+  }, [])
+  // const bar2 = {}
+
   useEffect(() => {
     if (localStorage.getItem('loginStatus') == 'true') {
       var mbn = localStorage.getItem('MypageMbn')
@@ -157,9 +157,11 @@ function outputShowAndTellCourse() {
         try {
           var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
           var Url = url + mbn
+          alert(Url)
           const response = await axios.get(Url)
 
           //setHWbookInfo(response.data)
+          alert(response.data[0].homework_id)
 
           setHWID(response.data[0].homework_id)
           // setUserName(response.data.name_eng)
@@ -184,7 +186,7 @@ function outputShowAndTellCourse() {
 
       fetchData2()
     }
-  }, [bar2])
+  }, [])
 
   return (
     <div className="AppBig">
@@ -292,7 +294,6 @@ function outputShowAndTellCourse() {
           {totalQuestion}
           <br />
         </div> */}
-
         {/* <MonsterGet />
         <PointBar cStep={pageView} pageTitle="Input-Self-Reading" />
         <StepBarB cStep={pageView} /> */}

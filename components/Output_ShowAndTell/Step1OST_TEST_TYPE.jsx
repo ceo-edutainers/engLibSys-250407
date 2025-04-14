@@ -23,6 +23,7 @@ import StepImportantWords2 from '@/components/Output_ShowAndTell/StepImportantWo
 import SampleWriting from '@/components/Output_ShowAndTell/SampleWriting'
 import Subpage from '@/components/Output_ShowAndTell/Subpage'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
+import { MdBeenhere } from 'react-icons/md'
 
 const Step1OST = () => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -161,17 +162,6 @@ const Step1OST = () => {
     setShowandtellTitle_Level,
   } = useContext(QuizContext)
 
-  // const handlePracticeRest = () => {
-  //   //練習をやめる時
-
-  //   setIsOpenBackMypage(false)
-
-  //   var nextStep = ''
-
-  //   localStorage.setItem('holdTempIdOST', practiceTempId)
-  //   hwHistoryUpdate(currentStep, 'holding', HWID, practiceTempId, nextStep)
-  // }
-
   const handlePracticeRest = () => {
     setIsOpenBackMypage(false)
 
@@ -197,6 +187,7 @@ const Step1OST = () => {
     goToMypage // ← 새 파라미터 추가
   ) => {
     const mbn = localStorage.getItem('MypageMbn')
+
     // console.log('TEST-homework_id', homework_id)
     // console.log('TEST-practiceTempId', practiceTempId)
     // console.log('TEST-currentStep', currentStep)
@@ -247,15 +238,18 @@ const Step1OST = () => {
   const nextStep = (option, arrayNum) => {
     const fetchData = async () => {
       // alert(selectedWriting)
-      var mbn = localStorage.getItem('MypageMbn')
+      alert(HWID)
       try {
+        var mbn = localStorage.getItem('MypageMbn')
+        // alert(HWID)
         // const response =
         // await axios.get(Url).then((response) => {
 
         var url = DB_CONN_URL + '/update-shadowing-title'
+
         axios
           .post(url, {
-            mbn: myMbn,
+            mbn: mbn,
             homework_id: HWID,
             selectedWriting: selectedWriting,
           })
@@ -347,6 +341,7 @@ const Step1OST = () => {
         <div className="row">
           <div className="col-lg-12 col-md-6">
             <MonsterGet />
+            HWID:{HWID}
           </div>
         </div>
       </div>
@@ -406,6 +401,7 @@ const Step1OST = () => {
                     setSearchTermName(showandtellTitle_Level)
                   }}
                 >
+                  {/* HWID: {HWID} */}
                   <img
                     src="/images/icon-mouseclick.png"
                     style={{ height: '40px', width: 'auto' }}
@@ -661,6 +657,7 @@ const Step1OST = () => {
                           <>
                             <tr>
                               <td style={{ width: '5%' }}>
+                                {/* selectedWriting:{selectedWriting} */}
                                 <input
                                   type="radio"
                                   name="selWriting"

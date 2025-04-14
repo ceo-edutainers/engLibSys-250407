@@ -223,42 +223,6 @@ function App() {
       })
   }
 
-  // const hwHistoryUpdate = (
-  //   currentStep,
-  //   stepStatus,
-  //   homework_id,
-  //   pti,
-  //   thisSubject,
-  //   newFileName,
-  //   fileDetail
-  // ) => {
-  //   var url = DB_CONN_URL + '/update-sys-hw-history-uploadFile/'
-  //   axios
-  //     .put(
-  //       url +
-  //         mbn +
-  //         '&' +
-  //         homework_id +
-  //         '&' +
-  //         pti +
-  //         '&' +
-  //         currentStep +
-  //         '&' +
-  //         stepStatus +
-  //         '&' +
-  //         thisSubject +
-  //         '&' +
-  //         newFileName +
-  //         '&' +
-  //         fileDetail
-  //     )
-  //     .then((response) => {
-  //       console.log('XXX-:', response.data.message)
-  //       localStorage.setItem('rediriectPageView', 'finished')
-  //       reloadImage()
-  //     })
-  // }
-
   const reloadImage = () => {
     const fetchData2 = async () => {
       try {
@@ -288,6 +252,7 @@ function App() {
         <center>
           {!expiredHW ? (
             <>
+              {mbn}
               <form className="upload-steps" onSubmit={handleClick}>
                 <div
                   className="col-lg-12 col-md-12 pt-2 pb-1"

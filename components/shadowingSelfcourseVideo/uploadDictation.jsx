@@ -212,7 +212,7 @@ function Upload({
                     paddingTop: 10,
                   }}
                 >
-                  {/* <p>{qrcodeUrl}</p> */}
+                  <p>{qrcodeUrl}</p>
                   <QRCode value={qrcodeUrl} size="100" />
                   <p style={{ color: 'blue', fontSize: '13px' }}>
                     スマホ

@@ -4,19 +4,7 @@ import { QuizContext } from './ContextsB'
 import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faMicrophone,
-  faTimes,
-  faSave,
-  faBullseye,
-  faTrashAlt,
-  faStop,
-  faTrash,
-  faLockOpen,
-  faArrowCircleRight,
-  faArrowAltCircleRight,
-  faCircle,
-} from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 // import S3 from 'react-aws-s3'
 const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -28,59 +16,13 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
   const [isFileSelected, setIsFileSelected] = useState(false)
   const [isFileDeleted, setIsFileDeleted] = useState(false)
   const [fileLength, setFileLength] = useState()
-  const {
-    myMbn,
-    setMyMbn,
-    HWID,
-    setHWID,
-    yoyakuDate,
-    setYoyakuDate,
-    yoyakuTime,
-    setYoyakuTime,
-    thisSubject,
-    setThisSubject,
-    storyTitle,
-    setStoryTitle,
-    practiceTempId,
-    setPracticeTempId,
-    audioOnOff,
-    setAudioOnOff,
-    course,
-    setCourse,
-    courseName,
-    setCourseName,
-    pageView,
-    setPageView,
-    courseLevel,
-    setCourseLevel,
-    userName,
-    setUserName,
-    point,
-    setPoint,
-  } = useContext(QuizContext)
-
-  // const s3 = new AWS.S3({
-  //   accessKeyId: process.env.S3_REACT_APP_ACCESS_ID,
-  //   secretAccessKey: process.env.S3_REACT_APP_ACCESS_KEY,
-  //   Bucket: process.env.S3_REACT_APP_BUCKET_NAME,
-  //   dirName: process.env.S3_REACT_APP_DIR_NAME2 /* optional */,
-  // })
-
-  // const params = {
-  //   Bucket: process.env.S3_REACT_APP_BUCKET_NAME,
-  //   Key: fileName,
-  // }
+  const { myMbn, setMyMbn, HWID, setHWID, thisSubject, setThisSubject } =
+    useContext(QuizContext)
 
   const refreshPage = () => {
     window.location.reload()
   }
 
-  // const afterDeleteImgReload = () => {
-  //   // alert('test')
-
-  //   setIsFileDeleted(false)
-  //   reloadImage()
-  // }
   const deleteFileInfo = (id, homework_id, pointStep) => {
     var homework_id = homework_id
     var pointStep = currentStep
@@ -115,7 +57,7 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
           var url = DB_CONN_URL + '/get-upload-file-sys-hw-history/'
           var Url =
             url + mbn + '&' + thisSubject + '&' + HWID + '&' + fileDetail
-
+          // alert(Url)
           // var url = DB_CONN_URL + '/get-book-question-sys-hw-history/'
           // var Url =
           //   url + mbn + '&' + thisSubject + '&' + HWID + '&' + currentStep
@@ -124,6 +66,7 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
           // alert(response.data.length)
           if (!response.data.length) {
             setIsFileAru(false)
+            alert('no data')
           } else {
             // alert(response.data.response)
             setIsFileAru(true)
@@ -170,7 +113,7 @@ const ViewBookQuestionFile = ({ currentStep, stepStatus }) => {
 
           {mindmapView
             ? 'ファイルを隠す'
-            : 'アップロード済みのファイルを確認する'}
+            : '<リーディング> アップロード済みのファイルを確認する'}
         </h5>
       </span>
       <div

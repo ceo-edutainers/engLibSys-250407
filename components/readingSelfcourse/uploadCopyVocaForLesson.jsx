@@ -150,27 +150,8 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
       handleUpload(newArr[i], i)
     }
   }
-  // const handleUpload = (file) => {
-  //   let newFileName = file.name.replace(/\..+$/, '')
-  //   const ReactS3Client = new S3(config)
-  //   ReactS3Client.uploadFile(file, newFileName).then((data) => {
-  //     if (data.status === 204) {
-  //       console.log('success')
-  //     } else {
-  //       console.log('fail')
-  //     }
-  //   })
-  // }
+
   const handleUpload = (file, i) => {
-    // event.preventDefault()
-
-    // let file = fileInput.current.files[0]
-
-    // if (!file) {
-    //   setIsFileSenected(true)
-    //   // alert('no file')
-    //   return false
-    // }
     //ファイル名から拡張子を取得する関数
     // console.log('fileInput.current.files:', fileInput.current.files[0].name)  //これが本当のファイル名
     var parts = []
@@ -271,15 +252,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
       )
 
       .then((response) => {
-        // reloadImage()
-        // if (stepStatus == 'giveup') {
-        //   router.reload('/outputShowAndTellCourse') // ここでリロード
-        // } else if (stepStatus == 'end') {
-        //   setPageView(nextStep)
-        // }
-
         localStorage.setItem('rediriectPageView', 'finished')
-        // router.reload('/readingSelfcourseB')
       })
   }
 
@@ -404,7 +377,7 @@ function Upload({ currentStep, stepStatus, pointKeyNum, homework_id, copyHW }) {
                       padding: '10px',
                     }}
                   >
-                    {/* <p>{qrLinkBookQuestion}</p> */}
+                    <p>{qrLinkBookQuestion}</p>
 
                     <QrcodeGenerator
                       url={qrLinkBookQuestion}

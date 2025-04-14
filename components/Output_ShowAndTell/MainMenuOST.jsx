@@ -97,6 +97,7 @@ function MainMenuOST() {
           setBeforeHwData(response.data)
 
           getFileFromAws(myMbn, response.data[0].homework_id)
+
           // alert('homework_id' + response.data[0].homework_id)
           getGoogleLinkFromPreviousLesson(myMbn, response.data[0].homework_id)
         } else {
@@ -223,6 +224,7 @@ function MainMenuOST() {
         if (response.data.length > 0) {
           // alert('response.data:' + response.data)
           setMyHistoryList(response.data)
+          setHWID(homework_id)
         } else {
           // alert(response.data.message)
         }
@@ -375,6 +377,7 @@ function MainMenuOST() {
         >
           Tutor: {teacherName}
         </h5> */}
+
         <h1
           className="startBtnBig"
           // onClick={() => {
