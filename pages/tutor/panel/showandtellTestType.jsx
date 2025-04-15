@@ -393,64 +393,102 @@ const SHOWANDTELL = () => {
   const [isError, setError] = useState(false)
 
   //無限ループしない
-  const bar2 = {}
+
+  // useEffect(() => {
+  //   if (router.isReady && router.query.m) {
+  //     setMbn(router.query.m)
+  //   }
+  // }, [router.isReady])
+  // useEffect(() => {
+  //   setMbn(router.query.m)
+  //   if (!mbn) return // mbn이 아직 없으면 무시
+
+  //   if (localStorage.getItem('T_loginStatus') == 'true' && newLesson == false) {
+  //     localStorage.setItem('mbn', query.m)
+  //     var Url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbn
+  //     // alert(Url)
+  //     const fetchData2 = async () => {
+  //       try {
+  //         axios.get(Url).then((response) => {
+  //           // alert('length' + response.data.result.length)
+  //           // alert(response.data.result.length)
+  //           if (response.data.result.length > 0) {
+  //             // alert('here')
+  //             setGoogleDocLink(response.data.result[0].google_doc_link)
+  //             setNameEng(response.data.result[0].name_eng)
+  //             setTutorNameEng(response.data.result[0].teacher_name)
+  //             setClassLink(response.data.result[0].classLink)
+  //             setHomeworkID(response.data.result[0].homework_id)
+
+  //             setOsusumeLetterSumOutline(
+  //               response.data.result[0].showandtell_outline_limit_words
+  //             )
+  //             setOsusumeLetterSumScript(
+  //               response.data.result[0].showandtell_script_limit_words
+  //             )
+  //             setWhenDetail(response.data.result[0].when_detail)
+
+  //             // setSearchTermName(response.data[0].showandtellTitle_Level)
+  //             setShowandtellTitle(response.data.result[0].showandtellTitle)
+
+  //             //追加
+  //             setLessonSubject(response.data.result[0].subject)
+  //             setYoyakuDate(response.data.result[0].yoyakuDate)
+  //             setYoyakuTime(response.data.result[0].yoyakuTime)
+  //             setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
+  //           }
+  //         })
+  //       } catch (error) {
+  //         alert('error1' + error)
+  //         console.log(error)
+  //       }
+  //     }
+
+  //     fetchData2()
+  //   }
+  //   // }
+  // }, [router.isReady])
 
   useEffect(() => {
-    if (router.isReady && router.query.m) {
-      setMbn(router.query.m)
-    }
-  }, [router.isReady])
-  useEffect(() => {
-    if (!mbn) return // mbn이 아직 없으면 무시
-    // console.log('newLesson', newLesson)
-    if (router.isReady) {
-      // alert('mbn:' + mbn)
-      if (
-        localStorage.getItem('T_loginStatus') == 'true' &&
-        newLesson == false
-      ) {
-        var Url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbn
-        // alert(Url)
-        const fetchData2 = async () => {
-          try {
-            axios.get(Url).then((response) => {
-              // alert('length' + response.data.result.length)
+    const mbnFromQuery = router.query.m
+    if (!router.isReady || !mbnFromQuery) return
 
-              if (response.data.result.length > 0) {
-                // alert('here')
-                setNameEng(response.data.result[0].name_eng)
-                setTutorNameEng(response.data.result[0].teacher_name)
-                setClassLink(response.data.result[0].classLink)
-                setHomeworkID(response.data.result[0].homework_id)
+    setMbn(mbnFromQuery) // 이건 그대로
 
-                setOsusumeLetterSumOutline(
-                  response.data.result[0].showandtell_outline_limit_words
-                )
-                setOsusumeLetterSumScript(
-                  response.data.result[0].showandtell_script_limit_words
-                )
-                setWhenDetail(response.data.result[0].when_detail)
+    if (
+      localStorage.getItem('T_loginStatus') === 'true' &&
+      newLesson === false
+    ) {
+      localStorage.setItem('mbn', mbnFromQuery)
+      const Url =
+        DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbnFromQuery
 
-                // setSearchTermName(response.data[0].showandtellTitle_Level)
-                setShowandtellTitle(response.data.result[0].showandtellTitle)
-
-                //追加
-                setLessonSubject(response.data.result[0].subject)
-                setYoyakuDate(response.data.result[0].yoyakuDate)
-                setYoyakuTime(response.data.result[0].yoyakuTime)
-                setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
-              }
-            })
-          } catch (error) {
-            alert('error1' + error)
-            console.log(error)
+      axios
+        .get(Url)
+        .then((response) => {
+          if (response.data.result?.length > 0) {
+            const data = response.data.result[0]
+            setGoogleDocLink(data.google_doc_link)
+            setNameEng(data.name_eng)
+            setTutorNameEng(data.teacher_name)
+            setClassLink(data.classLink)
+            setHomeworkID(data.homework_id)
+            setOsusumeLetterSumOutline(data.showandtell_outline_limit_words)
+            setOsusumeLetterSumScript(data.showandtell_script_limit_words)
+            setWhenDetail(data.when_detail)
+            setShowandtellTitle(data.showandtellTitle)
+            setLessonSubject(data.subject)
+            setYoyakuDate(data.yoyakuDate)
+            setYoyakuTime(data.yoyakuTime)
+            setYoyakuWeekday(data.yoyakuWeekday)
           }
-        }
-
-        fetchData2()
-      }
+        })
+        .catch((error) => {
+          alert('error1: ' + error)
+          console.log(error)
+        })
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query.m])
 
   if (isError) return <h1>Error, try again showandtell!</h1>
   if (isLoading) return <h1>Loading..........................</h1>
@@ -624,7 +662,8 @@ const SHOWANDTELL = () => {
             >
               Finish this Lesson
             </span>
-            <span className=" p-1 mr-2" style={{ fontSize: '25px' }}>
+            <br />
+            <span className=" p-1 mr-2" style={{ fontSize: '13px' }}>
               <input
                 type="checkbox"
                 value="adult"
@@ -642,7 +681,7 @@ const SHOWANDTELL = () => {
             </span>
             {!isCheckedAbsentBtn ? (
               <span
-                className="btn btn-danger ml-3"
+                className="btn btn-danger "
                 style={{ fontSize: '23px' }}
                 onClick={() => {
                   setIsSendEmailToAbsentStudent(true)
@@ -653,7 +692,7 @@ const SHOWANDTELL = () => {
               </span>
             ) : (
               <span
-                className="btn btn-primary ml-3"
+                className="btn btn-primary"
                 style={{ fontSize: '23px' }}
                 onClick={() => {
                   setIsAbsentStudentJoined(true)
