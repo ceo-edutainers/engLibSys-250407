@@ -155,7 +155,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           const duration = dur.toFixed(0)
 
           //✅ 25초 미만이면 경고 띄우고 중단
-          if (parseInt(duration) < 3) {
+          if (parseInt(duration) < 25) {
             // 🔊 음성 안내 추가
             const utterance = new SpeechSynthesisUtterance(
               '録音時間が短すぎます。再度録音をしてください。'
