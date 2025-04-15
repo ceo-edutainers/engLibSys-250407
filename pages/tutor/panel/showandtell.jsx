@@ -348,24 +348,27 @@ const SHOWANDTELL = () => {
       const fetchData2 = async () => {
         try {
           axios.get(Url).then((response) => {
-            if (response.data.length > 0) {
-              setNameEng(response.data[0].name_eng)
-              setTutorNameEng(response.data[0].teacher_name)
-              setClassLink(response.data[0].classLink)
-              setHomeworkID(response.data[0].homework_id)
+            // if (response.data.length > 0) {
+            if (response.data.status && response.data.result.length > 0) {
+              // alert(response.data.result[0])
+              setGoogleDocLink(response.data.result[0].google_doc_link)
+              setNameEng(response.data.result[0].name_eng)
+              setTutorNameEng(response.data.result[0].teacher_name)
+              setClassLink(response.data.result[0].classLink)
+              setHomeworkID(response.data.result[0].homework_id)
               setOsusumeLetterSumOutline(
-                response.data[0].showandtell_outline_limit_words
+                response.data.result[0].showandtell_outline_limit_words
               )
               setOsusumeLetterSumScript(
-                response.data[0].showandtell_script_limit_words
+                response.data.result[0].showandtell_script_limit_words
               )
-              setWhenDetail(response.data[0].when_detail)
+              setWhenDetail(response.data.result[0].when_detail)
 
               //追加 for no-show email start
-              setLessonSubject(response.data[0].subject)
-              setYoyakuDate(response.data[0].yoyakuDate)
-              setYoyakuTime(response.data[0].yoyakuTime)
-              setYoyakuWeekday(response.data[0].yoyakuWeekday)
+              setLessonSubject(response.data.result[0].subject)
+              setYoyakuDate(response.data.result[0].yoyakuDate)
+              setYoyakuTime(response.data.result[0].yoyakuTime)
+              setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
               //追加 for no-show email end
             }
           })
@@ -622,12 +625,6 @@ const SHOWANDTELL = () => {
               // practiceTempId={practiceTempId}
               tbn={tbn}
               tutorNameEng={tutorNameEng}
-              // audioDurationFromDB={audioDurtaionFromDB}
-              // pointKeyNum={pointKeyNum}
-              // pointStep={currentStep}
-              // leastRecordCount={leastRecordCount}
-              // pageView={pageView}
-              // readingHWAmount={readingHWAmount}
             />
           </>
         )}

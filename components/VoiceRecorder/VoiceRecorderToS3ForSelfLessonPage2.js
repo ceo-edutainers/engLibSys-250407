@@ -126,7 +126,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           audio: {
             noiseSuppression: true,
             echoCancellation: true,
-            sampleRate: 44100,
+            sampleRate: 44100, //44100->original 고용량 CD음질 ->16000
           },
         })
         .then((stream) => {

@@ -39,7 +39,7 @@ const SplitPanelOutputSAT = ({
           const response = await axios.get(Url)
           // alert(response.data[0].google_doc_link)
           // if (response.data[0].google_doc_link) {
-          setGoogleDocLink(response.data[0].google_doc_link)
+          setGoogleDocLink(response.data.result[0].google_doc_link)
           // }
         } catch (error) {
           alert(error)
