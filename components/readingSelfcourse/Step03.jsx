@@ -341,7 +341,7 @@ const Step3B = () => {
         var step = nextStep
         var pti = practiceTempId
         var url = DB_CONN_URL + '/reg-sys-hw-history'
-        // alert('step' + step)
+
         axios
           .post(url, {
             mbn: myMbn,

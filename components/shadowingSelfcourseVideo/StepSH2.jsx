@@ -407,21 +407,14 @@ const StepSH2 = () => {
     var mbn = localStorage.getItem('MypageMbn')
     var url = DB_CONN_URL + '/update-sys-hw-history/'
     axios
-
-      .put(
-        url +
-          mbn +
-          '&' +
-          homework_id +
-          '&' +
-          practiceTempId +
-          '&' +
-          currentStep +
-          '&' +
-          stepStatus +
-          '&' +
-          thisSubject
-      )
+      .post(`${DB_CONN_URL}/update-sys-hw-history`, {
+        mbn,
+        homework_id,
+        practiceTempId,
+        currentStep,
+        stepStatus,
+        thisSubject,
+      })
 
       .then((response) => {
         if (stepStatus == 'holding') {

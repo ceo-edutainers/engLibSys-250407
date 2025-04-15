@@ -57,6 +57,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       storyNum: this.props.storyNum,
       seriesName: this.props.seriesName,
       bookNum: this.props.bookNum,
+      isOpenBackMypage: false, // 🔒 반드시 초기 false 설정
     }
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -152,6 +153,24 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         const blobUrl = URL.createObjectURL(blob)
         getBlobDuration(blobUrl).then((dur) => {
           const duration = dur.toFixed(0)
+
+          //✅ 25초 미만이면 경고 띄우고 중단
+          if (parseInt(duration) < 3) {
+            // 🔊 음성 안내 추가
+            const utterance = new SpeechSynthesisUtterance(
+              '録音時間が短すぎます。再度録音をしてください。'
+            )
+            utterance.lang = 'ja-JP'
+            speechSynthesis.speak(utterance)
+
+            this.setState({
+              isrecording: false,
+              showWaitingPopup: false,
+              isOpenBackMypage: true,
+            })
+            return
+          }
+
           var aud =
             localStorage.getItem('MODE') === 'TEST'
               ? '0:5'

@@ -28,6 +28,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       recordListView: false,
       isrecording: false,
       showWaitingPopup: false,
+      isOpenBackMypage: false, // 🔒 반드시 초기 false 설정
     }
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
     this.recorder = new Recorder(this.audioContext)
@@ -45,6 +46,24 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     const { blob } = await this.recorder.stop()
     const blobUrl = URL.createObjectURL(blob)
     const duration = Math.round(await getBlobDuration(blobUrl))
+
+    //✅ 25초 미만이면 경고 띄우고 중단
+    if (parseInt(duration) < 3) {
+      // 🔊 음성 안내 추가
+      const utterance = new SpeechSynthesisUtterance(
+        '録音時間が短すぎます。再度録音をしてください。'
+      )
+      utterance.lang = 'ja-JP'
+      speechSynthesis.speak(utterance)
+
+      this.setState({
+        isrecording: false,
+        showWaitingPopup: false,
+        isOpenBackMypage: true,
+      })
+      return
+    }
+
     const d = new Date()
     const time = `${d.getFullYear()}-${
       d.getMonth() + 1
@@ -213,6 +232,21 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
             </p>
           </SweetAlert>
         )}
+        <SweetAlert
+          title="録音時間が十分でないため保存できませんでした。"
+          show={this.state.isOpenBackMypage}
+          onConfirm={() =>
+            this.setState({
+              isOpenBackMypage: false,
+            })
+          }
+          confirmBtnText="もう一度やり直す"
+          showCancel={false}
+          reverseButtons={true}
+          style={{ width: '600px', backgroundColor: '#afeeee' }}
+        >
+          <p>必ず決まった分量の録音をして下さい。</p>
+        </SweetAlert>
       </div>
     )
   }

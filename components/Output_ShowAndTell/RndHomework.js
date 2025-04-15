@@ -128,7 +128,7 @@ const RndHomework = ({ homework_id, subject }) => {
             var imgSrc = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
             return (
               <>
-                {' '}
+                {/* <p style={{ color: 'white' }}>{imgSrc}</p> */}
                 <p>
                   <img src={imgSrc} />
                 </p>
