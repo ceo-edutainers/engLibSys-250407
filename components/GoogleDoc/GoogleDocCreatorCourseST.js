@@ -27,26 +27,58 @@ export default function GoogleDocCreatorCourseST({
   const bar2 = {}
 
   useEffect(() => {
+    if (!mbn || !homework_id) return // 값이 없으면 실행하지 않음
     getGoogleUrl()
-  }, [])
+  }, [mbn, homework_id]) // dependency 추가
 
+  // function getGoogleUrl() {
+  //   var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
+  //   var Url = url + mbn
+  //   // alert(Url)
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(Url)
+
+  //       // if (response.data.result[0].google_doc_link) {
+  //       //   setGoogleUrl(response.data[0].google_doc_link)
+  //       // }
+
+  //       if (response.data.status) {
+  //         if (response.data.result[0].google_doc_link) {
+  //           setGoogleUrl(response.data.result[0].google_doc_link)
+  //           // console.log('TTT:' + response.data.result[0].google_doc_link)
+  //         }
+  //       } else {
+  //         console.log('Error:', response.data.message)
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+
+  //   fetchData()
+  // }
   function getGoogleUrl() {
-    var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
-    var Url = url + mbn
+    if (!mbn) return
 
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(Url)
-        if (response.data[0].google_doc_link) {
-          setGoogleUrl(response.data[0].google_doc_link)
+    const url = `${DB_CONN_URL}/get-hw-show-and-tell-info-first-page/${mbn}`
+
+    axios
+      .get(url)
+      .then((response) => {
+        if (
+          response.data.status &&
+          response.data.result?.[0]?.google_doc_link
+        ) {
+          setGoogleUrl(response.data.result[0].google_doc_link)
+        } else {
+          console.warn('No data or google_doc_link:', response.data.message)
         }
-        console.log('********************')
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchData()
+      })
+      .catch((err) => {
+        console.error('Network Error:', err)
+      })
   }
 
   // useEffect(() => {
@@ -54,17 +86,18 @@ export default function GoogleDocCreatorCourseST({
   // }, [bar2])
   useEffect(() => {
     var url = DB_CONN_URL + '/get-member-showandtell-script/' + homework_id
-
+    // alert(url)
     axios.get(url).then((response) => {
-      // alert(response.data.length)
+      // console.log('TTT2:' + url)
       if (response.data.length > 0) {
         setWholeScript(response.data[0].script)
+
         // console.log('wholeScript:', response.data[0].script)
       } else {
         setWholeScript('not yet submitted')
       }
     })
-  }, [bar2])
+  }, [])
 
   return (
     <>

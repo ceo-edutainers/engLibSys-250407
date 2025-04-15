@@ -30,15 +30,18 @@ const SplitPanelOutputSAT = ({
 
   //無限ループしない
 
-  const bar2 = {}
+  // const bar2 = {}
   useEffect(() => {
     if (localStorage.getItem('T_loginStatus') == 'true' && mbn) {
       const fetchData2 = async () => {
         try {
           var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
           var Url = url + mbn
+
           // alert(Url)
+
           const response = await axios.get(Url)
+          // alert(response.data.status)
 
           // alert(response.data[0].google_doc_link)
           // if (response.data[0].google_doc_link) {
@@ -53,7 +56,7 @@ const SplitPanelOutputSAT = ({
 
       fetchData2()
     }
-  }, [bar2])
+  }, [])
 
   if (isError)
     return <h1>discussion.js Error, try again hw info in splitpanel!</h1>
@@ -76,6 +79,7 @@ const SplitPanelOutputSAT = ({
         >
           {/* Left Panel */}
           <div className="mt-2" style={{ paddingLeft: '20px' }}>
+            {/* homework_id={homework_id} */}
             <ViewTestType
               mbn={mbn}
               homework_id={homework_id}
@@ -97,7 +101,13 @@ const SplitPanelOutputSAT = ({
               textAlign: 'center',
             }}
           >
-            {google_doc_link == '' ? (
+            {/* mbn:{mbn}
+            <br />
+            homework_id:{homework_id}
+            <br />
+            name_eng:{name_eng} */}
+            {!google_doc_link && mbn && homework_id && name_eng ? (
+              // {!google_doc_link ? (
               <GoogleDocCreatorCourseST
                 mbn={mbn}
                 tbn={tbn}

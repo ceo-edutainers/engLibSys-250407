@@ -116,7 +116,8 @@ const SplitPanelOutput = ({
             /> */}
             {/* <VoiceRecorderToS3ForLessonPage
             homework_id={homework_id}/> */}
-            {google_doc_link == '' ? (
+            {/* {google_doc_link == '' ? ( */}
+            {!google_doc_link ? (
               <GoogleDocCreator
                 mbn={mbn}
                 tbn={tbn}

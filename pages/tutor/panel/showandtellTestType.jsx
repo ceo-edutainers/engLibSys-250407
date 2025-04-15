@@ -21,7 +21,7 @@ import emailjs from 'emailjs-com'
 const SHOWANDTELL = () => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-  const [setUsePreviousHomework, usePreviousHomework] = useState(false)
+  const [usePreviousHomework, setUsePreviousHomework] = useState(false)
 
   const [writingView, setWritingView] = useState(false)
   const [searchTermName, setSearchTermName] = useState('')
@@ -64,22 +64,12 @@ const SHOWANDTELL = () => {
     useState(false)
 
   const [isGetMonster, setIsGetMonster] = useState(false)
-  // const [practiceTempId, setPracticeTempId] = useState(null)
-
-  // function generateRandomString(length) {
-  //   const characters =
-  //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  //   let result = ''
-  //   for (let i = 0; i < length; i++) {
-  //     result += characters.charAt(Math.floor(Math.random() * characters.length))
-  //   }
-  //   return result
-  // }
 
   useEffect(() => {
-    if (router.isReady) {
+    if (router.isReady && router.query.m) {
       // console.log('router.query', router.query)
-      setMbn(router.query.m)
+      const mbn = router.query.m
+      setMbn(mbn)
       setHomework_id(router.query.homework_id)
       setSubj(router.query.subJ)
       setTbn(router.query.tbn)
@@ -315,18 +305,13 @@ const SHOWANDTELL = () => {
   }, [])
 
   const functionFinishThisLesson = (newstatus) => {
-    // alert(nextnextWeekday('MON'))
-    // alert(newstatus)
     setNewLesson(true)
     setIsFinishThisLesson(false)
 
-    if (whenDetail == 'every week') {
-      //ENGLIBのカレンダー通りのスケジュール
-      // var url = DB_CONN_URL + '/finish-show-and-tell-lesson-year-plan/'
-      var url =
-        DB_CONN_URL +
-        '/finish-lesson-and-show-and-tell-set-by-year-plan-test-type/'
-    }
+    var url =
+      DB_CONN_URL +
+      '/finish-lesson-and-show-and-tell-set-by-year-plan-test-type/'
+    // }
     var newstatus = newstatus
 
     if (usePreviousHomework == true) {
@@ -334,6 +319,15 @@ const SHOWANDTELL = () => {
     } else if (usePreviousHomework == false) {
       var useThisHW = 'no'
     }
+
+    console.log('--- Finish Lesson URL 확인 ---')
+    console.log('mbn:', mbn)
+    console.log('homework_id:', homework_id)
+    console.log('subject:', subject)
+    console.log('courseName:', courseName)
+    console.log('course:', course)
+    console.log('useThisHW:', useThisHW)
+    console.log('whenDetail:', whenDetail)
 
     var Url =
       url +
@@ -351,28 +345,11 @@ const SHOWANDTELL = () => {
       '&' +
       useThisHW
 
+    console.log('url:', Url)
     const fetchData = async () => {
       try {
         // alert('1')
-        axios.get(Url).then((response) => {
-          // alert('2')
-          // alert(response.data.status)
-          // alert(response.data.message)
-          // alert('weekday' + response.data.weekday)
-          // alert(response.data.new_homework_id)
-          // alert(response.data.mbn)
-          // alert(response.data.name_eng)
-          // alert(response.data.teacher_barcode_num)
-          // alert(response.data.teacher_name_eng)
-          // alert(response.data.showandtell_outline_limit_words)
-          // alert(response.data.showandtell_script_limit_words)
-          // alert('newYoyakuTime' + response.data.newYoyakuTime)
-          // alert('duringTime' + response.data.duringTime)
-          // alert('NowRegdate' + response.data.NowRegdate)
-          // alert('NowRegtime' + response.data.NowRegtime)
-          // alert('next_weekdate' + response.data.next_weekdate)
-          // alert('newYoyakuTime' + response.data.newYoyakuTime)
-        })
+        axios.get(Url).then((response) => {})
       } catch (error) {
         console.log(error)
         alert('error1')
@@ -381,18 +358,8 @@ const SHOWANDTELL = () => {
 
     fetchData()
     if (newstatus == 'finished') {
-      // var alr = localStorage.getItem('afterLoginRedirect')
-      // var tbn = localStorage.getItem('tbn')
-      // var alr = '/tutor/' + alr + tbn
-      // alert('1' + alr)
-      // router.push(alr)
       setIsSuccessSetNewLesson(true)
     } else if (newstatus == 'no show') {
-      //   var alr = localStorage.getItem('afterLoginRedirect')
-      //   var tbn = localStorage.getItem('tbn')
-      //   var alr = '/tutor/' + alr + tbn
-      //   alert('1' + alr)
-      //   router.push(alr)
       setIsNoshowAndSuccessSetNewLesson(true)
     }
   }
@@ -407,6 +374,7 @@ const SHOWANDTELL = () => {
       try {
         axios.get(Url).then((response) => {
           // alert('1')
+          alert(response.data.status)
           if (response.data.status) {
             // alert('2')
 
@@ -426,44 +394,51 @@ const SHOWANDTELL = () => {
 
   //無限ループしない
   const bar2 = {}
+
   useEffect(() => {
+    if (router.isReady && router.query.m) {
+      setMbn(router.query.m)
+    }
+  }, [router.isReady])
+  useEffect(() => {
+    if (!mbn) return // mbn이 아직 없으면 무시
     // console.log('newLesson', newLesson)
     if (router.isReady) {
-      // setMbn(router.query.m)
-      var mbn = router.query.m
-      // alert('mbn' + mbn)
+      // alert('mbn:' + mbn)
       if (
         localStorage.getItem('T_loginStatus') == 'true' &&
         newLesson == false
       ) {
         var Url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbn
-
+        // alert(Url)
         const fetchData2 = async () => {
           try {
             axios.get(Url).then((response) => {
-              // alert('length' + response.data.length)
-              if (response.data.length > 0) {
-                setNameEng(response.data[0].name_eng)
-                setTutorNameEng(response.data[0].teacher_name)
-                setClassLink(response.data[0].classLink)
-                setHomeworkID(response.data[0].homework_id)
+              // alert('length' + response.data.result.length)
+
+              if (response.data.result.length > 0) {
+                // alert('here')
+                setNameEng(response.data.result[0].name_eng)
+                setTutorNameEng(response.data.result[0].teacher_name)
+                setClassLink(response.data.result[0].classLink)
+                setHomeworkID(response.data.result[0].homework_id)
 
                 setOsusumeLetterSumOutline(
-                  response.data[0].showandtell_outline_limit_words
+                  response.data.result[0].showandtell_outline_limit_words
                 )
                 setOsusumeLetterSumScript(
-                  response.data[0].showandtell_script_limit_words
+                  response.data.result[0].showandtell_script_limit_words
                 )
-                setWhenDetail(response.data[0].when_detail)
+                setWhenDetail(response.data.result[0].when_detail)
 
                 // setSearchTermName(response.data[0].showandtellTitle_Level)
-                setShowandtellTitle(response.data[0].showandtellTitle)
+                setShowandtellTitle(response.data.result[0].showandtellTitle)
 
                 //追加
-                setLessonSubject(response.data[0].subject)
-                setYoyakuDate(response.data[0].yoyakuDate)
-                setYoyakuTime(response.data[0].yoyakuTime)
-                setYoyakuWeekday(response.data[0].yoyakuWeekday)
+                setLessonSubject(response.data.result[0].subject)
+                setYoyakuDate(response.data.result[0].yoyakuDate)
+                setYoyakuTime(response.data.result[0].yoyakuTime)
+                setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
               }
             })
           } catch (error) {
@@ -497,6 +472,7 @@ const SHOWANDTELL = () => {
 
             if (response.data.length > 0) {
               setShowandtellLevel(response.data.response[0].showandtell_Level)
+
               // alert(
               //   'showandtellTitle_Level' +
               //     response.data.response[0].showandtell_Level
@@ -814,7 +790,7 @@ const SHOWANDTELL = () => {
             display: tutorOnlyMemoView ? 'block' : 'none',
           }}
         >
-          mbn:{mbn}
+          {/* mbn:{mbn} */}
           {mbn && (
             <>
               <ViewTutorOnlyMemo
