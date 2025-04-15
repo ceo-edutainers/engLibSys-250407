@@ -59,6 +59,8 @@ const SHOWANDTELL = () => {
   const [isSendEmailToAbsentStudent, setIsSendEmailToAbsentStudent] =
     useState(false)
 
+  const [monsterRefreshKey, setMonsterRefreshKey] = useState(0)
+
   useEffect(() => {
     if (router.isReady) {
       // console.log('router.query', router.query)
@@ -403,7 +405,7 @@ const SHOWANDTELL = () => {
   const handleGiveMonsterFromHistory = () => {
     // const fetchData = async () => {
     setIsGetMonster(false)
-    var mbn = localStorage.getItem('MypageMbn')
+    // var mbn = localStorage.getItem('MypageMbn')
     var url = DB_CONN_URL + '/give-monster-from-tutor'
 
     axios
@@ -422,7 +424,7 @@ const SHOWANDTELL = () => {
             var imgCount = getOrdinalSuffix(monsterNum)
             Swal.fire({
               showConfirmButton: false,
-              timer: 5000,
+              timer: 2000,
               timerProgressBar: true,
               html:
                 "<h1><b>Congratulations！</b></h1><h5>You've got the " +
@@ -444,6 +446,8 @@ const SHOWANDTELL = () => {
             no-repeat
         `,
             })
+            // 👇 이 부분이 중요!
+            setMonsterRefreshKey((prev) => prev + 1)
           }
         }
       })
@@ -608,7 +612,13 @@ const SHOWANDTELL = () => {
           textAlign: 'center',
         }}
       >
-        <MonsterGetTotal mbn={mbn} homework_id={homework_id} />
+        {/* <MonsterGetTotal mbn={mbn} homework_id={homework_id} /> */}
+
+        <MonsterGetTotal
+          key={monsterRefreshKey} // 이게 바뀌면 컴포넌트가 강제로 리렌더링 됨
+          mbn={mbn}
+          homework_id={homework_id}
+        />
       </div>
       <div
         style={{

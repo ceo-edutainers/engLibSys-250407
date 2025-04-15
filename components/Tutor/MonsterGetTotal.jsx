@@ -68,6 +68,7 @@ const MonsterGet = ({ mbn, homework_id }) => {
         // alert(response.data.length)
 
         setGetMonsterInfo(response.data)
+        // alert(response.data.length)
         if (!response.data.length) {
           setTotalMonster('0')
         } else {
@@ -80,23 +81,6 @@ const MonsterGet = ({ mbn, homework_id }) => {
 
     fetchData2()
   }
-
-  // useEffect(() => {
-  //   const fetchData2 = async () => {
-  //     try {
-  //       var url = DB_CONN_URL + '/get-hw-history-monster-this-hw/'
-  //       var Url = url + mbn + '&' + homework_id
-
-  //       const response = await axios.get(Url)
-
-  //       setGetThisMonsterInfo(response.data)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   fetchData2()
-  // }, [mbn, homework_id])
 
   return (
     <>
