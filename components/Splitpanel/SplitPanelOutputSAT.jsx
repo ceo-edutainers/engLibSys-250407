@@ -100,7 +100,20 @@ const SplitPanelOutputSAT = ({
               textAlign: 'center',
             }}
           >
-            {google_doc_link == '' ? (
+            {/* {google_doc_link == '' ? (
+              <GoogleDocCreatorCourseST
+                mbn={mbn}
+                tbn={tbn}
+                name_eng={name_eng}
+                homework_id={homework_id}
+              />
+            ) : (
+              <>
+                <GoogleDoc embedUrl={google_doc_link} />
+              </>
+            )} */}
+            {!google_doc_link && mbn && homework_id && name_eng ? (
+              // {!google_doc_link ? (
               <GoogleDocCreatorCourseST
                 mbn={mbn}
                 tbn={tbn}
