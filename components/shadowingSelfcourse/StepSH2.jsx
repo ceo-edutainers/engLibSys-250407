@@ -1803,7 +1803,7 @@ const StepSH2 = () => {
                                 }}
                                 // disabled="disabled"
                               >
-                                スクリプトを見る
+                                スクリプトを見る--
                               </span>
                             )}
                           </>

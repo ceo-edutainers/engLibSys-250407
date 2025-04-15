@@ -57,53 +57,32 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
     getYoutubeTimeScript()
   }, [yID])
 
-  // function getYoutubeTimeScript() {
-  //   const fetchData = async () => {
-  //     if (yID) {
-  //       // console.log('this', yID)
-  //       let newUrl = 'https://www.youtube.com/embed/' + yID
-  //       setUrl(newUrl)
+  function getYoutubeTimeScript() {
+    const fetchData = async () => {
+      if (yID) {
+        // console.log('this', yID)
+        let newUrl = 'https://www.youtube.com/embed/' + yID
+        setUrl(newUrl)
 
-  //       let urlkids = 'https://www.youtubekids.com/watch?v=' + yID
+        let urlkids = 'https://www.youtubekids.com/watch?v=' + yID
 
-  //       setUrlKids(urlkids)
+        setUrlKids(urlkids)
 
-  //       var Url = DB_CONN_URL + '/get-youtube-time-script/' + yID
-  //       // alert(Url)
-  //       try {
-  //         // await axios.get(Url).then((response) => {
-  //         const response = await axios.get(Url)
+        var Url = DB_CONN_URL + '/get-youtube-time-script/' + yID
+        // alert(Url)
+        try {
+          // await axios.get(Url).then((response) => {
+          const response = await axios.get(Url)
 
-  //         if (response.data.length > 0) {
-  //           setYoutubeList(response.data)
-  //         }
-  //       } catch (error) {
-  //         alert(error)
-  //       }
-  //     }
-  //   }
-  //   fetchData()
-  // }
-
-  async function getYoutubeTimeScript() {
-    if (yID) {
-      let newUrl = 'https://www.youtube.com/embed/' + yID
-      setUrl(newUrl)
-      let urlkids = 'https://www.youtubekids.com/watch?v=' + yID
-      setUrlKids(urlkids)
-      var Url = DB_CONN_URL + '/get-youtube-time-script/' + yID
-
-      try {
-        const response = await axios.get(Url)
-        if (response.data.length > 0) {
-          setYoutubeList(response.data)
-          return response.data // ⭐️ return 추가
+          if (response.data.length > 0) {
+            setYoutubeList(response.data)
+          }
+        } catch (error) {
+          alert(error)
         }
-      } catch (error) {
-        alert(error)
       }
     }
-    return []
+    fetchData()
   }
 
   function handleChange(url) {
@@ -158,18 +137,10 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
 
       var dictationStatus = 'completed'
       var pointKeyNum = 'DIC-3'
-      // console.log('TEST-mbn', mbn)
-      // console.log('TEST-yID', yID)
-      // console.log('TEST-homework_id', homework_id)
-      // console.log('TEST-dictationStatus', dictationStatus)
-      // console.log('TEST-viewNum', viewNum)
-      // console.log('TEST-practiceTempId', practiceTempId)
-      // console.log('TEST-currentStep', currentStep)
-      // console.log('TEST-pointKeyNum', pointKeyNum)
 
       try {
         var url = DB_CONN_URL + '/update-sys-video-dictation-history'
-
+        // alert(url)
         axios
           .post(url, {
             mbn: mbn,
@@ -190,39 +161,6 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
     }
     fetchData()
   }
-
-  // async function historyUpdate() {
-  //   setScriptView(false)
-  //   setViewSentence(true)
-  //   setViewNum(viewNum)
-
-  //   var mbn = localStorage.getItem('MypageMbn')
-  //   var dictationStatus = 'completed'
-  //   var pointKeyNum = 'DIC-3'
-
-  //   try {
-  //     var url = DB_CONN_URL + '/update-sys-video-dictation-history'
-  //     await axios.post(url, {
-  //       mbn,
-  //       youtubeID: yID,
-  //       homework_id,
-  //       dictationStatus,
-  //       sentenceOrder: viewNum,
-  //       practiceTempId,
-  //       pointStep: currentStep,
-  //       pointKeyNum,
-  //     })
-
-  //     // 🔁 데이터 다시 받아오고
-  //     const updatedData = await getYoutubeTimeScript()
-
-  //     // ✅ 완료 정보 초기화 후 다시 체크
-  //     setThisRightAnswerAru([]) // 초기화
-  //     updatedData.forEach((_, idx) => checkDicFinished(idx + 1))
-  //   } catch (error) {
-  //     alert(error)
-  //   }
-  // }
 
   function wrongScriptSend(viewNum) {
     setFeelsWrong(false)
@@ -274,9 +212,9 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
               ...thisRightAnswerAru,
               response.data.message,
             ])
-            // console.log(
-            //   'BBBB:' + thisSentenceOrder + '/' + response.data.message
-            // )
+            console.log(
+              'BBBB:' + thisSentenceOrder + '/' + response.data.message
+            )
           })
       } catch (error) {
         alert(error)
@@ -289,7 +227,7 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
     // function funcSplitInfo() {
     //  console.log('SplitHWbookInfo:', SplitHWbookInfo)
     youtubeList.map((val, key) => {
-      // console.log('AAAA:', key + 1)
+      console.log('AAAA:', key + 1)
       checkDicFinished(key + 1)
     })
     // }
@@ -1119,112 +1057,109 @@ export default function YoutubeScriptTimeInsertForStudentStep2({
               <>
                 {/* {url} */}
                 {/* {ra}/{raWrong} */}
-                <div key={`dictation-${val.autoid || num}`}>
-                  <span
-                    style={{
-                      // fontSize: '32px',
-                      borderRadius: '50%',
-                      width: '36px',
-                      height: '36px',
-                      padding: '8px',
-                      // background: '#fff',
-                      background: roundColor,
-                      color: fontColor,
-                      border: '2px solid #666',
+                <span
+                  style={{
+                    // fontSize: '32px',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    padding: '8px',
+                    // background: '#fff',
+                    background: roundColor,
+                    color: fontColor,
+                    border: '2px solid #666',
 
-                      textAlign: 'center',
-                      font: '20px Arial, sans-serif',
-                      verticalAlign: 'baseline',
-                    }}
-                  >
-                    {fileNumCicle}
-                  </span>
-                  &nbsp;&nbsp; &nbsp;&nbsp;
-                  <span
-                    style={{
-                      fontSize: '20px',
-                      fontWeight: '100',
-                      color: 'darkblue',
-                    }}
-                  >
-                    [{val.startTimeSec}]〜&nbsp;
-                  </span>
-                  &nbsp;&nbsp; &nbsp;&nbsp;
-                  <button
-                    className="btn btn-outline-secondary"
-                    style={{ width: '100px', backgrouncColor: '#555555' }}
-                    onClick={() => {
-                      // handleChange(nowurl)
-                      setUrl(nowurl)
-                      setPlayStatus(true)
-                      setPauseState(false)
-                    }}
-                  >
-                    &#9654;
-                  </button>
-                  &nbsp;&nbsp; &nbsp;&nbsp;
-                  {/* {fileNum} */}
-                  <span
-                    className="btn btn-info"
-                    onClick={() => {
-                      setViewNum(fileNum)
-                      setScriptView(true)
-                      setViewSentence(false)
-                    }}
-                  >
-                    スクリプトを見る
-                  </span>
-                  &nbsp;&nbsp;<strong>&larr;</strong>
-                  <span style={{ color: 'darkslategray', fontSize: '12px' }}>
-                    このボタンはノートに
-                    <ruby>
-                      書<rt>か</rt>
-                    </ruby>
-                    いた
-                    <ruby>
-                      後<rt>あと</rt>
-                    </ruby>
-                    に
-                    <ruby>
-                      押<rt>お</rt>
-                    </ruby>
-                    す
-                  </span>
-                  &nbsp;&nbsp; &nbsp;&nbsp;
-                  {viewSentence && viewNum == fileNum && (
-                    <>
-                      <p
-                        dangerouslySetInnerHTML={{ __html: newScript }}
-                        value="html"
-                        id="search_para"
-                        style={{
-                          paddingTop: 10,
-                          paddingLeft: 10,
-                          border: 0,
-                          backgroundColor: '#dedede',
-                          marginBottom: '0px',
+                    textAlign: 'center',
+                    font: '20px Arial, sans-serif',
+                    verticalAlign: 'baseline',
+                  }}
+                >
+                  {fileNumCicle}
+                </span>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <span
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: '100',
+                    color: 'darkblue',
+                  }}
+                >
+                  [{val.startTimeSec}]〜&nbsp;
+                </span>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <button
+                  className="btn btn-outline-secondary"
+                  style={{ width: '100px', backgrouncColor: '#555555' }}
+                  onClick={() => {
+                    // handleChange(nowurl)
+                    setUrl(nowurl)
+                    setPlayStatus(true)
+                    setPauseState(false)
+                  }}
+                >
+                  &#9654;
+                </button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <span
+                  className="btn btn-info"
+                  onClick={() => {
+                    setViewNum(fileNum)
+                    setScriptView(true)
+                    setViewSentence(false)
+                  }}
+                >
+                  スクリプトを見る
+                </span>
+                &nbsp;&nbsp;<strong>&larr;</strong>
+                <span style={{ color: 'darkslategray', fontSize: '12px' }}>
+                  このボタンはノートに
+                  <ruby>
+                    書<rt>か</rt>
+                  </ruby>
+                  いた
+                  <ruby>
+                    後<rt>あと</rt>
+                  </ruby>
+                  に
+                  <ruby>
+                    押<rt>お</rt>
+                  </ruby>
+                  す
+                </span>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                {viewSentence && viewNum == fileNum && (
+                  <>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: newScript }}
+                      value="html"
+                      id="search_para"
+                      style={{
+                        paddingTop: 10,
+                        paddingLeft: 10,
+                        border: 0,
+                        backgroundColor: '#dedede',
+                        marginBottom: '0px',
 
-                          color: 'navy',
-                          fontSize: '18px',
-                          // cursor: 'pointer',
+                        color: 'navy',
+                        fontSize: '18px',
+                        // cursor: 'pointer',
+                      }}
+                    />
+
+                    <center>
+                      <span
+                        className="btn btn-danger mt-2"
+                        onClick={() => {
+                          //wrongScriptSend(viewNum)
+                          setFeelsWrong(true)
                         }}
-                      />
-
-                      <center>
-                        <span
-                          className="btn btn-danger mt-2"
-                          onClick={() => {
-                            //wrongScriptSend(viewNum)
-                            setFeelsWrong(true)
-                          }}
-                        >
-                          何回聞いても聞こえない単語がある時にクリック。
-                        </span>
-                      </center>
-                    </>
-                  )}
-                  <hr style={{ border: '0.001em solid #BAB8B2' }} />
-                </div>
+                      >
+                        何回聞いても聞こえない単語がある時にクリック。
+                      </span>
+                    </center>
+                  </>
+                )}
+                <hr style={{ border: '0.001em solid #BAB8B2' }} />
               </>
             )
           })}
