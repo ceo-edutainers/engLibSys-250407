@@ -9,7 +9,7 @@ import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 import { QuizContext } from '@/components/MypageGroup/Contexts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu' //Original
-// import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu-testing' //テスト用
+
 import NavbarEnglib from '@/components/MypageGroup/NavbarEnglib'
 import FireViewReading from '@/components/readingSelfcourse/FireView'
 import FireViewShadowing from '@/components/shadowingSelfcourse/FireView'
@@ -52,7 +52,7 @@ function App() {
   const [practiceTempId, setPracticeTempId] = useState('')
   const [userName, setUserName] = useState('')
   const [memberSort, setMemberSort] = useState('')
-
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   //画面が更新されて日時を入れる
   // const [refreshDateTime, setRefreshDateTime] = useState()
 

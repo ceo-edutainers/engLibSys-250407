@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import S3 from 'react-aws-s3'
+// import S3 from 'react-aws-s3'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
 import Recorder from 'recorder-js'
@@ -20,10 +20,7 @@ import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 import ViewBookReadingTriumphs from './ViewBookReadingTriumphs'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const S3_BUCKET = process.env.S3_REACT_APP_DIR_NAME
-const REGION = process.env.S3_REACT_APP_REGION
-const ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_ID
-const SECRET_ACCESS_KEY = process.env.S3_REACT_APP_ACCESS_KEY
+
 export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Component {
   constructor(props) {
     super(props)
@@ -60,6 +57,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       storyNum: this.props.storyNum,
       seriesName: this.props.seriesName,
       bookNum: this.props.bookNum,
+      isOpenBackMypage: false, // 🔒 반드시 초기 false 설정
     }
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -129,7 +127,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           audio: {
             noiseSuppression: true,
             echoCancellation: true,
-            sampleRate: 44100,
+            sampleRate: 44100, //44100->original 고용량 CD음질 ->16000
           },
         })
         .then((stream) => {
@@ -155,6 +153,24 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         const blobUrl = URL.createObjectURL(blob)
         getBlobDuration(blobUrl).then((dur) => {
           const duration = dur.toFixed(0)
+
+          //✅ 25초 미만이면 경고 띄우고 중단
+          if (parseInt(duration) < 25) {
+            // 🔊 음성 안내 추가
+            const utterance = new SpeechSynthesisUtterance(
+              '録音時間が短すぎます。再度録音をしてください。'
+            )
+            utterance.lang = 'ja-JP'
+            speechSynthesis.speak(utterance)
+
+            this.setState({
+              isrecording: false,
+              showWaitingPopup: false,
+              isOpenBackMypage: true,
+            })
+            return
+          }
+
           var aud =
             localStorage.getItem('MODE') === 'TEST'
               ? '0:5'
@@ -207,134 +223,73 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     })
   }
 
-  // handleaudiofile(ev, dur) {
-  //   const fetchData = async () => {
-  //     let file = ev
-  //     let fileName = ev.name
-  //     let fileType = ev.type
-  //     let duration = dur
-
-  //     try {
-  //       var url = DB_CONN_URL + '/sign_s3'
-  //       const response = await axios.post(url, { fileName, fileType })
-
-  //       var returnData = response.data.data.returnData
-  //       var signedRequest = returnData.signedRequest
-  //       var url = returnData.url
-  //       var options = {
-  //         statusCode: 200,
-  //         headers: {
-  //           'Content-Type': fileType,
-  //           'Access-Control-Allow-Origin': '*',
-  //           'Access-Control-Allow-Methods': 'POST,GET,PUT',
-  //           'Access-Control-Allow-Headers': 'Content-Type',
-  //         },
-  //       }
-
-  //       const fetchData2 = async () => {
-  //         try {
-  //           const result = await axios.put(signedRequest, file, options)
-  //           this.setState({ audio: url, isRefreshBtn: true })
-  //           this.getFileFromAws(
-  //             this.state.mbn,
-  //             this.state.homework_id,
-  //             this.state.practiceTempId,
-  //             this.state.pointStep
-  //           )
-  //           this.setState({ showWaitingPopup: false })
-  //         } catch (error) {
-  //           alert('送信エラーです。もう一度録音して下さい。1')
-  //           this.setState({ showWaitingPopup: false })
-  //         }
-  //       }
-  //       fetchData2()
-  //     } catch (error) {
-  //       this.setState({ isError: true, showWaitingPopup: false })
-  //       this.setState({ isError: true })
-  //       alert('送信エラーです。もう一度録音して下さい。2')
-  //       return false
-  //     }
-
-  //     this.setState({ isLoading: false })
-  //     this.audioIntoDB(fileName, duration)
-  //   }
-  //   fetchData()
-  // }
-
-  handleaudiofile(ev, dur) {
+  handleaudiofile(file, duration) {
     const fetchData = async () => {
-      let file = ev
-      let fileName = ev.name
-      let fileType = ev.type
-      let duration = dur
-
       try {
-        // 1. R2 사인 URL 요청
+        const fileName = file.name
+        const fileType = 'audio/mpeg' // 명시적으로 설정 (안전)
+
+        // ① presigned URL 요청
         const response = await axios.post(DB_CONN_URL + '/r2/sign-url', {
           fileName,
           fileType,
         })
 
-        const data = response.data.data
+        const { signedUrl, key, publicUrl } = response.data.data
 
-        // 2. 폼데이터로 변환
-        const formData = new FormData()
-        formData.append('key', data.key)
-        formData.append('x-amz-algorithm', data.x_amz_algorithm)
-        formData.append('x-amz-credential', data.x_amz_credential)
-        formData.append('x-amz-date', data.x_amz_date)
-        formData.append('policy', data.policy)
-        formData.append('x-amz-signature', data.x_amz_signature)
-        formData.append('file', file)
+        // ② R2에 업로드
+        await axios.put(signedUrl, file, {
+          headers: {
+            'Content-Type': fileType,
+          },
+        })
 
-        // 3. 실제 업로드
-        await axios.post(data.uploadURL, formData)
+        // ③ 상태 업데이트
+        this.setState({ audio: publicUrl, isRefreshBtn: true })
 
-        // 4. 업로드한 파일의 공개 URL 저장
-        const publicURL = `https://${process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN}/${data.key}`
-        this.setState({ audio: publicURL, isRefreshBtn: true })
-
+        // ④ DB에 저장 완료 후 → 리스트 다시 불러오기
+        await this.audioIntoDB(fileName, duration)
         this.getFileFromAws(
           this.state.mbn,
           this.state.homework_id,
           this.state.practiceTempId,
           this.state.pointStep
         )
+
         this.setState({ showWaitingPopup: false })
       } catch (error) {
-        console.error('Upload Error:', error)
+        console.error('업로드 에러:', error)
+        alert('送信エラーです。もう一度録音して下さい---')
         this.setState({ isError: true, showWaitingPopup: false })
-        alert('送信エラーです。もう一度録音して下さい。')
       }
-
-      this.setState({ isLoading: false })
-      this.audioIntoDB(fileName, duration)
     }
 
     fetchData()
   }
-
-  audioIntoDB = (fileName, duration) => {
-    var rc = this.state.record_comment
-    const fetchData3 = async () => {
-      try {
-        var url = DB_CONN_URL + '/member-record'
-        const response = await axios.post(url, {
-          mbn: this.state.mbn,
-          fileName,
-          homework_id: this.state.homework_id,
-          practiceTempId: this.state.practiceTempId,
-          step: this.state.pointStep,
-          record_comment: rc,
-          who_record: 'student',
-          when_record: 'homework',
-          length_second: duration,
-        })
-      } catch (error) {
-        alert('db insert error')
-      }
+  audioIntoDB = async (fileName, duration) => {
+    // console.log('FILE-TEST-fileName:', fileName)
+    // console.log('FILE-TEST-length_second:', duration)
+    // console.log('FILE-TEST-mbn', this.state.mbn)
+    // console.log('FILE-TEST-homework_id', this.state.homework_id)
+    // console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
+    // console.log('FILE-TEST-pointStep', this.state.pointStep)
+    // console.log('FILE-TEST-record_comment', this.state.record_comment)
+    try {
+      await axios.post(DB_CONN_URL + '/member-record', {
+        mbn: this.state.mbn,
+        fileName,
+        homework_id: this.state.homework_id,
+        practiceTempId: this.state.practiceTempId,
+        step: this.state.pointStep,
+        record_comment: this.state.record_comment,
+        who_record: 'student',
+        when_record: 'homework',
+        length_second: duration,
+      })
+    } catch (error) {
+      console.error('DB 저장 실패:', error)
+      alert('録音情報をデータベースに保存できませんでした。')
     }
-    fetchData3()
   }
 
   getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
@@ -348,21 +303,53 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           who_record: 'student',
           currentStep: pointStep,
         })
+        // alert(url + ' / ' + mbn + ' / ' + homework_id + ' / ' + practiceTempId)
+
+        console.log('🎯 TEST-서버 응답:', response.data)
 
         if (!response.data.status) {
-          alert(response.data.message)
+          alert('⚠️ TEST-서버 응답 오류: ' + response.data.message)
         } else {
           this.setState({
             recordFileList: response.data.result,
             recordListView: true,
           })
+          console.log('📋 TEST-받아온 리스트:', response.data.result)
         }
       } catch (error) {
-        alert('db insert error')
+        alert('❌ API 호출 에러 발생')
+        console.error('🧨 getFileFromAws 에러:', error)
       }
     }
     fetchData4()
   }
+
+  // getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
+  //   const fetchData4 = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/get-member-record-file'
+  //       const response = await axios.post(url, {
+  //         mbn,
+  //         homework_id,
+  //         practiceTempId,
+  //         who_record: 'student',
+  //         currentStep: pointStep,
+  //       })
+
+  //       if (!response.data.status) {
+  //         alert(response.data.message)
+  //       } else {
+  //         this.setState({
+  //           recordFileList: response.data.result,
+  //           recordListView: true,
+  //         })
+  //       }
+  //     } catch (error) {
+  //       alert('db insert error')
+  //     }
+  //   }
+  //   fetchData4()
+  // }
 
   handleViewList = (value) => {
     this.setState({
@@ -392,7 +379,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       try {
         await axios.get(Url).then((response) => {
           this.setState({ deleteFileName: response.data.result[0].filename })
-          this.handleDelFileS3(response.data.result[0].filename)
+          this.handleDelFileR2(response.data.result[0].filename)
         })
         this.getFileFromAws(
           this.state.mbn,
@@ -407,18 +394,39 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     fetchData()
   }
 
-  handleDelFileS3 = (value) => {
-    const config = {
-      bucketName: S3_BUCKET,
-      region: REGION,
-      accessKeyId: ACCESS_KEY,
-      secretAccessKey: SECRET_ACCESS_KEY,
+  // handleDelFileS3 = (value) => {
+  //   const config = {
+  //     bucketName: S3_BUCKET,
+  //     region: REGION,
+  //     accessKeyId: ACCESS_KEY,
+  //     secretAccessKey: SECRET_ACCESS_KEY,
+  //   }
+  //   const ReactS3Client = new S3(config)
+  //   const filename = value
+  //   ReactS3Client.deleteFile(filename)
+  //     .then((response) => console.error(response))
+  //     .catch((err) => console.error('s3 delete failed', err))
+  // }
+
+  handleDelFileR2 = async (filename) => {
+    try {
+      const res = await fetch(`${DB_CONN_URL}/r2/delete-uploadrecording`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filename }),
+      })
+
+      if (res.ok) {
+        const result = await res.json()
+        console.log('deleted!!!!:', result)
+      } else {
+        console.error('Failed!!!:', await res.text())
+      }
+    } catch (err) {
+      console.error('Connection Error!!!:', err)
     }
-    const ReactS3Client = new S3(config)
-    const filename = value
-    ReactS3Client.deleteFile(filename)
-      .then((response) => console.error(response))
-      .catch((err) => console.error('s3 delete failed', err))
   }
 
   componentDidMount() {
@@ -492,10 +500,13 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
 
           {this.state.recordListView &&
             this.state.recordFileList.map((val, key) => {
-              var audioFile =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
-                val.filename
+              // var audioFile =
+              //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
+              //   val.filename
 
+              // R2의 Public Worker 도메인 기반으로 바꾸기
+              const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+              var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
               return (
                 <div key={key} className="row align-items-center">
                   <div className="col-lg-2 col-md-12"></div>
@@ -512,6 +523,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
                         {/* {key + 1}. &nbsp; */}
                         {key == 0 && '最新順 latest-order'}
                       </font>
+
                       <audio
                         src={audioFile}
                         controls="controls"

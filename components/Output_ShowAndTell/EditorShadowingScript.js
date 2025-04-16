@@ -23,6 +23,7 @@ const EditorShadowingScript = ({
   homework_id,
 }) => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   // const youtubeID = yID
 
   // const [shadowLevel, setShadowLevel] = useState()
@@ -92,7 +93,8 @@ const EditorShadowingScript = ({
               // setShadowLevel(response.data.result[0].shadowingLevel)
               // setShadowQuestionFile(response.data.result[0].serverURL)
               var qUrl =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/ShadowingQuestion/Video/' +
+                // 'https:/ShadowingQuestion/Video/' +
+                `https://${PUBLIC_R2_DOMAIN}/ShadowingQuestion/Video/` +
                 response.data.result[0].shadowingLevel +
                 '/' +
                 response.data.result[0].serverURL +
@@ -100,7 +102,7 @@ const EditorShadowingScript = ({
 
               //TEST
               // var qUrl =
-              //   'https://englib-materials.s3.ap-northeast-1.amazonaws.com/ShadowingQuestion/Video/BASIC/1_Penguins-QUESTION.pdf'
+              //   'https:/ShadowingQuestion/Video/BASIC/1_Penguins-QUESTION.pdf'
 
               setQuestionUrl(qUrl)
             }
@@ -273,7 +275,7 @@ const EditorShadowingScript = ({
               > */}
             {questionUrl && (
               <object
-                // data="https://englib-materials.s3.ap-northeast-1.amazonaws.com/ShadowingQuestion/Video/BASIC/1_Penguins-QUESTION.pdf"
+                // data="https:/ShadowingQuestion/Video/BASIC/1_Penguins-QUESTION.pdf"
                 data={questionUrl}
                 style={{
                   width: '100%',

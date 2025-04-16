@@ -127,10 +127,10 @@ const EndScreenSHLESSON = () => {
         }
       })
   }
-
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   useEffect(() => {
     let audioEndAlert = new Audio(
-      'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/complete.mp3'
+      `https://${PUBLIC_R2_DOMAIN}/sound-effect/complete.mp3`
     )
     audioEndAlert.play()
   }, [])
@@ -139,7 +139,7 @@ const EndScreenSHLESSON = () => {
   //   function endSoundPlay() {
   //     if (audioOnOff == 'on') {
   //       let audioEndAlert = new Audio(
-  //         'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/complete.mp3'
+  //         `https://${PUBLIC_R2_DOMAIN}/sound-effect/complete.mp3`
   //       )
   //       audioEndAlert.play()
   //     }

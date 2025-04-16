@@ -8,8 +8,8 @@ import Router, { useRouter } from 'next/router'
 import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 import { QuizContext } from '@/components/MypageGroup/Contexts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu' //Original
-import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu-testing' //テスト用
+import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu' //Original
+// import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu-testing' //テスト用
 import NavbarEnglib from '@/components/MypageGroup/NavbarEnglib'
 import FireViewReading from '@/components/readingSelfcourse/FireView'
 import FireViewShadowing from '@/components/shadowingSelfcourse/FireView'

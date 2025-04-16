@@ -37,6 +37,7 @@ function App({ mst }) {
   const [qrLinkUrl, setQrLinkUrl] = useState()
 
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const router = useRouter() //使い方：router.replace('/')
   const [isTodayLessonDay, setIsTodayLessonDay] = useState(false)
   const [isTodayLessonTime, setIsTodayLessonTime] = useState(false)
@@ -62,11 +63,11 @@ function App({ mst }) {
     // alert(mst)
     if (mst == 'PERSONAL') {
       setRuleURL(
-        'https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Student-Rule-2024-3-ver4.pdf'
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-2024-3-ver4.pdf`
       )
     } else if (mst == 'COMPANY') {
       setRuleURL(
-        'https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Student-Rule-Company-2022-9-ver3.pdf'
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-Company-2022-9-ver3.pdf`
       )
     }
   }, [mst])
@@ -87,10 +88,7 @@ function App({ mst }) {
           const eID = '9584rrf89'
 
           var qrUrl =
-           DB_CONN_URL+'/event-intro-reg?eID=' +
-            eID +
-            '&rfn=' +
-            thisRfn
+            DB_CONN_URL + '/event-intro-reg?eID=' + eID + '&rfn=' + thisRfn
           setQrLinkUrl(qrUrl)
         }
       })
@@ -376,68 +374,36 @@ function App({ mst }) {
           )}
           <a
             className="btn btn-info mr-2 pt-0 pb-0"
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/ORT-HowToUse-2022-9-ver1.pdf"
+            ///document/ORT-HowToUse-2022-9-ver1.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/document/ORT-HowToUse-2022-9-ver1.pdf`}
             target="_blank"
           >
             ORC使用方法
           </a>
           <a
             className="btn btn-info mr-2 pt-0 pb-0"
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Payment-2024-2-ver3.pdf"
+            ///document/Payment-2024-2-ver3.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/document/Payment-2024-2-ver3.pdf`}
             target="_blank"
           >
-          教材費
+            教材費
           </a>
           &nbsp;
           <a
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-student.pdf"
+            ///calendar/Calendar-2023-4-2024-3-for-student.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/document/Calendar-2023-4-2024-3-for-student.pdf`}
             target="_blank"
           >
             4月〜
           </a>{' '}
           <a
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2024-4-2025-3-for-student.pdf"
+            ///calendar/Calendar-2024-4-2025-3-for-student.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2024-4-2025-3-for-student.pdf`}
             target="_blank"
           >
             2024年4月〜
           </a>{' '}
-          &nbsp;
-          {/* {mst == 'PERSONAL' ? (
-            <>
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/2022_4_2023_3_1.pdf"
-                target="_blank"
-              >
-                <img src="/images/calendar-icon.png" width="40px" />
-              </a>
-              &nbsp;
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-student.pdf"
-                target="_blank"
-              >
-                num4月〜
-              </a>{' '}
-              &nbsp;
-            </>
-          ) : (
-            <>
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/business-calendar-2022.pdf"
-                target="_blank"
-              >
-                <img src="/images/calendar-icon.png" width="40px" />
-              </a>
-              &nbsp;
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-HHG.pdf"
-                target="_blank"
-              >
-                num4月〜
-              </a>{' '}
-              &nbsp;
-            </>
-          )} */}
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           <span
             className="mt-0 pt-0 pb-0 mb-0"
             style={{
@@ -521,7 +487,6 @@ function App({ mst }) {
                   {qrLinkUrl && (
                     <QrcodeGeneratorForEvent
                       url={qrLinkUrl}
-                     
                       title="友達紹介キャンペーン"
                       size="200"
                     />
@@ -625,7 +590,8 @@ function App({ mst }) {
                       <p style={{ fontSize: '12px', color: 'black' }}>
                         詳しくは
                         <a
-                          href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/2022_4_2023_3_1.pdf"
+                          ///calendar/2022_4_2023_3_1.pdf"
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/2022_4_2023_3_1.pdf`}
                           target="_blank"
                         >
                           カレンダー
@@ -647,8 +613,7 @@ function App({ mst }) {
                   )}
                   <h5 style={{ fontWeight: 'bold', fontSize: '25px' }}>
                     {/* <RealTime timeZone="JP/Tokyo" /> */}
-                     <RealTime timeZone=" Asia/Tokyo" />
-                    
+                    <RealTime timeZone=" Asia/Tokyo" />
                   </h5>
                   <h5 className="mb-0">{userName}&nbsp;&nbsp;</h5>
                   {memberSort == 'COMPANY' && (
@@ -754,7 +719,8 @@ function App({ mst }) {
                       <p style={{ fontSize: '12px', color: 'black' }}>
                         詳しくは
                         <a
-                          href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/2022_4_2023_3_1.pdf"
+                          ///calendar/2022_4_2023_3_1.pdf"
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/2022_4_2023_3_1.pdf`}
                           target="_blank"
                         >
                           カレンダー
@@ -1240,7 +1206,7 @@ function App({ mst }) {
                   display: viewTutorMessage ? 'block' : 'none',
                 }}
               >
-                <="table table-bordered mt-3">
+                <table className="table-bordered mt-3">
                   <thead>
                     <tr>
                       <th

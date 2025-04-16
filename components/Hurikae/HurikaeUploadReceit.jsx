@@ -204,13 +204,15 @@ const HurikaeAskNormalTimeNew = () => {
       }
     })
   }
-
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const receitHistoryUpdate = (newFileName) => {
     // console.log('test;', currentStep)
 
     var mbn = localStorage.getItem('MypageMbn')
     var fileUrl =
-      'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' + newFileName
+      // 'uploadhw/' +
+      `https://${PUBLIC_R2_DOMAIN}/uploadhw/` + newFileName
+
     // alert(newFileName)
 
     var homework_id = homeworkId

@@ -104,10 +104,7 @@ const MonsterGet = () => {
             {imgArray.map((val, key) => {
               var fileNum = key + 1
               var monster = 'Monster' + fileNum
-              // var fileImgLink =
-              //   'https://englib.s3.ap-northeast-1.amazonaws.com/monster/' +
-              //   fileNum +
-              //   '.png'
+
               var fileImgLink = '/images/monster/' + fileNum + '.png'
               if (getMonsterInfo[key]) {
                 var myMonster = getMonsterInfo[key]

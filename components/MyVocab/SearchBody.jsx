@@ -21,6 +21,7 @@ import {
 
 const SingleCourses = () => {
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const { myMbn, setMyMbn, userName, setUserName, searchWord, setSearchWord } =
     useContext(VocaContext)
   const [cantFindWord, SetCantFindWord] = useState(false)
@@ -291,8 +292,9 @@ const SingleCourses = () => {
                   {/* <h1>{selectedWords.length}</h1> */}
 
                   {selectedWords.map((val, key) => {
-                    var imgurl =
-                      'https://englib.s3.ap-northeast-1.amazonaws.com/img_voca5000/'
+                    // var imgurl = '/img_voca5000/'
+                    var imgurl = `https://${PUBLIC_R2_DOMAIN}/img_voca5000/`
+
                     var img1 = imgurl + val.img_ex1
                     var img2 = imgurl + val.img_ex2
                     var img3 = imgurl + val.img_ex3

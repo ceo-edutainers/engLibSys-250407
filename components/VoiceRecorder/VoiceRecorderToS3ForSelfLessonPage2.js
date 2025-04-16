@@ -19,6 +19,9 @@ import {
 import WaveAppLessonPage from '@/components/Wave/WaveAppLessonPage'
 import ViewBookReadingTriumphs from './ViewBookReadingTriumphs'
 
+//new recorder module setting
+import MicRecorder from 'mic-recorder-to-mp3'
+
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Component {
@@ -66,6 +69,9 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.handleaudiofile = this.handleaudiofile.bind(this)
+
+    //new recording 2025-04-16 added
+    this.recorder = new MicRecorder({ bitRate: 64 }) // 💡 비트레이트 낮게 설정
   }
   applyAudioFilters = (stream) => {
     const source = this.audioContext.createMediaStreamSource(stream)
@@ -118,45 +124,56 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     })
   }
 
+  //2025-04-16-backup  -昔の容量の大きいVersion
+  // start = () => {
+  //   if (this.state.isblocked) {
+  //     console.log('permission Denied')
+  //   } else {
+  //     navigator.mediaDevices
+  //       .getUserMedia({
+  //         audio: {
+  //           noiseSuppression: true,
+  //           echoCancellation: true,
+  //           sampleRate: 44100, //44100->original 고용량 CD음질 ->16000
+  //         },
+  //       })
+  //       .then((stream) => {
+  //         this.applyAudioFilters(stream)
+  //         this.recorder.init(stream)
+  //         this.recorder.start().then(() => {
+  //           this.setState({
+  //             isrecording: true,
+  //             isdeleted: false,
+  //             isRefreshBtn: false,
+  //           })
+  //         })
+  //       })
+  //       .catch((e) => console.log(e))
+  //   }
+  // }
+
+  //new recording module 2025-04-16 added
   start = () => {
-    if (this.state.isblocked) {
-      console.log('permission Denied')
-    } else {
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: {
-            noiseSuppression: true,
-            echoCancellation: true,
-            sampleRate: 44100, //44100->original 고용량 CD음질 ->16000
-          },
-        })
-        .then((stream) => {
-          this.applyAudioFilters(stream)
-          this.recorder.init(stream)
-          this.recorder.start().then(() => {
-            this.setState({
-              isrecording: true,
-              isdeleted: false,
-              isRefreshBtn: false,
-            })
-          })
-        })
-        .catch((e) => console.log(e))
-    }
+    this.recorder
+      .start()
+      .then(() => {
+        this.setState({ isrecording: true })
+      })
+      .catch((e) => console.error('녹음 시작 실패:', e))
   }
 
+  //new recording module 2025-04-16 added
   stop = () => {
     this.setState({ showWaitingPopup: true })
     this.recorder
       .stop()
-      .then(({ blob, buffer }) => {
+      .getMp3()
+      .then(([buffer, blob]) => {
         const blobUrl = URL.createObjectURL(blob)
         getBlobDuration(blobUrl).then((dur) => {
-          const duration = dur.toFixed(0)
+          const duration = parseInt(dur)
 
-          //✅ 25초 미만이면 경고 띄우고 중단
-          if (parseInt(duration) < 25) {
-            // 🔊 음성 안내 추가
+          if (duration < 25) {
             const utterance = new SpeechSynthesisUtterance(
               '録音時間が短すぎます。再度録音をしてください。'
             )
@@ -171,48 +188,95 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
             return
           }
 
-          var aud =
-            localStorage.getItem('MODE') === 'TEST'
-              ? '0:5'
-              : this.props.audioDurationFromDB
-
-          var compareAudioDuration = this.handleCalAudioDurationFromDB(
-            aud,
-            duration,
-            0.7
-          )
-          if (compareAudioDuration === false) {
-            return
-          }
-
-          this.setState({
-            blobUrl,
-            isrecording: false,
-            isdeleted: false,
-            isRefreshBtn: true,
-          })
-
-          const d = new Date()
-          let y = d.getFullYear()
-          let mt = d.getMonth() + 1
-          let day = d.getDate()
-          let h = myFun_addZero(d.getHours())
-          let m = myFun_addZero(d.getMinutes())
-          let s = myFun_addZero(d.getSeconds())
-          let ms = myFun_addZero(d.getMilliseconds())
-          let time = `${y}-${mt}-${day}_${h}:${m}:${s}:${ms}`
-          var d2 = `${this.state.homework_id}_${time}`
-          var file = new File([blob], d2, { type: 'audio/mp3' })
+          const now = new Date()
+          const timeStr = `${now.getFullYear()}-${
+            now.getMonth() + 1
+          }-${now.getDate()}_${myFun_addZero(now.getHours())}:${myFun_addZero(
+            now.getMinutes()
+          )}:${myFun_addZero(now.getSeconds())}`
+          const fileName = `${this.state.homework_id}_${timeStr}`
+          const file = new File([blob], fileName, { type: 'audio/mp3' })
 
           this.handleaudiofile(file, duration)
           this.insertPointToDB()
-          // setTimeout(() => {
-          //   this.setState({ showWaitingPopup: false })
-          // }, 2000) // Change the timeout value as per your requirement
+          this.setState({ isrecording: false, showWaitingPopup: false })
         })
       })
-      .catch((error) => console.error('stop error', error))
+      .catch((e) => {
+        console.error('녹음 중단 실패:', e)
+        this.setState({ isrecording: false, showWaitingPopup: false })
+      })
   }
+
+  //2025-04-16 backup  -昔の容量の大きいVersion
+  // stop = () => {
+  //   this.setState({ showWaitingPopup: true })
+  //   this.recorder
+  //     .stop()
+  //     .then(({ blob, buffer }) => {
+  //       const blobUrl = URL.createObjectURL(blob)
+  //       getBlobDuration(blobUrl).then((dur) => {
+  //         const duration = dur.toFixed(0)
+
+  //         //✅ 25초 미만이면 경고 띄우고 중단
+  //         if (parseInt(duration) < 25) {
+  //           // 🔊 음성 안내 추가
+  //           const utterance = new SpeechSynthesisUtterance(
+  //             '録音時間が短すぎます。再度録音をしてください。'
+  //           )
+  //           utterance.lang = 'ja-JP'
+  //           speechSynthesis.speak(utterance)
+
+  //           this.setState({
+  //             isrecording: false,
+  //             showWaitingPopup: false,
+  //             isOpenBackMypage: true,
+  //           })
+  //           return
+  //         }
+
+  //         var aud =
+  //           localStorage.getItem('MODE') === 'TEST'
+  //             ? '0:5'
+  //             : this.props.audioDurationFromDB
+
+  //         var compareAudioDuration = this.handleCalAudioDurationFromDB(
+  //           aud,
+  //           duration,
+  //           0.7
+  //         )
+  //         if (compareAudioDuration === false) {
+  //           return
+  //         }
+
+  //         this.setState({
+  //           blobUrl,
+  //           isrecording: false,
+  //           isdeleted: false,
+  //           isRefreshBtn: true,
+  //         })
+
+  //         const d = new Date()
+  //         let y = d.getFullYear()
+  //         let mt = d.getMonth() + 1
+  //         let day = d.getDate()
+  //         let h = myFun_addZero(d.getHours())
+  //         let m = myFun_addZero(d.getMinutes())
+  //         let s = myFun_addZero(d.getSeconds())
+  //         let ms = myFun_addZero(d.getMilliseconds())
+  //         let time = `${y}-${mt}-${day}_${h}:${m}:${s}:${ms}`
+  //         var d2 = `${this.state.homework_id}_${time}`
+  //         var file = new File([blob], d2, { type: 'audio/mp3' })
+
+  //         this.handleaudiofile(file, duration)
+  //         this.insertPointToDB()
+  //         // setTimeout(() => {
+  //         //   this.setState({ showWaitingPopup: false })
+  //         // }, 2000) // Change the timeout value as per your requirement
+  //       })
+  //     })
+  //     .catch((error) => console.error('stop error', error))
+  // }
 
   deleteAudio = () => {
     this.setState({

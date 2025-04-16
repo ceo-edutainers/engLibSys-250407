@@ -7,12 +7,15 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 
 const Quiz = () => {
   const router = useRouter() //使い方：router.replace('/')
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
 
   let audioRightAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
+    // 'sound-effect/dingdongdang.mp3'
+    `https://${PUBLIC_R2_DOMAIN}/sound-effect/dingdongdang.mp3`
   )
   let audioWrongAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
+    // 'sound-effect/wrong-answer.mp3'
+    `https://${PUBLIC_R2_DOMAIN}/sound-effect/wrong-answer.mp3`
   )
   //For sweet alert
   const [isOpenBackMypage, setIsOpenBackMypage] = useState(false)
@@ -171,10 +174,15 @@ const Quiz = () => {
   }
 
   const thisImage = () => {
+    // var imgsrc =
+    // 'leveltest-eiken/' +
+    // Questions[currentQuestion].questionPic +
+    // '.jpg'
     var imgsrc =
-      'https://englib.s3.ap-northeast-1.amazonaws.com/leveltest-eiken/' +
+      `https://${PUBLIC_R2_DOMAIN}/leveltest-eiken/` +
       Questions[currentQuestion].questionPic +
       '.jpg'
+
     return imgsrc
   }
 
@@ -534,7 +542,8 @@ const Quiz = () => {
                   {audioOnOff == 'on' ? (
                     <a onClick={() => setAudioOnOff('off')}>
                       <img
-                        src="https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/sound-on.jpg"
+                        // src="/sound-effect/sound-on.jpg"
+                        src={`https://${PUBLIC_R2_DOMAIN}/sound-effect/sound-on.jpg`}
                         style={{
                           marginLeft: '10px',
                           width: '30px',
@@ -547,7 +556,8 @@ const Quiz = () => {
                   ) : (
                     <a onClick={() => setAudioOnOff('on')}>
                       <img
-                        src="https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/sound-off.jpg"
+                        // src="/sound-effect/sound-off.jpg"
+                        src={`https://${PUBLIC_R2_DOMAIN}/sound-effect/sound-off.jpg`}
                         style={{
                           marginLeft: '10px',
                           width: '30px',

@@ -61,11 +61,13 @@ function App({ mst }) {
     // alert(mst)
     if (mst == 'PERSONAL') {
       setRuleURL(
-        'https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Student-Rule-2024-3-ver4.pdf'
+        // document/Student-Rule-2024-3-ver4.pdf'
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-2024-3-ver4.pdf`
       )
     } else if (mst == 'COMPANY') {
       setRuleURL(
-        'https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Student-Rule-Company-2022-9-ver3.pdf'
+        // document/Student-Rule-Company-2022-9-ver3.pdf'
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-Company-2022-9-ver3.pdf`
       )
     }
   }, [mst])
@@ -393,51 +395,35 @@ function App({ mst }) {
           )}
           <a
             className="btn btn-info mr-2 pt-0 pb-0"
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/ORT-HowToUse-2022-9-ver1.pdf"
+            // /document/ORT-HowToUse-2022-9-ver1.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/document/ORT-HowToUse-2022-9-ver1.pdf`}
             target="_blank"
           >
             ORC使用方法
           </a>
           <a
             className="btn btn-info mr-2 pt-0 pb-0"
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Payment-2024-2-ver2.pdf"
+            // /document/Payment-2024-2-ver2.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/document/Payment-2024-2-ver2.pdf`}
             target="_blank"
           >
             お月謝・教材費
           </a>
           <a
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-student.pdf"
+            // /calendar/Calendar-2023-4-2024-3-for-student.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2023-4-2024-3-for-student.pdf`}
             target="_blank"
           >
             <img src="/images/calendar-icon.png" width="40px" />
           </a>
           &nbsp; &nbsp;
           <a
-            href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2024-4-2025-3-for-student.pdf"
+            // /calendar/Calendar-2024-4-2025-3-for-student.pdf"
+            href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2024-4-2025-3-for-student.pdf`}
             target="_blank"
           >
             カレンダー
           </a>
-          {/*           
-          {mst == 'PERSONAL' ? (
-            <>
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-student.pdf"
-                target="_blank"
-              >
-                <img src="/images/calendar-icon.png" width="40px" />
-              </a>
-            </>
-          ) : (
-            <>
-              <a
-                href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2023-4-2024-3-for-HHG.pdf"
-                target="_blank"
-              >
-                <img src="/images/calendar-icon.png" width="40px" />
-              </a>
-            </>
-          )} */}
           &nbsp;&nbsp;&nbsp;&nbsp;
           <span
             className="mt-0 pt-0 pb-0 mb-0"
@@ -625,7 +611,8 @@ function App({ mst }) {
                       <p style={{ fontSize: '12px', color: 'black' }}>
                         詳しくは
                         <a
-                          href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/2022_4_2023_3_1.pdf"
+                          // /calendar/2022_4_2023_3_1.pdf"
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/2022_4_2023_3_1.pdf`}
                           target="_blank"
                         >
                           カレンダー
@@ -753,7 +740,8 @@ function App({ mst }) {
                       <p style={{ fontSize: '12px', color: 'black' }}>
                         詳しくは
                         <a
-                          href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/2022_4_2023_3_1.pdf"
+                          // /calendar/2022_4_2023_3_1.pdf"
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/2022_4_2023_3_1.pdf`}
                           target="_blank"
                         >
                           カレンダー

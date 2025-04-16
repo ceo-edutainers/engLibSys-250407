@@ -12,6 +12,8 @@ import {
   faStopCircle,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+//new recorder module setting
+import MicRecorder from 'mic-recorder-to-mp3'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
@@ -32,49 +34,104 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     }
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
     this.recorder = new Recorder(this.audioContext)
+
+    //new recording 2025-04-16 added
+    this.recorder = new MicRecorder({ bitRate: 64 }) // 💡 비트레이트 낮게 설정
   }
 
+  //2025-04-16-backup  -昔の容量の大きいVersion
+  // start = async () => {
+  //   const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+  //   this.recorder.init(stream)
+  //   await this.recorder.start()
+  //   this.setState({ isrecording: true })
+  // }
+
+  //new recording module 2025-04-16 added
   start = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    this.recorder.init(stream)
-    await this.recorder.start()
-    this.setState({ isrecording: true })
+    try {
+      await this.recorder.start()
+      this.setState({ isrecording: true })
+    } catch (err) {
+      alert('マイクへのアクセスに失敗しました')
+    }
   }
 
+  //new recording module 2025-04-16 added
   stop = async () => {
     this.setState({ showWaitingPopup: true })
-    const { blob } = await this.recorder.stop()
-    const blobUrl = URL.createObjectURL(blob)
-    const duration = Math.round(await getBlobDuration(blobUrl))
+    try {
+      const [buffer, blob] = await this.recorder.stop().getMp3()
+      const blobUrl = URL.createObjectURL(blob)
+      const duration = Math.round(await getBlobDuration(blobUrl))
 
-    //✅ 40초 미만이면 경고 띄우고 중단
-    if (parseInt(duration) < 40) {
-      // 🔊 음성 안내 추가
-      const utterance = new SpeechSynthesisUtterance(
-        '録音時間が短すぎます。再度録音をしてください。'
-      )
-      utterance.lang = 'ja-JP'
-      speechSynthesis.speak(utterance)
+      if (duration < 40) {
+        const utterance = new SpeechSynthesisUtterance(
+          '録音時間が短すぎます。再度録音をしてください。'
+        )
+        utterance.lang = 'ja-JP'
+        speechSynthesis.speak(utterance)
 
-      this.setState({
-        isrecording: false,
-        showWaitingPopup: false,
-        isOpenBackMypage: true,
-      })
-      return
+        this.setState({
+          isrecording: false,
+          showWaitingPopup: false,
+          isOpenBackMypage: true,
+        })
+        return
+      }
+
+      const d = new Date()
+      const time = `${d.getFullYear()}-${
+        d.getMonth() + 1
+      }-${d.getDate()}_${myFun_addZero(d.getHours())}:${myFun_addZero(
+        d.getMinutes()
+      )}:${myFun_addZero(d.getSeconds())}:${myFun_addZero(d.getMilliseconds())}`
+      const fileName = `${this.state.homework_id}_${time}`
+      const file = new File([blob], fileName, { type: 'audio/mpeg' })
+
+      await this.uploadAndSave(file, duration)
+      this.setState({ showWaitingPopup: false, isrecording: false })
+    } catch (err) {
+      alert('録音の停止またはアップロードに失敗しました')
+      console.error(err)
     }
-
-    const d = new Date()
-    const time = `${d.getFullYear()}-${
-      d.getMonth() + 1
-    }-${d.getDate()}_${myFun_addZero(d.getHours())}:${myFun_addZero(
-      d.getMinutes()
-    )}:${myFun_addZero(d.getSeconds())}:${myFun_addZero(d.getMilliseconds())}`
-    const fileName = `${this.state.homework_id}_${time}`
-    const file = new File([blob], fileName, { type: 'audio/mpeg' })
-    await this.uploadAndSave(file, duration)
-    this.setState({ showWaitingPopup: false, isrecording: false })
   }
+
+  //2025-04-16 backup -昔の容量の大きいVersion
+  // stop = async () => {
+  //   this.setState({ showWaitingPopup: true })
+  //   const { blob } = await this.recorder.stop()
+  //   const blobUrl = URL.createObjectURL(blob)
+  //   const duration = Math.round(await getBlobDuration(blobUrl))
+
+  //   //✅ 40초 미만이면 경고 띄우고 중단
+  //   if (parseInt(duration) < 40) {
+  //     // 🔊 음성 안내 추가
+  //     const utterance = new SpeechSynthesisUtterance(
+  //       '録音時間が短すぎます。再度録音をしてください。'
+  //     )
+  //     utterance.lang = 'ja-JP'
+  //     speechSynthesis.speak(utterance)
+
+  //     this.setState({
+  //       isrecording: false,
+  //       showWaitingPopup: false,
+  //       isOpenBackMypage: true,
+  //     })
+  //     return
+  //   }
+
+  //   const d = new Date()
+  //   const time = `${d.getFullYear()}-${
+  //     d.getMonth() + 1
+  //   }-${d.getDate()}_${myFun_addZero(d.getHours())}:${myFun_addZero(
+  //     d.getMinutes()
+  //   )}:${myFun_addZero(d.getSeconds())}:${myFun_addZero(d.getMilliseconds())}`
+  //   const fileName = `${this.state.homework_id}_${time}`
+  //   const file = new File([blob], fileName, { type: 'audio/mpeg' })
+  //   await this.uploadAndSave(file, duration)
+  //   this.setState({ showWaitingPopup: false, isrecording: false })
+  // }
 
   uploadAndSave = async (file, duration) => {
     const res = await axios.post(DB_CONN_URL + '/r2/sign-url', {

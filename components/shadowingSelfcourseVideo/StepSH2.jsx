@@ -140,12 +140,12 @@ const StepSH2 = () => {
   const thisWidth = width - 10 + 'px'
   //console.log('thisWidth:', thisWidth)
 
-  let audioRightAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
-  )
-  let audioWrongAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
-  )
+  // let audioRightAnswer = new Audio(
+  //   'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
+  // )
+  // let audioWrongAnswer = new Audio(
+  //   'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
+  // )
   ////////////////////////////////////////////////////////////////////
   //SETTING START
   ////////////////////////////////////////////////////////////////////

@@ -14,6 +14,7 @@ import SweetAlert from 'react-bootstrap-sweetalert'
 const NavbarEnglib_Tutor = () => {
   const router = useRouter() //使い方：router.replace('/')
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   //Tutor-Authentication
   useEffect(() => {
     if (localStorage.getItem('T_loginStatus') !== 'true') {
@@ -165,29 +166,25 @@ const NavbarEnglib_Tutor = () => {
                 style={{ backgroundColor: '#ececec', textAlign: 'right' }}
               >
                 <a
-                  href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2024-4-2025-3-for-student.pdf"
+                  // calendar/Calendar-2024-4-2025-3-for-student.pdf"
+                  href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2024-4-2025-3-for-student.pdf`}
                   target="_blank"
                 >
                   Calendar Year 2024
                 </a>{' '}
                 &nbsp;{' '}
                 <a
-                  href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/calendar/Calendar-2025-4-2026-3-for-student-ENG.pdf"
+                  // /calendar/Calendar-2025-4-2026-3-for-student-ENG.pdf"
+                  href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student-ENG.pdf`}
                   target="_blank"
                 >
                   Calendar Year 2025
                 </a>{' '}
                 &nbsp;
-                {/* <a
-                  className="btn btn-info mr-2 ml-2"
-                  href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/Student-Rule-2024-3-ver4.pdf"
-                  target="_blank"
-                >
-                  Student Rule
-                </a> */}
                 <a
                   className="btn btn-info mr-2　"
-                  href="https://englib-materials.s3.ap-northeast-1.amazonaws.com/document/ORT-HowToUse-2022-9-ver1.pdf"
+                  //document/ORT-HowToUse-2022-9-ver1.pdf"
+                  href={`https://${PUBLIC_R2_DOMAIN}/document/ORT-HowToUse-2022-9-ver1.pdf`}
                   target="_blank"
                 >
                   How to use ORT

@@ -147,6 +147,7 @@ const StepSH1 = () => {
     dispatch({ type: 'RESTART' })
   }
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const router = useRouter() //使い方：router.replace('/')
 
   //import useWindowDimensionsを使う
@@ -154,12 +155,14 @@ const StepSH1 = () => {
   const thisWidth = width - 10 + 'px'
   //console.log('thisWidth:', thisWidth)
 
-  let audioRightAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
-  )
-  let audioWrongAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
-  )
+  // let audioRightAnswer = new Audio(
+  //   'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
+  // )
+  // let audioWrongAnswer = new Audio(
+  //   // 'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
+  //   `https://${PUBLIC_R2_DOMAIN}/sound-effect/wrong-answer.mp3`
+  // )
+
   ////////////////////////////////////////////////////////////////////
   //SETTING START
   ////////////////////////////////////////////////////////////////////

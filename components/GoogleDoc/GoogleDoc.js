@@ -1,8 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 
 function GoogleDoc({ embedUrl }) {
-  // const embedUrl =
-  //   'https://docs.google.com/document/d/1jmX3125JNX6ip3ysRqV9_hWph-AwH7VxEBtazbXywCg/edit?usp=sharing'
   useEffect(() => {
     getGoogleDoc()
   }, [])
