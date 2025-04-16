@@ -4,7 +4,7 @@ import React from 'react'
 import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
-import Recorder from 'recorder-js'
+// import Recorder from 'recorder-js'
 import { myFun_addZero } from '../FunctionComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -32,8 +32,8 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       showWaitingPopup: false,
       isOpenBackMypage: false, // 🔒 반드시 초기 false 설정
     }
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
-    this.recorder = new Recorder(this.audioContext)
+    // this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    // this.recorder = new Recorder(this.audioContext)
 
     //new recording 2025-04-16 added
     this.recorder = new MicRecorder({ bitRate: 96 }) // 💡 비트레이트 낮게 설정

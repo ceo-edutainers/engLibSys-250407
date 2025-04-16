@@ -444,7 +444,7 @@ const Step1B = () => {
             practiceStart(nextStep)
           })
         } catch (error) {
-          alert('select error!')
+          alert('select error!!!! nextStep')
         }
       }
 

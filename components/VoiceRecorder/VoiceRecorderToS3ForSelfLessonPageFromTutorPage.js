@@ -4,7 +4,7 @@ import React from 'react'
 import axios from 'axios'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
-import Recorder from 'recorder-js'
+// import Recorder from 'recorder-js'
 import { myFun_addZero } from '../FunctionComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -12,6 +12,9 @@ import {
   faStopCircle,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+
+//new recorder module setting
+import MicRecorder from 'mic-recorder-to-mp3'
 
 const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
@@ -39,26 +42,86 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       showWaitingPopup: false,
       pointKeyNum: props.pointKeyNum,
     }
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
-    this.recorder = new Recorder(this.audioContext)
-    console.log('TEST-tbn:', props.tbn)
-    console.log('TEST-tutorNameEng:', props.tutorNameEng)
+    // this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    // this.recorder = new Recorder(this.audioContext)
+
+    //new recording 2025-04-16 added
+    // 96-팟캐스트, YouTube 음성 수준
+    //64-음성 학습에 적당, 저장 공간 절약
+    this.recorder = new MicRecorder({ bitRate: 96 }) // 💡 비트레이트 낮게 설정
   }
 
-  start = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    this.recorder.init(stream)
-    await this.recorder.start()
-    this.setState({ isrecording: true })
+  // start = async () => {
+  //   const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+  //   this.recorder.init(stream)
+  //   await this.recorder.start()
+  //   this.setState({ isrecording: true })
+  // }
+
+  start = () => {
+    this.recorder
+      .start()
+      .then(() => {
+        this.setState({ isrecording: true })
+      })
+      .catch((e) => {
+        console.error('🎤 start error:', e)
+        alert(
+          '録音を開始できませんでした。マイクのアクセス権限を確認してください。'
+        )
+      })
   }
 
+  // stop = async () => {
+  //   this.setState({ showWaitingPopup: true })
+
+  //   try {
+  //     const { blob } = await this.recorder.stop()
+  //     const blobUrl = URL.createObjectURL(blob)
+  //     const duration = Math.round(await getBlobDuration(blobUrl))
+
+  //     const d = new Date()
+  //     const time = `${d.getFullYear()}-${
+  //       d.getMonth() + 1
+  //     }-${d.getDate()}_${myFun_addZero(d.getHours())}:${myFun_addZero(
+  //       d.getMinutes()
+  //     )}:${myFun_addZero(d.getSeconds())}:${myFun_addZero(d.getMilliseconds())}`
+
+  //     const fileName = `${this.state.homework_id}_${time}`
+  //     const file = new File([blob], fileName, { type: 'audio/mpeg' })
+
+  //     await this.uploadAndSave(file, duration, fileName)
+  //   } catch (error) {
+  //     console.error('❌ stop failed:', error)
+
+  //     alert('録音処理中にエラーが発生しました。')
+  //   } finally {
+  //     this.setState({ showWaitingPopup: false, isrecording: false })
+  //   }
+  // }
   stop = async () => {
     this.setState({ showWaitingPopup: true })
 
     try {
-      const { blob } = await this.recorder.stop()
+      const [buffer, blob] = await this.recorder.stop().getMp3()
       const blobUrl = URL.createObjectURL(blob)
       const duration = Math.round(await getBlobDuration(blobUrl))
+
+      // 🔔 40초 미만일 경우 경고
+      // if (duration < 40) {
+      //   const utterance = new SpeechSynthesisUtterance(
+      //     '録音時間が短すぎます。再度録音をしてください。'
+      //   )
+      //   utterance.lang = 'ja-JP'
+      //   speechSynthesis.speak(utterance)
+
+      //   this.setState({
+      //     isrecording: false,
+      //     showWaitingPopup: false,
+      //     isOpenBackMypage: true,
+      //   })
+      //   return
+      // }
 
       const d = new Date()
       const time = `${d.getFullYear()}-${
@@ -73,7 +136,6 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       await this.uploadAndSave(file, duration, fileName)
     } catch (error) {
       console.error('❌ stop failed:', error)
-
       alert('録音処理中にエラーが発生しました。')
     } finally {
       this.setState({ showWaitingPopup: false, isrecording: false })

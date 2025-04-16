@@ -3,7 +3,7 @@ import axios from 'axios'
 // import S3 from 'react-aws-s3'
 import SweetAlert from 'react-bootstrap-sweetalert'
 import getBlobDuration from 'get-blob-duration'
-import Recorder from 'recorder-js'
+// import Recorder from 'recorder-js'
 import StepGoal from '@/components/readingSelfcourse/StepGoal'
 import { myFun_addZero } from '../FunctionComponent'
 import 'balloon-css'
@@ -63,8 +63,8 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
       isOpenBackMypage: false, // 🔒 반드시 초기 false 설정
     }
 
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
-    this.recorder = new Recorder(this.audioContext)
+    // this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    // this.recorder = new Recorder(this.audioContext)
 
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
@@ -175,6 +175,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
         getBlobDuration(blobUrl).then((dur) => {
           const duration = parseInt(dur)
 
+          //25分以下の長さの場合、再度録音する
           if (duration < 25) {
             const utterance = new SpeechSynthesisUtterance(
               '録音時間が短すぎます。再度録音をしてください。'
@@ -333,13 +334,6 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     fetchData()
   }
   audioIntoDB = async (fileName, duration) => {
-    // console.log('FILE-TEST-fileName:', fileName)
-    // console.log('FILE-TEST-length_second:', duration)
-    // console.log('FILE-TEST-mbn', this.state.mbn)
-    // console.log('FILE-TEST-homework_id', this.state.homework_id)
-    // console.log('FILE-TEST-practiceTempId', this.state.practiceTempId)
-    // console.log('FILE-TEST-pointStep', this.state.pointStep)
-    // console.log('FILE-TEST-record_comment', this.state.record_comment)
     try {
       await axios.post(DB_CONN_URL + '/member-record', {
         mbn: this.state.mbn,
@@ -390,33 +384,6 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     fetchData4()
   }
 
-  // getFileFromAws = (mbn, homework_id, practiceTempId, pointStep) => {
-  //   const fetchData4 = async () => {
-  //     try {
-  //       var url = DB_CONN_URL + '/get-member-record-file'
-  //       const response = await axios.post(url, {
-  //         mbn,
-  //         homework_id,
-  //         practiceTempId,
-  //         who_record: 'student',
-  //         currentStep: pointStep,
-  //       })
-
-  //       if (!response.data.status) {
-  //         alert(response.data.message)
-  //       } else {
-  //         this.setState({
-  //           recordFileList: response.data.result,
-  //           recordListView: true,
-  //         })
-  //       }
-  //     } catch (error) {
-  //       alert('db insert error')
-  //     }
-  //   }
-  //   fetchData4()
-  // }
-
   handleViewList = (value) => {
     this.setState({
       recordListView: value,
@@ -454,7 +421,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           this.state.pointStep
         )
       } catch (error) {
-        alert('select error!')
+        alert('select error!!! in Reading Voice Recorder/' + '   ID:' + id)
       }
     }
     fetchData()

@@ -98,11 +98,19 @@ const SHOWANDTELL = () => {
 
   //戻るページ(ログイン後最初に行くページへ)
   const [RedirectTopPage, setRedirectTopPage] = useState()
+  // useEffect(() => {
+  //   var alr = localStorage.getItem('afterLoginRedirect')
+  //   var alr = '/tutor/' + alr + tbn
+  //   setRedirectTopPage(alr)
+  // }, [])
+
   useEffect(() => {
-    var alr = localStorage.getItem('afterLoginRedirect')
-    var alr = '/tutor/' + alr + tbn
-    setRedirectTopPage(alr)
-  }, [])
+    if (router.isReady && router.query.tbn) {
+      const alr = localStorage.getItem('afterLoginRedirect')
+      const redirectUrl = '/tutor/' + alr + router.query.tbn
+      setRedirectTopPage(redirectUrl)
+    }
+  }, [router.isReady, router.query.tbn])
 
   useEffect(() => {
     // ブラウザバックを禁止する
@@ -199,12 +207,17 @@ const SHOWANDTELL = () => {
 
     var d = ''
     d = new Date()
-    var Y = d.getFullYear()
-    var M = d.getMonth() + 1
-    var D = d.getDate()
-    var h = d.getHours()
-    var m = d.getMinutes()
-    var s = d.getSeconds()
+    const tokyoTime = new Date(
+      d.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' })
+    )
+
+    let Y = tokyoTime.getFullYear()
+    let M = tokyoTime.getMonth() + 1
+    let D = tokyoTime.getDate()
+    let h = tokyoTime.getHours()
+    let m = tokyoTime.getMinutes()
+    let s = tokyoTime.getSeconds()
+
     // let ms = myFun_addZero(d.getMilliseconds())
 
     if (M < 10) {
@@ -271,66 +284,85 @@ const SHOWANDTELL = () => {
         }
       )
   }
-  //for no show -> end here
+
+  // //for no show -> end here
+  // const functionFinishThisLesson = (newstatus) => {
+  //   setNewLesson(true)
+  //   setIsFinishThisLesson(false)
+
+  //   if (whenDetail == 'every week') {
+  //     var Url =
+  //       DB_CONN_URL +
+  //       '/finish-lesson-and-show-and-tell-set-by-year-plan2' +
+  //       `?mbn=${mbn}&homework_id=${homework_id}&newstatus=${newstatus}` +
+  //       `&subject=${subject}&courseName=${courseName}&course=${course}&useThisHW=${useThisHW}`
+  //   }
+  //   var newstatus = newstatus
+
+  //   if (usePreviousHomework == true) {
+  //     var useThisHW = 'ok'
+  //   } else if (usePreviousHomework == false) {
+  //     var useThisHW = 'no'
+  //   }
+
+  //   const fetchData = async () => {
+  //     try {
+  //       // alert('1')
+  //       axios.get(Url).then((response) => {
+  //         alert(response.data.message)
+  //         console.log('✅ FinishLesson response:', response.data.message)
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //       alert('error1')
+  //     }
+  //   }
+
+  //   fetchData()
+  //   if (newstatus == 'finished') {
+  //     setIsSuccessSetNewLesson(true)
+  //   } else if (newstatus == 'no show') {
+  //     setIsNoshowAndSuccessSetNewLesson(true)
+  //   }
+  // }
+
   const functionFinishThisLesson = (newstatus) => {
-    // alert(nextnextWeekday('MON'))
-    // alert(newstatus)
     setNewLesson(true)
     setIsFinishThisLesson(false)
 
-    if (whenDetail == 'every week') {
-      //ENGLIBのカレンダー通りのスケジュール
-      // var url = DB_CONN_URL + '/finish-show-and-tell-lesson-year-plan/'
-      var url =
-        DB_CONN_URL + '/finish-lesson-and-show-and-tell-set-by-year-plan/'
-    }
-    var newstatus = newstatus
+    // ✅ 먼저 useThisHW부터 정의
+    let useThisHW = usePreviousHomework ? 'ok' : 'no'
 
-    if (usePreviousHomework == true) {
-      var useThisHW = 'ok'
-    } else if (usePreviousHomework == false) {
-      var useThisHW = 'no'
-    }
-    var Url =
-      url +
-      mbn +
-      '&' +
-      homework_id +
-      '&' +
-      newstatus +
-      '&' +
-      subject +
-      '&' +
-      courseName +
-      '&' +
-      course +
-      '&' +
-      useThisHW
+    // ✅ Url 정의 전에 모든 값이 준비되어 있어야 함
+    let Url = ''
 
+    // if (whenDetail === 'every week') {
+    Url =
+      DB_CONN_URL +
+      '/finish-lesson-and-show-and-tell-set-by-year-plan2' +
+      `?mbn=${mbn}&homework_id=${homework_id}&newstatus=${newstatus}` +
+      `&subject=${subject}&courseName=${courseName}&course=${course}&useThisHW=${useThisHW}`
+    // }
+
+    console.log('Url:', Url)
+    // ✅ 서버 호출
     const fetchData = async () => {
       try {
-        // alert('1')
-        axios.get(Url).then((response) => {})
+        const response = await axios.get(Url)
+        // alert(response.data.message)
+        console.log('✅ FinishLesson response:', response.data.message)
       } catch (error) {
-        console.log(error)
-        alert('error1')
+        console.error('❌ Axios error:', error)
+        alert('エラーが発生しました。もう一度お試しください。')
       }
     }
 
     fetchData()
-    if (newstatus == 'finished') {
-      // var alr = localStorage.getItem('afterLoginRedirect')
-      // var tbn = localStorage.getItem('tbn')
-      // var alr = '/tutor/' + alr + tbn
-      // alert('1' + alr)
-      // router.push(alr)
+
+    // ✅ 결과 처리
+    if (newstatus === 'finished') {
       setIsSuccessSetNewLesson(true)
-    } else if (newstatus == 'no show') {
-      //   var alr = localStorage.getItem('afterLoginRedirect')
-      //   var tbn = localStorage.getItem('tbn')
-      //   var alr = '/tutor/' + alr + tbn
-      //   alert('1' + alr)
-      //   router.push(alr)
+    } else if (newstatus === 'no show') {
       setIsNoshowAndSuccessSetNewLesson(true)
     }
   }
@@ -339,50 +371,103 @@ const SHOWANDTELL = () => {
   const [isError, setError] = useState(false)
 
   //無限ループしない
-  const bar2 = {}
-  useEffect(() => {
-    // console.log('newLesson', newLesson)
-    if (localStorage.getItem('T_loginStatus') == 'true' && newLesson == false) {
-      localStorage.setItem('mbn', query.m)
 
-      var Url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbn
+  // useEffect(() => {
+  //   const mbnFromQuery = router.query.m
+  //   if (!router.isReady || !mbnFromQuery) return
+
+  //   // setMbn(mbnFromQuery) // 이건 그대로
+
+  //   if (
+  //     localStorage.getItem('T_loginStatus') === 'true' &&
+  //     newLesson === false
+  //   ) {
+  //     localStorage.setItem('mbn', mbnFromQuery)
+
+  //     var Url =
+  //       DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbnFromQuery
+
+  //     const fetchData2 = async () => {
+  //       try {
+  //         axios.get(Url).then((response) => {
+  //           // alert(Url)
+  //           // alert(response.data.status)
+  //           // alert(response.data.result[0].name_eng)
+  //           // alert(response.data.result?.length)
+  //           if (response.data.result?.length > 0) {
+  //             // if (response.data.status && response.data.result.length > 0) {
+  //             // alert(response.data.result[0])
+  //             setGoogleDocLink(response.data.result[0].google_doc_link)
+  //             setNameEng(response.data.result[0].name_eng)
+  //             setTutorNameEng(response.data.result[0].teacher_name)
+  //             setClassLink(response.data.result[0].classLink)
+  //             setHomeworkID(response.data.result[0].homework_id)
+  //             setOsusumeLetterSumOutline(
+  //               response.data.result[0].showandtell_outline_limit_words
+  //             )
+  //             setOsusumeLetterSumScript(
+  //               response.data.result[0].showandtell_script_limit_words
+  //             )
+  //             setWhenDetail(response.data.result[0].when_detail)
+
+  //             //追加 for no-show email start
+  //             setLessonSubject(response.data.result[0].subject)
+  //             setYoyakuDate(response.data.result[0].yoyakuDate)
+  //             setYoyakuTime(response.data.result[0].yoyakuTime)
+  //             setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
+  //             //追加 for no-show email end
+  //           }
+  //         })
+  //       } catch (error) {
+  //         // alert('error1' + error)
+  //         console.log(error)
+  //       }
+  //     }
+
+  //     fetchData2()
+  //   }
+  // }, [])
+  useEffect(() => {
+    if (!router.isReady) return
+
+    const mbnFromQuery = router.query.m
+    if (!mbnFromQuery) return
+
+    if (
+      localStorage.getItem('T_loginStatus') === 'true' &&
+      newLesson === false
+    ) {
+      localStorage.setItem('mbn', mbnFromQuery)
+
+      const Url =
+        DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/' + mbnFromQuery
 
       const fetchData2 = async () => {
         try {
-          axios.get(Url).then((response) => {
-            // if (response.data.length > 0) {
-            if (response.data.status && response.data.result.length > 0) {
-              // alert(response.data.result[0])
-              setGoogleDocLink(response.data.result[0].google_doc_link)
-              setNameEng(response.data.result[0].name_eng)
-              setTutorNameEng(response.data.result[0].teacher_name)
-              setClassLink(response.data.result[0].classLink)
-              setHomeworkID(response.data.result[0].homework_id)
-              setOsusumeLetterSumOutline(
-                response.data.result[0].showandtell_outline_limit_words
-              )
-              setOsusumeLetterSumScript(
-                response.data.result[0].showandtell_script_limit_words
-              )
-              setWhenDetail(response.data.result[0].when_detail)
-
-              //追加 for no-show email start
-              setLessonSubject(response.data.result[0].subject)
-              setYoyakuDate(response.data.result[0].yoyakuDate)
-              setYoyakuTime(response.data.result[0].yoyakuTime)
-              setYoyakuWeekday(response.data.result[0].yoyakuWeekday)
-              //追加 for no-show email end
-            }
-          })
+          const response = await axios.get(Url)
+          if (response.data.result?.length > 0) {
+            const data = response.data.result[0]
+            setGoogleDocLink(data.google_doc_link)
+            setNameEng(data.name_eng)
+            setTutorNameEng(data.teacher_name)
+            setClassLink(data.classLink)
+            setHomeworkID(data.homework_id)
+            setOsusumeLetterSumOutline(data.showandtell_outline_limit_words)
+            setOsusumeLetterSumScript(data.showandtell_script_limit_words)
+            setWhenDetail(data.when_detail)
+            setLessonSubject(data.subject)
+            setYoyakuDate(data.yoyakuDate)
+            setYoyakuTime(data.yoyakuTime)
+            setYoyakuWeekday(data.yoyakuWeekday)
+          }
         } catch (error) {
-          // alert('error1' + error)
-          console.log(error)
+          console.error('❌ fetchData2 error:', error)
         }
       }
 
       fetchData2()
     }
-  }, [bar2])
+  }, [router.isReady, router.query.m, newLesson])
 
   if (isError) return <h1>Error, try again showandtell!</h1>
   if (isLoading) return <h1>Loading..........................</h1>

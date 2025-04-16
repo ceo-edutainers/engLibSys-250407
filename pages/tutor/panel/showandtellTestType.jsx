@@ -279,11 +279,19 @@ const SHOWANDTELL = () => {
 
   //戻るページ(ログイン後最初に行くページへ)
   const [RedirectTopPage, setRedirectTopPage] = useState()
+  // useEffect(() => {
+  //   var alr = localStorage.getItem('afterLoginRedirect')
+  //   var alr = '/tutor/' + alr + tbn
+  //   setRedirectTopPage(alr)
+  // }, [])
+
   useEffect(() => {
-    var alr = localStorage.getItem('afterLoginRedirect')
-    var alr = '/tutor/' + alr + tbn
-    setRedirectTopPage(alr)
-  }, [])
+    if (router.isReady && router.query.tbn) {
+      const alr = localStorage.getItem('afterLoginRedirect')
+      const redirectUrl = '/tutor/' + alr + router.query.tbn
+      setRedirectTopPage(redirectUrl)
+    }
+  }, [router.isReady, router.query.tbn])
 
   useEffect(() => {
     // ブラウザバックを禁止する
@@ -312,7 +320,7 @@ const SHOWANDTELL = () => {
     var url =
       DB_CONN_URL +
       '/finish-lesson-and-show-and-tell-set-by-year-plan-test-type/'
-    // }
+
     var newstatus = newstatus
 
     if (usePreviousHomework == true) {
@@ -350,7 +358,9 @@ const SHOWANDTELL = () => {
     const fetchData = async () => {
       try {
         // alert('1')
-        axios.get(Url).then((response) => {})
+        axios.get(Url).then((response) => {
+          // alert(response.data.status)
+        })
       } catch (error) {
         console.log(error)
         alert('error1')
@@ -626,17 +636,6 @@ const SHOWANDTELL = () => {
         }}
       >
         <div className="col-lg-4 col-md-12 text-left">
-          {/* <Link href={alr}>
-            <a
-              className="btn btn-danger text-white ml-4 mr-2 mt-2"
-              style={{ height: 35 }}
-            >
-              Finish This Lesson
-            </a>
-          </Link> */}
-
-          {/* <Link href=""> */}
-          {/* {RedirectTopPage} */}
           <a
             className="btn btn-danger text-white ml-4 mr-2 mt-2"
             style={{ height: 35 }}
