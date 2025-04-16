@@ -71,7 +71,9 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
     this.handleaudiofile = this.handleaudiofile.bind(this)
 
     //new recording 2025-04-16 added
-    this.recorder = new MicRecorder({ bitRate: 64 }) // 💡 비트레이트 낮게 설정
+    // 96-팟캐스트, YouTube 음성 수준
+    //64-음성 학습에 적당, 저장 공간 절약
+    this.recorder = new MicRecorder({ bitRate: 96 }) // 💡 비트레이트 낮게 설정
   }
   applyAudioFilters = (stream) => {
     const source = this.audioContext.createMediaStreamSource(stream)

@@ -36,7 +36,7 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
     this.recorder = new Recorder(this.audioContext)
 
     //new recording 2025-04-16 added
-    this.recorder = new MicRecorder({ bitRate: 64 }) // 💡 비트레이트 낮게 설정
+    this.recorder = new MicRecorder({ bitRate: 96 }) // 💡 비트레이트 낮게 설정
   }
 
   //2025-04-16-backup  -昔の容量の大きいVersion
