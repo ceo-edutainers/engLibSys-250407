@@ -470,6 +470,8 @@ const Step2B = () => {
             .then((response) => {
               if (!response.data.status) {
               } else {
+                console.log('TEST2-NowRegdate:', response.data.NowRegdate)
+                console.log('TEST2-NowRegtime:', response.data.NowRegtime)
                 setPageView(nextStep)
               }
             })

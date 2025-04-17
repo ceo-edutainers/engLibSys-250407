@@ -35,6 +35,8 @@ import '../public/css/tooltip_vocaclean.css'
 import '../public/css/tooltipNew.css'
 import '../public/css/tutorPayTable.css'
 
+import '../public/css/ScrambledSentenceGame.css'
+
 // import '../public/css/calendarSample.less'
 
 // If you want RTL style, comment out below line

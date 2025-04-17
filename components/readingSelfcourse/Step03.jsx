@@ -357,6 +357,8 @@ const Step3B = () => {
               // alert('B')
             } else {
               // alert('C')
+              console.log('TEST3-NowRegdate:', response.data.NowRegdate)
+              console.log('TEST3-NowRegtime:', response.data.NowRegtime)
               setPageView(nextStep)
             }
           })

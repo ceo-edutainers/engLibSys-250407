@@ -176,7 +176,7 @@ export default class VoiceRecorderToS3ForSelfLessonPage5Times extends React.Comp
           const duration = parseInt(dur)
 
           //25分以下の長さの場合、再度録音する
-          if (duration < 25) {
+          if (duration < 3) {
             const utterance = new SpeechSynthesisUtterance(
               '録音時間が短すぎます。再度録音をしてください。'
             )

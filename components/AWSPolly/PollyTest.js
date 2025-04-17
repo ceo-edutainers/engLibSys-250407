@@ -27,7 +27,7 @@ function PollyTest() {
       // )
 
       const response = await axios.post(
-        'http://localhost:5001/synthesize',
+        'http://localhost:3001/synthesize',
         {
           // text: 'Hello, this is a test',
           text,
