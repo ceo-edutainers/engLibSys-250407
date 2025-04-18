@@ -31,34 +31,6 @@ export default function GoogleDocCreatorCourseST({
     getGoogleUrl()
   }, [mbn, homework_id]) // dependency 추가
 
-  // function getGoogleUrl() {
-  //   var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
-  //   var Url = url + mbn
-  //   // alert(Url)
-
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(Url)
-
-  //       // if (response.data.result[0].google_doc_link) {
-  //       //   setGoogleUrl(response.data[0].google_doc_link)
-  //       // }
-
-  //       if (response.data.status) {
-  //         if (response.data.result[0].google_doc_link) {
-  //           setGoogleUrl(response.data.result[0].google_doc_link)
-  //           // console.log('TTT:' + response.data.result[0].google_doc_link)
-  //         }
-  //       } else {
-  //         console.log('Error:', response.data.message)
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }
   function getGoogleUrl() {
     if (!mbn) return
 
@@ -67,6 +39,7 @@ export default function GoogleDocCreatorCourseST({
     axios
       .get(url)
       .then((response) => {
+        // alert(response.data.result[0].google_doc_link)
         if (
           response.data.status &&
           response.data.result?.[0]?.google_doc_link
@@ -86,7 +59,6 @@ export default function GoogleDocCreatorCourseST({
   // }, [bar2])
   useEffect(() => {
     var url = DB_CONN_URL + '/get-member-showandtell-script/' + homework_id
-    // alert(url)
     axios.get(url).then((response) => {
       // console.log('TTT2:' + url)
       if (response.data.length > 0) {
@@ -108,7 +80,8 @@ export default function GoogleDocCreatorCourseST({
 
           return (
             <div style={{ textAlign: 'center' }}>
-              {!success && !loading && (
+              {/* {!success && !loading && ( */}
+              {!success && !loading && !googleUrl && (
                 <>
                   <div className="col-lg-12 col-md-12">
                     <input
@@ -147,7 +120,7 @@ export default function GoogleDocCreatorCourseST({
                       <h3>
                         {/* {wholeScript} */}
                         Click here if you can't see the google-doc for this
-                        lesson.
+                        lesson....
                       </h3>
                     </button>
                   </div>
@@ -167,7 +140,7 @@ export default function GoogleDocCreatorCourseST({
                 </div>
               )}
               <div style={{ height: '800px' }}>
-                {success && (
+                {success && !googleUrl && (
                   <>
                     {/* <h1>Created Google Doc Succefully!</h1> */}
 
@@ -189,7 +162,11 @@ export default function GoogleDocCreatorCourseST({
                     )}
                   </>
                 )}
-                {success && googleUrl != '' && (
+                {/* {success && googleUrl != '' && ( */}
+
+                {/* {success && googleUrl !== '' && (
+                 */}
+                {googleUrl && (
                   <>
                     <GoogleDoc embedUrl={googleUrl} />
                   </>
