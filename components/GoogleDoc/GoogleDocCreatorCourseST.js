@@ -22,6 +22,9 @@ export default function GoogleDocCreatorCourseST({
   const [outlineConclusion, setOutlineConclusion] = useState()
   const [wholeScript, setWholeScript] = useState('')
 
+  //구글 도큐 링크 가져올 때 '로드 완료 상태'를 따로 관리한다
+  const [isGoogleUrlLoaded, setIsGoogleUrlLoaded] = useState(false)
+
   //useEffectの複数run防止
   const bar = {}
   const bar2 = {}
@@ -52,6 +55,10 @@ export default function GoogleDocCreatorCourseST({
       .catch((err) => {
         console.error('Network Error:', err)
       })
+      .finally(() => {
+        // 요청이 끝나면 무조건 로딩 완료로 표시
+        setIsGoogleUrlLoaded(true)
+      })
   }
 
   // useEffect(() => {
@@ -81,7 +88,8 @@ export default function GoogleDocCreatorCourseST({
           return (
             <div style={{ textAlign: 'center' }}>
               {/* {!success && !loading && ( */}
-              {!success && !loading && !googleUrl && (
+              {/* {!success && !loading && !googleUrl && ( */}
+              {isGoogleUrlLoaded && !success && !loading && !googleUrl && (
                 <>
                   <div className="col-lg-12 col-md-12">
                     <input
@@ -127,7 +135,19 @@ export default function GoogleDocCreatorCourseST({
                 </>
               )}
 
-              {loading && <div>Loading...</div>}
+              {/* {loading && <div>Loading...</div>} */}
+              {!isGoogleUrlLoaded && (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    padding: '20px',
+                  }}
+                >
+                  <h3 style={{ color: 'black', paddingTop: '50px' }}>
+                    Now Loading...
+                  </h3>
+                </div>
+              )}
               {error && (
                 <div>
                   Something went wrong. Please try again later.
@@ -163,10 +183,10 @@ export default function GoogleDocCreatorCourseST({
                   </>
                 )}
                 {/* {success && googleUrl != '' && ( */}
-
                 {/* {success && googleUrl !== '' && (
                  */}
-                {googleUrl && (
+
+                {googleUrl && isGoogleUrlLoaded && (
                   <>
                     <GoogleDoc embedUrl={googleUrl} />
                   </>
