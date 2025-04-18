@@ -994,7 +994,7 @@ function App() {
                                     >
                                       レッスン
                                       <br />
-                                      スタートd
+                                      スタート
                                     </span>
                                   ) : (
                                     <span
