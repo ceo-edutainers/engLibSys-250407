@@ -8,23 +8,7 @@ import CopyrightFooter from '@/components/Copyright/CopyrightFooter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MyHeaderMenu from '@/components/MypageGroup/myHeaderMenu'
 import { QuizContext } from '@/components/MypageGroup/Contexts'
-import {
-  faMicrophone,
-  faTimes,
-  faSave,
-  faBullseye,
-  faTrashAlt,
-  faStop,
-  faDoorOpen,
-  faChartBar,
-  faTrash,
-  faPenSquare,
-  faFileAudio,
-  faHeadphones,
-  faCubes,
-  faLaptop,
-  faFile,
-} from '@fortawesome/free-solid-svg-icons'
+import { faLaptop } from '@fortawesome/free-solid-svg-icons'
 
 // ['menu', 'playing', 'finished']
 
@@ -56,45 +40,35 @@ function lessonPre() {
         try {
           var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
           var Url = url + mbn
+
           const response = await axios.get(Url)
+          // alert('here' + response.data.result[0].yoyakuDate)
+          const d = new Date()
 
-          var yoyakuDate = response.data[0].yoyakuDate
-          var yoyakuTime = response.data[0].yoyakuTime
+          const tokyoTime = new Date(
+            d.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
+          )
 
-          //regdate & regtime START
-          var d = ''
-          var d = new Date()
-          var Y = d.getFullYear()
-          var M = d.getMonth() + 1
-          var D = d.getDate()
-          var h = d.getHours()
-          var m = d.getMinutes()
-          var s = d.getSeconds()
-          // let ms = myFun_addZero(d.getMilliseconds())
+          let Y = tokyoTime.getFullYear()
+          let M = tokyoTime.getMonth() + 1
+          let D = tokyoTime.getDate()
+          let h = tokyoTime.getHours()
+          let m = tokyoTime.getMinutes()
+          let s = tokyoTime.getSeconds()
 
-          if (M < 10) {
-            M = '0' + M
-          }
-          if (D < 10) {
-            D = '0' + D
-          }
-          if (h < 10) {
-            h = '0' + h
-          }
-          if (m < 10) {
-            m = '0' + m
-          }
-          if (s < 10) {
-            s = '0' + s
-          }
+          if (M < 10) M = '0' + M
+          if (D < 10) D = '0' + D
+          if (h < 10) h = '0' + h
+          if (m < 10) m = '0' + m
+          if (s < 10) s = '0' + s
+
+          // const lessonDateStart = `${Y}-${M}-01`
+          // const lessonDateStop = `${Y}-${M}-31`
+
           var NowRegdate = Y + '-' + M + '-' + D
           var NowRegtime = h + ':' + m + ':' + s
 
-          if (NowRegdate !== yoyakuDate) {
-            // alert(
-            //   '本日はレッスン日では有りません。' + yoyakuDate + '/' + NowRegdate
-            // )
-            //setIsTodayLessonDay(true)
+          if (NowRegdate !== response.data.result[0].yoyakuDate) {
             alert(
               'レッスン日ではないため、アクセスできません。過去の添削ドキュメントはマイページのレッスン歴からアクセスできます。'
             )
@@ -102,10 +76,8 @@ function lessonPre() {
             redirectToTop()
             return false
           } else {
-            // alert(response.data[0].name_eng)
-            // alert(response.data[0].lessonStatus)
-            setGoogleDocLink(response.data[0].google_doc_link)
-            setClassLink(response.data[0].classLink)
+            setGoogleDocLink(response.data.result[0].google_doc_link)
+            setClassLink(response.data.result[0].classLink)
           }
         } catch (error) {
           alert(error)
@@ -122,35 +94,6 @@ function lessonPre() {
     return false
   }
 
-  // //今日がレッスン日なのかをチェック
-  // useEffect(() => {
-  //   if (localStorage.getItem('loginStatus') == 'true') {
-  //     var mbn = localStorage.getItem('MypageMbn')
-
-  //     const fetchData2 = async () => {
-  //       try {
-  //         var url = DB_CONN_URL + '/get-hw-show-and-tell-info-first-page/'
-  //         var Url = url + mbn
-  //         const response = await axios.get(Url)
-  //         if (response.data[0].lessonStatus == 'finished') {
-  //           alert(response.data[0].name_eng)
-  //           alert(response.data[0].lessonStatus)
-  //           router.push('/myGroupTop')
-  //         } else {
-  //           alert(response.data[0].name_eng)
-  //           alert(response.data[0].lessonStatus)
-  //           setGoogleDocLink(response.data[0].google_doc_link)
-  //           setClassLink(response.data[0].classLink)
-  //         }
-  //       } catch (error) {
-  //         alert(error)
-  //         console.log(error)
-  //       }
-  //     }
-
-  //     fetchData2()
-  //   }
-  // }, [])
   useEffect(() => {
     // ブラウザバックを禁止する
     const fetchData = async () => {

@@ -123,6 +123,7 @@ function App() {
     if (localStorage.getItem('loginStatus') == 'true') {
       var mbn = localStorage.getItem('MypageMbn')
 
+      // alert(thisYoyakuDate)
       const fetchData2 = async () => {
         try {
           // var url = DB_CONN_URL + '/get-hw-first-page-for-lesson-start/'
@@ -153,31 +154,56 @@ function App() {
             var yoyakuTime = response.data[0].yoyakuTime
 
             //regdate & regtime START
-            var d = ''
-            var d = new Date()
-            var Y = d.getFullYear()
-            var M = d.getMonth() + 1
-            var D = d.getDate()
-            var h = d.getHours()
-            var m = d.getMinutes()
-            var s = d.getSeconds()
-            // let ms = myFun_addZero(d.getMilliseconds())
+            // var d = ''
+            // var d = new Date()
+            // var Y = d.getFullYear()
+            // var M = d.getMonth() + 1
+            // var D = d.getDate()
+            // var h = d.getHours()
+            // var m = d.getMinutes()
+            // var s = d.getSeconds()
+            // // let ms = myFun_addZero(d.getMilliseconds())
 
-            if (M < 10) {
-              M = '0' + M
-            }
-            if (D < 10) {
-              D = '0' + D
-            }
-            if (h < 10) {
-              h = '0' + h
-            }
-            if (m < 10) {
-              m = '0' + m
-            }
-            if (s < 10) {
-              s = '0' + s
-            }
+            // if (M < 10) {
+            //   M = '0' + M
+            // }
+            // if (D < 10) {
+            //   D = '0' + D
+            // }
+            // if (h < 10) {
+            //   h = '0' + h
+            // }
+            // if (m < 10) {
+            //   m = '0' + m
+            // }
+            // if (s < 10) {
+            //   s = '0' + s
+            // }
+            // var NowRegdate = Y + '-' + M + '-' + D
+            // var NowRegtime = h + ':' + m + ':' + s
+
+            const d = new Date()
+
+            const tokyoTime = new Date(
+              d.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
+            )
+
+            let Y = tokyoTime.getFullYear()
+            let M = tokyoTime.getMonth() + 1
+            let D = tokyoTime.getDate()
+            let h = tokyoTime.getHours()
+            let m = tokyoTime.getMinutes()
+            let s = tokyoTime.getSeconds()
+
+            if (M < 10) M = '0' + M
+            if (D < 10) D = '0' + D
+            if (h < 10) h = '0' + h
+            if (m < 10) m = '0' + m
+            if (s < 10) s = '0' + s
+
+            // const lessonDateStart = `${Y}-${M}-01`
+            // const lessonDateStop = `${Y}-${M}-31`
+
             var NowRegdate = Y + '-' + M + '-' + D
             var NowRegtime = h + ':' + m + ':' + s
 
