@@ -105,7 +105,7 @@ function App() {
   const [timezoneCountryName, setTimezoneCountryName] = useState() //Japan
   const [timezoneCity, setTimezoneCity] = useState() //Asia/Tokyo
   const [timezoneUTC, setTimeZoneUTC] = useState() //9
-  const [nowSummerTime, setNowSummerTime] = useState()
+  // const [nowSummerTime, setNowSummerTime] = useState()
 
   const tutorTimezone = () => {
     var Url = DB_CONN_URL + '/select-timezone-country'
@@ -224,7 +224,7 @@ function App() {
         setTimezoneCity(response.data.response[0].timezoneCity)
         setTimeZoneUTC(response.data.response[0].timezoneUTC)
 
-        setNowSummerTime(response.data.response[0].now_summer_time)
+        // setNowSummerTime(response.data.response[0].now_summer_time)
 
         setParentName(response.data.response[0].parent_name)
         setParentNameKana(response.data.response[0].parent_name_kana)

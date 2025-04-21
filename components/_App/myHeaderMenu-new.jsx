@@ -612,7 +612,6 @@ function App({ mst }) {
                     </h2>
                   )}
                   <h5 style={{ fontWeight: 'bold', fontSize: '25px' }}>
-                    {/* <RealTime timeZone="JP/Tokyo" /> */}
                     <RealTime timeZone=" Asia/Tokyo" />
                   </h5>
                   <h5 className="mb-0">{userName}&nbsp;&nbsp;</h5>

@@ -1006,7 +1006,7 @@ const ViewReading = ({
             >
               {/* homework_id: {homework_id} */}
               <>
-                <div
+                {/* <div
                   className="col-lg-12 col-md-12 mb-2 pl-0 ml-0"
                   style={{ textAlign: 'center' }}
                 >
@@ -1014,7 +1014,7 @@ const ViewReading = ({
                   <span
                     className="btn btn-danger mt-2"
                     onClick={() => {
-                      // saveEditor(value)
+      
                       saveEditor(dbValue)
                     }}
                     style={{ cursor: 'pointer' }}
@@ -1024,13 +1024,13 @@ const ViewReading = ({
                   <span
                     className="btn btn-primary mt-2 ml-2"
                     onClick={() => {
-                      // saveEditor(value)
+                    
                       sentMemoToStudent(dbValue)
                     }}
                   >
                     Send to student
                   </span>
-                </div>
+                </div> */}
                 {/* dbvalue {dbValue} */}
                 {/* <br />
                 {seriesName}/{bookNum}/{storyNum} */}

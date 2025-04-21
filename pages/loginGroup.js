@@ -40,18 +40,7 @@ const LoginFormNewGroup = () => {
           localStorage.setItem('email', response.data.response[0].email)
           localStorage.setItem('userName', response.data.response[0].name_eng)
           localStorage.setItem('memberSort', response.data.response[0].sort)
-          localStorage.setItem(
-            'memberTimezone',
-            response.data.response[0].timezoneCity
-          )
-          localStorage.setItem(
-            'timezoneUTC',
-            response.data.response[0].timezoneUTC
-          )
-          localStorage.setItem(
-            'wantAdjustTimezone',
-            response.data.response[0].want_adjust_timezone
-          )
+
           localStorage.setItem(
             'MypageMbn',
             response.data.response[0].member_barcode_num

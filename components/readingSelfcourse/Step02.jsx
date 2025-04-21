@@ -768,7 +768,8 @@ const Step2B = () => {
                             }
                           }
                         />
-                      )}
+                      )}{' '}
+                      {/* {bookAudioUrl} */}
                     </div>
                     <div
                       className="col-lg-5 col-md-12 "

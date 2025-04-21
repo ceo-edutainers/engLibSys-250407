@@ -112,9 +112,9 @@ const EditorBookShadowingScript = ({
   }
 
   const [dbValue, setDbValue] = useState('')
-  useEffect(() => {
-    selectMemo()
-  }, [])
+  // useEffect(() => {
+  //   selectMemo()
+  // }, [])
   function selectMemo() {
     const fetchData = async () => {
       try {
@@ -252,11 +252,11 @@ const EditorBookShadowingScript = ({
         </TabContext>
       </Box> */}
       <div className="col-lg-12 col-md-12 mb-2">
-        <div
+        {/* <div
           className="col-lg-12 col-md-12 mb-2 pl-0 ml-0"
           style={{ textAlign: 'left' }}
         >
-          {/* {dbValue} */}
+          
           <span
             className="btn btn-danger mt-2"
             onClick={() => {
@@ -270,14 +270,14 @@ const EditorBookShadowingScript = ({
           <span
             className="btn btn-primary mt-2 ml-3"
             onClick={() => {
-              // saveEditor(value)
+            
               sentMemoToStudent(dbValue)
             }}
           >
             Send to student
           </span>
-        </div>
-        {/* {dbValue} */}
+        </div> */}
+
         <ReactQuill
           theme="snow"
           value={dbValue ? dbValue : value}
