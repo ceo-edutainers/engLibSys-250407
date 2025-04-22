@@ -77,6 +77,7 @@ function MainMenuOST() {
     setPoint,
   } = useContext(QuizContext)
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [isGoBeforeHoldingPage, setIsGoBeforeHoldingPage] = useState(false)
 
   const [beforeHwData, setBeforeHwData] = useState(null)
@@ -284,6 +285,7 @@ function MainMenuOST() {
               //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
               //   val.filename
 
+              //NEXT_PUBLIC_R2_PUBLIC_DOMAIN
               var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
 
               return (
