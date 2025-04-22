@@ -142,36 +142,61 @@ const EditorShadowingScript = ({
   }
 
   useEffect(() => {
-    // selectMemo()
+    selectMemo()
   }, [yID])
   function selectMemo() {
     const fetchData = async () => {
       try {
-        var url = DB_CONN_URL + '/select-lesson-memo-tutor-shadowing-VIDEO'
-        var youtubeURL = 'https://youtu.be/' + yID
+        const url = `${DB_CONN_URL}/select-lesson-memo-tutor-shadowing-VIDEO`
+        const youtubeURL = `https://youtu.be/${yID}`
+        const res = await axios.post(url, { tbn, youtubeURL })
 
-        axios
-          .post(url, {
-            tbn: tbn,
-            youtubeURL: youtubeURL,
-          })
-          .then((response) => {
-            // alert(response.data.message)
-            // alert('length:' + response.data.length)
-
-            if (response.data.length > 0) {
-              // alert(response.data.length)
-              // alert(response.data.response[0].lessonMemo)
-              setDbValue(response.data.response[0].lessonMemo)
-            }
-          })
+        if (res.data.status) {
+          if (res.data.length > 0) {
+            // alert(res.data.message)
+            setDbValue(res.data.data[0].lessonMemo)
+          } else {
+            // alert(res.data.message) // “저장된 메모가 없습니다”
+          }
+        } else {
+          alert(`서버 오류: ${res.data.message}`)
+        }
       } catch (error) {
-        alert('error1')
-        console.log(error)
+        console.error('network error:', error)
+        alert('Networkerror - shadowing.')
       }
     }
+
     fetchData()
   }
+  // function selectMemo() {
+  //   const fetchData = async () => {
+  //     try {
+  //       var url = DB_CONN_URL + '/select-lesson-memo-tutor-shadowing-VIDEO'
+  //       var youtubeURL = 'https://youtu.be/' + yID
+
+  //       axios
+  //         .post(url, {
+  //           tbn: tbn,
+  //           youtubeURL: youtubeURL,
+  //         })
+  //         .then((response) => {
+  //           // alert(response.data.message)
+  //           // alert('length:' + response.data.length)
+
+  //           if (response.data.length > 0) {
+  //             // alert(response.data.length)
+  //             // alert(response.data.response[0].lessonMemo)
+  //             setDbValue(response.data.response[0].lessonMemo)
+  //           }
+  //         })
+  //     } catch (error) {
+  //       alert('error1')
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }
 
   // alert(yID)
   function saveEditor(vlu) {
@@ -195,7 +220,7 @@ const EditorShadowingScript = ({
             memo: vlu,
           })
           .then((response) => {
-            // alert(response.data.message)
+            alert(response.data.message)
             alert('Saved!')
             selectMemo()
           })

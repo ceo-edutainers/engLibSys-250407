@@ -11,7 +11,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-function MainMenuOST() {
+function MainMenuOST(hwid) {
   function firstMessage() {
     const MySwal = withReactContent(Swal)
     Swal.fire({
@@ -78,9 +78,11 @@ function MainMenuOST() {
   } = useContext(QuizContext)
   const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+
   const [isGoBeforeHoldingPage, setIsGoBeforeHoldingPage] = useState(false)
 
   const [beforeHwData, setBeforeHwData] = useState(null)
+
   const [messageNoBeforeLessonData, setMessageNoBeforeLessonData] =
     useState(null)
 
@@ -225,7 +227,7 @@ function MainMenuOST() {
         if (Array.isArray(response.data) && response.data.length > 0) {
           const first = response.data[0]
           setMyHistoryList(response.data)
-          setHWID(homework_id)
+          // setHWID(homework_id)
 
           // ✅ google_doc_link를 바로 사용할 경우
           console.log('Google Link:', first.google_doc_link)
@@ -285,7 +287,6 @@ function MainMenuOST() {
               //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadrecording/' +
               //   val.filename
 
-              //NEXT_PUBLIC_R2_PUBLIC_DOMAIN
               var audioFile = `https://${PUBLIC_R2_DOMAIN}/uploadrecording/${val.filename}`
 
               return (

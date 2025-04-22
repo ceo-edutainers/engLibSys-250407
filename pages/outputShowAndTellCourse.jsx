@@ -83,41 +83,6 @@ function outputShowAndTellCourse() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   const fetchData1 = async () => {
-  //     // alert('3')
-  //     var holdTempIdOST = localStorage.getItem('holdTempIdOST')
-  //     // alert('4')
-  //     try {
-  //       // if (practiceTempId == '' && !holdTempIdOST) {
-  //       //   alert('1')
-  //       //   var tempid = Math.floor(Math.random() * 999999999999999)
-  //       //   setPracticeTempId(tempid)
-  //       //   console.log('practiceTempId-ない時:', practiceTempId)
-  //       // } else if (holdTempIdOST) {
-  //       //   // alert('2')
-  //       //   setPracticeTempId(holdTempIdOST)
-  //       //   console.log('practiceTempId-ある時:', practiceTempId)
-  //       // } else {
-  //       // }
-
-  //       if (!holdTempIdOST || holdTempIdOST == '') {
-  //         setPracticeTempId(holdTempIdOST)
-  //       } else {
-  //         var tempid = Math.floor(Math.random() * 999999999999999)
-  //         setPracticeTempId(tempid)
-  //       }
-
-  //       // }
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   fetchData1()
-  // }, [])
-
-  //無限ループしない
-
   useEffect(() => {
     if (localStorage.getItem('loginStatus') == 'true') {
       var mbn = localStorage.getItem('MypageMbn')
@@ -160,13 +125,15 @@ function outputShowAndTellCourse() {
           // alert(Url)
           const response = await axios.get(Url)
           // alert(response.data.status)
+          // alert(response.data.result[0].homework_id)
           // setHWbookInfo(response.data)
           // alert('homework_id' + response.data[0].homework_id)
           // alert(response.data.result[0].homework_id)
 
-          setHWID(response.data.result[0].homework_id)
           // setUserName(response.data.name_eng)
+
           setYoyakuDate(response.data.result[0].yoyakuDate)
+          setHWID(response.data.result[0].homework_id)
           setYoyakuTime(response.data.result[0].yoyakuTime)
           setTeacherName(response.data.result[0].teacher_name)
           setTbn(response.data.result[0].teacher_barcode_num)
@@ -194,6 +161,45 @@ function outputShowAndTellCourse() {
       fetchData2()
     }
   }, [])
+
+  // useEffect(() => {
+  //   const fetchData2 = async () => {
+  //     // if (localStorage.getItem('loginStatus') == 'true') {
+  //     var mbn = localStorage.getItem('MypageMbn')
+  //     setMyMbn(mbn)
+
+  //     try {
+  //       const { data } = await axios.get(
+  //         `${DB_CONN_URL}/get-hw-show-and-tell-info-first-page/${mbn}`
+  //       )
+  //       // const id = data.result[0].homework_id
+  //       // setHWID(id) // ① 비동기 상태 업데이트
+  //       alert(id)
+  //       setHWID(data.result[0].homework_id)
+  //       setShowandtell_type(data.result[0].showandtell_type)
+  //       setYoyakuDate(data.result[0].yoyakuDate)
+  //       setYoyakuTime(data.result[0].yoyakuTime)
+  //       setTeacherName(data.result[0].teacher_name)
+  //       setTbn(data.result[0].teacher_barcode_num)
+  //       setOutlineLimitWords(data.result[0].showandtell_outline_limit_words)
+  //       setScriptLimitWords(data.result[0].showandtell_script_limit_words)
+  //       setShowandtell_type(data.result[0].showandtell_type)
+  //       setShowandtellTitle(data.result[0].showandtellTitle)
+  //       setShowandtellTitle_Level(data.result[0].showandtellTitle_Level)
+  //       setShowandtellTitle_yourLanguage(
+  //         data.result[0].showandtellTitle_yourLanguage
+  //       )
+  //       /* ...나머지 setState... */
+
+  //       // ② HWID가 준비된 뒤에야 페이지 이동
+  //       setPageView('Step1OST')
+  //     } catch (e) {
+  //       console.error(e)
+  //     }
+  //   }
+  //   fetchData2()
+  //   // }
+  // }, [])
 
   return (
     <div className="AppBig">
@@ -245,66 +251,6 @@ function outputShowAndTellCourse() {
           setShowandtellTitle_Level,
         }}
       >
-        {/* <div>tempid:{practiceTempId}</div> */}
-        {/* <div>
-          <b>myMbn:</b>
-          {myMbn}
-          <br />
-          <b>bookCoverImgUrl:</b> {bookCoverImgUrl}
-          <br /> <b>bookImgUrl:</b>
-          {bookImgUrl}
-          <br /> <b>bookAudioUrl:</b>
-          {bookAudioUrl}
-          <br />
-          <b>bookStory:</b>
-          {bookStory}
-          <br />
-          <b>practiceTempId:</b>
-          {practiceTempId}
-          <br />
-          <b>audioOnOff:</b>
-          {audioOnOff}
-          <br />
-          <b>point:</b>
-          {point}
-          <br />
-          <b>
-            userName:
-            <b />
-            {userName}
-            <br />
-            <b>course:</b>
-            {course}
-            <br /> courseName:{courseName}
-            <br />
-            <b>textbook:</b>
-            {textbook}
-            <br /> <b>pageView:</b>
-            {pageView}
-            <br /> <b>courseLevel:</b>
-          </b>
-          {courseLevel}
-          <br />
-          <b>bookTitle:</b>
-          {bookTitle}
-          <br />
-          <b>storyTitle:</b>
-          {storyTitle}
-          <br />
-          <b> bookNum:</b>
-          {bookNum}
-          <br />
-          <b> storyNum:</b>
-          {storyNum}
-          <br />
-          <b>totalQuestion:</b>
-          {totalQuestion}
-          <br />
-        </div> */}
-        {/* <MonsterGet />
-        <PointBar cStep={pageView} pageTitle="Input-Self-Reading" />
-        <StepBarB cStep={pageView} /> */}
-
         {pageView === 'menu' && <MainMenuOST />}
         {pageView === 'Step1OST' && showandtell_type === 'normal type' && (
           <Step1OST />
@@ -314,10 +260,11 @@ function outputShowAndTellCourse() {
         )}
         {pageView === 'Step3OST' && showandtell_type === 'normal type' && (
           <Step3OST />
-        )}
-        {pageView === 'Step1OST' && showandtell_type === 'test type' && (
-          <Step1OST_TEST_TYPE />
-        )}
+        )}{' '}
+        {/* {HWID && HWID} */}
+        {pageView === 'Step1OST' &&
+          showandtell_type === 'test type' &&
+          HWID != '' && <Step1OST_TEST_TYPE hwid={HWID} />}
         {pageView === 'Step2OST' && showandtell_type === 'test type' && (
           <Step2OST_TEST_TYPE />
         )}

@@ -241,13 +241,15 @@ const Step1OST = () => {
 
       try {
         var mbn = localStorage.getItem('MypageMbn')
-        // alert(mbn)
-        // alert(HWID)
+        // alert(mbn + '/' + HWID + '/' + selectedWriting)
+
         // const response =
         // await axios.get(Url).then((response) => {
 
         var url = DB_CONN_URL + '/update-shadowing-title'
-
+        // alert(mbn)
+        // alert(HWID)
+        // alert(selectedWriting)
         axios
           .post(url, {
             mbn: mbn,
@@ -256,6 +258,15 @@ const Step1OST = () => {
           })
           .then((response) => {
             // alert(response.data.message)
+
+            // alert('level:' + response.data.level)
+            // alert('title:' + response.data.title)
+            // alert('title_japanese:' + response.data.title_japanese)
+            // alert('homework_id:' + response.data.homework_id)
+            // alert('mbn:' + response.data.mbn)
+
+            // alert(mbn)
+            // return
             if (response.data.status) {
               var stepStatus = 'end'
               var nextStep = 'Step2OST'
@@ -659,6 +670,7 @@ const Step1OST = () => {
                             <tr>
                               <td style={{ width: '5%' }}>
                                 {/* selectedWriting:{selectedWriting} */}
+                                {/* {val.autoid} */}
                                 <input
                                   type="radio"
                                   name="selWriting"

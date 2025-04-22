@@ -225,7 +225,7 @@ const ViewReading = ({
         var url = DB_CONN_URL + '/get-hw-and-Blackcat-Series-info/'
         // alert('blackcat')
         var Url = url + mbn
-
+        // alert(Url)
         const response = await axios.get(Url)
 
         if (response.data.length > 0) {
@@ -520,49 +520,75 @@ const ViewReading = ({
     fetchData2()
   }
 
-  // useEffect(() => {
-  //   selectMemo()
-  // }, [])
+  useEffect(() => {
+    selectMemo()
+  }, [])
 
   function selectMemo() {
     const fetchData = async () => {
-      // alert('tbn' + tbn)
-      // alert('seriesName:' + seriesName1)
-      // alert('course' + course)
-      // alert('courseName' + courseName)
-      // alert('bookNum:' + bookNum1)
-      // alert('storyNum:' + storyNum1)
-      // alert('readingLevel:' + readingLevel1)
-
-      var url = DB_CONN_URL + '/select-lesson-memo-tutor-reading'
       try {
-        axios
-          .post(url, {
-            tbn: tbn,
-            seriesName: seriesName1,
-            course: course,
-            courseName: courseName,
-            bookNum: bookNum1,
-            storyNum: storyNum1,
-            readingLevel: readingLevel1,
-          })
-          .then((response) => {
-            // alert('length:' + response.data.length)
-            // alert(response.data.message)
-            //  alert(response.data.length)
-            if (response.data.length > 0) {
-              // alert(response.data.length)
-              // alert(response.data.response[0].lessonMemo)
-              setDbValue(response.data.response[0].lessonMemo)
-            }
-          })
+        const url = `${DB_CONN_URL}/select-lesson-memo-tutor-reading`
+
+        const res = await axios.post(url, {
+          tbn,
+          seriesName: seriesName1,
+          subject: 'READING',
+          course,
+          courseName,
+          bookNum: bookNum1,
+          storyNum: storyNum1,
+          readingLevel: readingLevel1,
+        })
+        // 성공 응답 처리
+        // alert(res.data.message)
+        if (res.data.status) {
+          if (res.data.data) {
+            setDbValue(res.data.data)
+          } else {
+            // alert(res.data.message) // “저장된 메모가 없습니다.”
+          }
+        } else {
+          alert(`오류: ${res.data.message}`)
+        }
       } catch (error) {
-        alert('error1')
-        console.log(error)
+        console.error(error)
+        alert('network error -select-lesson-memo-tutor-reading ')
       }
     }
+
     fetchData()
   }
+  // function selectMemo() {
+  //   const fetchData = async () => {
+  //     var url = DB_CONN_URL + '/select-lesson-memo-tutor-reading'
+  //     try {
+  //       axios
+  //         .post(url, {
+  //           tbn: tbn,
+  //           seriesName: seriesName1,
+  //           subject: subject,
+  //           course: course,
+  //           courseName: courseName,
+  //           bookNum: bookNum1,
+  //           storyNum: storyNum1,
+  //           readingLevel: readingLevel1,
+  //         })
+  //         .then((response) => {
+  //           // alert('length:' + response.data.length)
+  //           alert(response.data.message)
+  //           //  alert(response.data.length)
+
+  //           if (response.data.length > 0) {
+  //             setDbValue(response.data.response[0].lessonMemo)
+  //           }
+  //         })
+  //     } catch (error) {
+  //       alert('error1-select-lesson-memo-tutor-reading')
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }
 
   function getTutorQuestionReadingTriumphs(readingLevel, storyNum) {
     const fetchData2 = async () => {
@@ -620,7 +646,7 @@ const ViewReading = ({
             memo: vlu,
           })
           .then((response) => {
-            // alert(response.data.message)
+            alert(response.data.message)
 
             if (noalert == '' || noalert == null) {
               alert('Saved!')
@@ -1006,7 +1032,7 @@ const ViewReading = ({
             >
               {/* homework_id: {homework_id} */}
               <>
-                {/* <div
+                <div
                   className="col-lg-12 col-md-12 mb-2 pl-0 ml-0"
                   style={{ textAlign: 'center' }}
                 >
@@ -1014,7 +1040,6 @@ const ViewReading = ({
                   <span
                     className="btn btn-danger mt-2"
                     onClick={() => {
-      
                       saveEditor(dbValue)
                     }}
                     style={{ cursor: 'pointer' }}
@@ -1024,13 +1049,12 @@ const ViewReading = ({
                   <span
                     className="btn btn-primary mt-2 ml-2"
                     onClick={() => {
-                    
                       sentMemoToStudent(dbValue)
                     }}
                   >
                     Send to student
                   </span>
-                </div> */}
+                </div>
                 {/* dbvalue {dbValue} */}
                 {/* <br />
                 {seriesName}/{bookNum}/{storyNum} */}
