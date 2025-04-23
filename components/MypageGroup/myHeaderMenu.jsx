@@ -421,7 +421,7 @@ function App({ mst }) {
             href={ruleURL}
             target="_blank"
           >
-            生徒ルールtest
+            生徒ルール
           </a>
           &nbsp; &nbsp;{' '}
           <a
