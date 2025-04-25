@@ -428,7 +428,13 @@ function App({ mst }) {
             href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student.pdf`}
             target="_blank"
           >
-            25年4月から
+            <img
+              src="/images/Icons-calendar.png"
+              alt="logo"
+              width="20px"
+              height="20px"
+            />
+            &nbsp;25年4月から
           </a>
           &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           <span
