@@ -1,22 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react'
-
-// import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mobile or tablet etc...portrait...
+import dynamic from 'next/dynamic'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Rnd } from 'react-rnd'
-import Link from '@/utils/ActiveLink'
-import { myFun_getYoutubeID } from '@/components/FunctionComponent'
-import ReactPanZoom from 'react-image-pan-zoom-rotate'
-const RndHomeworkShadowing = ({ homework_id }) => {
-  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
+// import ReactPanZoom from 'react-image-pan-zoom-rotate'
+import EXIF from 'exif-js'
 
+// SSR 중 import 되지 않도록 dynamic 처리
+const ReactPanZoom = dynamic(() => import('react-image-pan-zoom-rotate'), {
+  ssr: false,
+})
+
+const RndHomeworkShadowing = ({ homework_id }) => {
+  const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [hwInfo, setHwInfo] = useState([])
+  const [rotations, setRotations] = useState({}) // { fileName: degree, ... }
   const [rndWidth1, setRndWidth1] = useState(300)
   const [rndHeight1, setRndHeight1] = useState(60)
   const [defaultX, setDefaultX] = useState(600)
   const [defaultY, setDefaultY] = useState(0)
   const [rndZIndex, setRndZIndex] = useState(2) //-1 後ろ
-
   function rndResize(width, height, x, y, zIndex) {
     setRndWidth1(width)
     setRndHeight1(height)
@@ -24,34 +26,59 @@ const RndHomeworkShadowing = ({ homework_id }) => {
     setDefaultY(y)
     setRndZIndex(zIndex)
   }
-
-  //無限ループしない
-  const bar2 = {}
+  // 데이터 fetch
   useEffect(() => {
-    // console.log('newLesson', newLesson)
-    if (localStorage.getItem('T_loginStatus') == 'true') {
-      var Url = DB_CONN_URL + '/get-hw-main-course-shadowing/' + homework_id
-      // alert(Url)
-      const fetchData2 = async () => {
-        try {
-          axios.get(Url).then((response) => {
-            // alert('length' + response.data.length)
-            if (response.data.length > 0) {
-              // alert(response.data)
-              setHwInfo(response.data)
-            }
-          })
-        } catch (error) {
-          // alert('error1' + error)
-          console.log(error)
-        }
-      }
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/get-hw-main-course-shadowing/${homework_id}`
+      )
+      .then((res) => setHwInfo(res.data))
+      .catch(console.error)
+  }, [homework_id])
 
-      fetchData2()
-    }
-  }, [])
+  // EXIF から初期回転角度をセット
+  // useEffect(() => {
+  //   hwInfo.forEach((item) => {
+  //     const img = new Image()
+  //     img.src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${item.fileName}`
+  //     img.onload = () => {
+  //       EXIF.getData(img, function () {
+  //         const ori = EXIF.getTag(this, 'Orientation')
+  //         const deg = ori === 3 ? 180 : ori === 6 ? 90 : ori === 8 ? 270 : 0
+  //         setRotations((prev) => ({ ...prev, [item.fileName]: deg }))
+  //       })
+  //     }
+  //   })
+  // }, [hwInfo, PUBLIC_R2_DOMAIN])
+
+  // EXIF 도 SSR 중 로드하지 않도록 dynamic import
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    hwInfo.forEach((item) => {
+      const img = new Image()
+      img.src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${item.fileName}`
+      img.onload = () => {
+        import('exif-js').then(({ default: EXIF }) => {
+          EXIF.getData(img, function () {
+            const ori = EXIF.getTag(this, 'Orientation')
+            const deg = ori === 3 ? 180 : ori === 6 ? 90 : ori === 8 ? 270 : 0
+            setRotations((prev) => ({ ...prev, [item.fileName]: deg }))
+          })
+        })
+      }
+    })
+  }, [hwInfo, PUBLIC_R2_DOMAIN])
+
+  // ボタンで回転角度を 90° 足す関数
+  const rotateImage = (fileName) => {
+    setRotations((prev) => ({
+      ...prev,
+      [fileName]: ((prev[fileName] || 0) + 90) % 360,
+    }))
+  }
+
   return (
-    <>
+    <div className="mt-3 p-4">
       <Rnd
         default={{
           x: defaultX,
@@ -86,6 +113,7 @@ const RndHomeworkShadowing = ({ homework_id }) => {
         minHeight={50}
         // bounds="window"
       >
+        {' '}
         {/* <b>MultiQ</b> */}
         <a
           className="btn btn-light ml-2 mr-2"
@@ -108,22 +136,35 @@ const RndHomeworkShadowing = ({ homework_id }) => {
           X
         </a>
         <br />
+        <br />
+        {hwInfo.map((val) => {
+          const src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
+          const deg = rotations[val.fileName] || 0
 
-        <div className="mt-3 p-4" style={{ overflow: 'scroll' }}>
-          {hwInfo.map((val, key) => {
-            var imgSrc = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
-            return (
-              <>
-                {' '}
-                <p>
-                  <img src={imgSrc} />
-                </p>
-              </>
-            )
-          })}
-        </div>
+          return (
+            <div
+              key={val.fileName}
+              style={{
+                position: 'relative',
+                marginBottom: '1rem',
+                border: '1px solid #ddd',
+                padding: '4px',
+              }}
+            >
+              <ReactPanZoom
+                image={src}
+                alt={val.fileName}
+                style={{
+                  width: '100%',
+                  transform: `rotate(${deg}deg)`,
+                  transformOrigin: 'center center',
+                }}
+              />
+            </div>
+          )
+        })}
       </Rnd>
-    </>
+    </div>
   )
 }
 
