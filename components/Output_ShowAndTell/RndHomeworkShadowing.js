@@ -29,9 +29,7 @@ const RndHomeworkShadowing = ({ homework_id }) => {
   // 데이터 fetch
   useEffect(() => {
     axios
-      .get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/get-hw-main-course-shadowing/${homework_id}`
-      )
+      .get(`${PUBLIC_R2_DOMAIN}/get-hw-main-course-shadowing/${homework_id}`)
       .then((res) => setHwInfo(res.data))
       .catch(console.error)
   }, [homework_id])
