@@ -1,21 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react'
-
-// import MediaQuery from 'react-responsive' //接続機械を調べる、pc or mobile or tablet etc...portrait...
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Rnd } from 'react-rnd'
-import Link from '@/utils/ActiveLink'
-import { myFun_getYoutubeID } from '@/components/FunctionComponent'
+import ReactPanZoom from 'react-image-pan-zoom-rotate'
+import EXIF from 'exif-js'
 
 const RndHomeworkShadowing = ({ homework_id }) => {
-  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
-
   const [hwInfo, setHwInfo] = useState([])
+  const [rotations, setRotations] = useState({}) // { fileName: degree, ... }
   const [rndWidth1, setRndWidth1] = useState(300)
   const [rndHeight1, setRndHeight1] = useState(60)
   const [defaultX, setDefaultX] = useState(600)
   const [defaultY, setDefaultY] = useState(0)
   const [rndZIndex, setRndZIndex] = useState(2) //-1 後ろ
+
+  // 데이터 fetch
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/get-hw-main-course-shadowing/${homework_id}`
+      )
+      .then((res) => setHwInfo(res.data))
+      .catch(console.error)
+  }, [homework_id])
 
   function rndResize(width, height, x, y, zIndex) {
     setRndWidth1(width)
@@ -24,34 +31,31 @@ const RndHomeworkShadowing = ({ homework_id }) => {
     setDefaultY(y)
     setRndZIndex(zIndex)
   }
-
-  //無限ループしない
-  const bar2 = {}
+  // EXIF から初期回転角度をセット
   useEffect(() => {
-    // console.log('newLesson', newLesson)
-    if (localStorage.getItem('T_loginStatus') == 'true') {
-      var Url = DB_CONN_URL + '/get-hw-main-course-shadowing/' + homework_id
-      // alert(Url)
-      const fetchData2 = async () => {
-        try {
-          axios.get(Url).then((response) => {
-            // alert('length' + response.data.length)
-            if (response.data.length > 0) {
-              // alert(response.data)
-              setHwInfo(response.data)
-            }
-          })
-        } catch (error) {
-          // alert('error1' + error)
-          console.log(error)
-        }
+    hwInfo.forEach((item) => {
+      const img = new Image()
+      img.src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${item.fileName}`
+      img.onload = () => {
+        EXIF.getData(img, function () {
+          const ori = EXIF.getTag(this, 'Orientation')
+          const deg = ori === 3 ? 180 : ori === 6 ? 90 : ori === 8 ? 270 : 0
+          setRotations((prev) => ({ ...prev, [item.fileName]: deg }))
+        })
       }
+    })
+  }, [hwInfo, PUBLIC_R2_DOMAIN])
 
-      fetchData2()
-    }
-  }, [])
+  // ボタンで回転角度を 90° 足す関数
+  const rotateImage = (fileName) => {
+    setRotations((prev) => ({
+      ...prev,
+      [fileName]: ((prev[fileName] || 0) + 90) % 360,
+    }))
+  }
+
   return (
-    <>
+    <div className="mt-3 p-4">
       <Rnd
         default={{
           x: defaultX,
@@ -86,8 +90,8 @@ const RndHomeworkShadowing = ({ homework_id }) => {
         minHeight={50}
         // bounds="window"
       >
+        {' '}
         {/* <b>MultiQ</b> */}
-
         <a
           className="btn btn-light ml-2 mr-2"
           //width, height, x, y, zIndex
@@ -98,7 +102,6 @@ const RndHomeworkShadowing = ({ homework_id }) => {
         >
           DICTATION H.W
         </a>
-
         <a
           className="btn btn-light"
           style={{ color: 'red' }}
@@ -109,28 +112,55 @@ const RndHomeworkShadowing = ({ homework_id }) => {
         >
           X
         </a>
-
         <br />
+        <br />
+        {hwInfo.map((val) => {
+          const src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
+          const deg = rotations[val.fileName] || 0
 
-        <div className="mt-3 p-4" style={{ overflow: 'scroll' }}>
-          {hwInfo.map((val, key) => {
-            // var imgSrc =
-            //   'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-            //   val.fileName
+          return (
+            <div
+              key={val.fileName}
+              style={{
+                position: 'relative',
+                marginBottom: '1rem',
+                border: '1px solid #ddd',
+                padding: '4px',
+              }}
+            >
+              {/* 回転ボタン */}
+              {/* <button
+                onClick={() => rotateImage(val.fileName)}
+                style={{
+                  position: 'absolute',
+                  top: '4px',
+                  right: '4px',
+                  zIndex: 10,
+                  background: 'rgba(255,255,255,0.8)',
+                  border: 'none',
+                  borderRadius: '3px',
+                  cursor: 'pointer',
+                }}
+                title="Rotate 90°"
+              >
+                ↻
+              </button> */}
 
-            var imgSrc = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
-            return (
-              <>
-                {' '}
-                <p>
-                  <img src={imgSrc} />
-                </p>
-              </>
-            )
-          })}
-        </div>
+              {/* ReactPanZoom は image prop で渡す */}
+              <ReactPanZoom
+                image={src}
+                alt={val.fileName}
+                style={{
+                  width: '100%',
+                  transform: `rotate(${deg}deg)`,
+                  transformOrigin: 'center center',
+                }}
+              />
+            </div>
+          )
+        })}
       </Rnd>
-    </>
+    </div>
   )
 }
 
