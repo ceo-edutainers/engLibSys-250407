@@ -36,21 +36,6 @@ const RndHomeworkShadowing = ({ homework_id }) => {
       .catch(console.error)
   }, [homework_id])
 
-  // EXIF から初期回転角度をセット
-  // useEffect(() => {
-  //   hwInfo.forEach((item) => {
-  //     const img = new Image()
-  //     img.src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${item.fileName}`
-  //     img.onload = () => {
-  //       EXIF.getData(img, function () {
-  //         const ori = EXIF.getTag(this, 'Orientation')
-  //         const deg = ori === 3 ? 180 : ori === 6 ? 90 : ori === 8 ? 270 : 0
-  //         setRotations((prev) => ({ ...prev, [item.fileName]: deg }))
-  //       })
-  //     }
-  //   })
-  // }, [hwInfo, PUBLIC_R2_DOMAIN])
-
   // EXIF 도 SSR 중 로드하지 않도록 dynamic import
   useEffect(() => {
     if (typeof window === 'undefined') return
