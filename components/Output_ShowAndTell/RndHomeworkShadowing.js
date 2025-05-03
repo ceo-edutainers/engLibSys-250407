@@ -31,9 +31,13 @@ const RndHomeworkShadowing = ({ homework_id }) => {
   useEffect(() => {
     axios
       .get(`${DB_CONN_URL}/get-hw-main-course-shadowing/${homework_id}`)
-      .then((res) => setHwInfo(res.data))
+      .then((res) => {
+        // res.data가 배열이면 그대로, 아니면 빈 배열
+        const list = Array.isArray(res.data) ? res.data : []
+        setHwInfo(list)
+      })
       .catch(console.error)
-  }, [homework_id, PUBLIC_R2_DOMAIN])
+  }, [homework_id])
 
   // EXIF 도 SSR 중 로드하지 않도록 dynamic import
   useEffect(() => {
@@ -121,32 +125,33 @@ const RndHomeworkShadowing = ({ homework_id }) => {
         </a>
         <br />
         <br />
-        {hwInfo.map((val) => {
-          const src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
-          const deg = rotations[val.fileName] || 0
+        {Array.isArray(hwInfo) &&
+          hwInfo.map((val) => {
+            const src = `https://${PUBLIC_R2_DOMAIN}/uploadhw/${val.fileName}`
+            const deg = rotations[val.fileName] || 0
 
-          return (
-            <div
-              key={val.fileName}
-              style={{
-                position: 'relative',
-                marginBottom: '1rem',
-                border: '1px solid #ddd',
-                padding: '4px',
-              }}
-            >
-              <ReactPanZoom
-                image={src}
-                alt={val.fileName}
+            return (
+              <div
+                key={val.fileName}
                 style={{
-                  width: '100%',
-                  transform: `rotate(${deg}deg)`,
-                  transformOrigin: 'center center',
+                  position: 'relative',
+                  marginBottom: '1rem',
+                  border: '1px solid #ddd',
+                  padding: '4px',
                 }}
-              />
-            </div>
-          )
-        })}
+              >
+                <ReactPanZoom
+                  image={src}
+                  alt={val.fileName}
+                  style={{
+                    width: '100%',
+                    transform: `rotate(${deg}deg)`,
+                    transformOrigin: 'center center',
+                  }}
+                />
+              </div>
+            )
+          })}
       </Rnd>
     </div>
   )
