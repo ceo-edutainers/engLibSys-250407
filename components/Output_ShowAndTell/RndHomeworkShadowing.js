@@ -128,24 +128,6 @@ const RndHomeworkShadowing = ({ homework_id }) => {
                 padding: '4px',
               }}
             >
-              {/* 回転ボタン */}
-              {/* <button
-                onClick={() => rotateImage(val.fileName)}
-                style={{
-                  position: 'absolute',
-                  top: '4px',
-                  right: '4px',
-                  zIndex: 10,
-                  background: 'rgba(255,255,255,0.8)',
-                  border: 'none',
-                  borderRadius: '3px',
-                  cursor: 'pointer',
-                }}
-                title="Rotate 90°"
-              >
-                ↻
-              </button> */}
-
               {/* ReactPanZoom は image prop で渡す */}
               <ReactPanZoom
                 image={src}
