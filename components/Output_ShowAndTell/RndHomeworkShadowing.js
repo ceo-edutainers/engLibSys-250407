@@ -11,6 +11,7 @@ const ReactPanZoom = dynamic(() => import('react-image-pan-zoom-rotate'), {
 })
 
 const RndHomeworkShadowing = ({ homework_id }) => {
+  const DB_CONN_URL = process.env.NEXT_PUBLIC_API_BASE_URL
   const PUBLIC_R2_DOMAIN = process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN
   const [hwInfo, setHwInfo] = useState([])
   const [rotations, setRotations] = useState({}) // { fileName: degree, ... }
@@ -29,10 +30,10 @@ const RndHomeworkShadowing = ({ homework_id }) => {
   // 데이터 fetch
   useEffect(() => {
     axios
-      .get(`${PUBLIC_R2_DOMAIN}/get-hw-main-course-shadowing/${homework_id}`)
+      .get(`${DB_CONN_URL}/get-hw-main-course-shadowing/${homework_id}`)
       .then((res) => setHwInfo(res.data))
       .catch(console.error)
-  }, [homework_id])
+  }, [homework_id, PUBLIC_R2_DOMAIN])
 
   // EXIF 도 SSR 중 로드하지 않도록 dynamic import
   useEffect(() => {
