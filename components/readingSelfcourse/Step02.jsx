@@ -733,7 +733,7 @@ const Step2B = () => {
                       className="col-lg-7 col-md-12 pt-2 tour-step3"
                       style={{ textAlign: 'center' }}
                     >
-                      {courseName == 'CourseZ' ? (
+                      {/* {courseName == 'CourseZ' ? (
                         <>
                           <span
                             className="btn btn-primary"
@@ -768,8 +768,42 @@ const Step2B = () => {
                             }
                           }
                         />
-                      )}{' '}
-                      {/* {bookAudioUrl} */}
+                      )} */}
+                      {courseName === 'CourseZ' ? (
+                        <>
+                          <span
+                            className="btn btn-primary"
+                            style={{ cursor: 'none' }}
+                          >
+                            <img src="/images/orc-logo.png" width="200px" />
+                          </span>
+                          <p>
+                            Oxford Reading
+                            Club(eBookシステム)の音源をプレイしてください。
+                          </p>
+                        </>
+                      ) : !bookAudioUrl ||
+                        bookAudioUrl.trim() === '' ||
+                        bookAudioUrl.endsWith('/no audio') ? (
+                        <p>
+                          このチャプターには音声がありません。
+                          <br />
+                          （レベルの高い教材には、音声が付いていない場合があります）
+                        </p>
+                      ) : (
+                        <ReactAudioPlayer
+                          src={bookAudioUrl}
+                          controls
+                          onPlay={() => {
+                            // setIsAudioPlaying(true)
+                          }}
+                          onPause={() => {
+                            // setIsAudioPlaying(false)
+                          }}
+                          style={{}}
+                        />
+                      )}
+                      {/* test:{bookAudioUrl} */}
                     </div>
                     <div
                       className="col-lg-5 col-md-12 "
