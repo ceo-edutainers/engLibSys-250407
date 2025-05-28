@@ -741,7 +741,7 @@ const Step3B = () => {
                   className="col-lg-12 col-md-12"
                   style={{ display: showAudio ? 'block' : 'none' }}
                 >
-                  {courseName == 'CourseZ' ? (
+                  {/* {courseName == 'CourseZ' ? (
                     <>
                       <p>
                         Oxford Reading
@@ -767,6 +767,40 @@ const Step3B = () => {
                           // borderRadius: '10px',
                         }
                       }
+                    />
+                  )} */}
+                  {courseName === 'CourseZ' ? (
+                    <>
+                      <span
+                        className="btn btn-primary"
+                        style={{ cursor: 'none' }}
+                      >
+                        <img src="/images/orc-logo.png" width="200px" />
+                      </span>
+                      <p>
+                        Oxford Reading
+                        Club(eBookシステム)の音源をプレイしてください。
+                      </p>
+                    </>
+                  ) : !bookAudioUrl ||
+                    bookAudioUrl.trim() === '' ||
+                    bookAudioUrl.endsWith('/no audio') ? (
+                    <p>
+                      このチャプターには音声がありません。
+                      <br />
+                      （レベルの高い教材には、音声が付いていない場合があります）
+                    </p>
+                  ) : (
+                    <ReactAudioPlayer
+                      src={bookAudioUrl}
+                      controls
+                      onPlay={() => {
+                        // setIsAudioPlaying(true)
+                      }}
+                      onPause={() => {
+                        // setIsAudioPlaying(false)
+                      }}
+                      style={{}}
                     />
                   )}
                   {/* <ReactAudioPlayer
