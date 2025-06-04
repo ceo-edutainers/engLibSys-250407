@@ -159,7 +159,7 @@ const ViewBookReadingTriumphs = ({
       {onlineBookStudent && webFileUrl && (
         <>
           <div className="mb-2">
-            <button
+            {/* <button
               onClick={() => setIsModalOpen(true)}
               style={{
                 width: 'auto',
@@ -173,7 +173,7 @@ const ViewBookReadingTriumphs = ({
               }}
             >
               オンライン教材を読む
-            </button>
+            </button> */}
             <QrcodeGeneratorForEvent
               url={webFileUrl}
               title="別の機械で読む"
