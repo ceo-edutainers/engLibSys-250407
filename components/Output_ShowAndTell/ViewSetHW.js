@@ -2144,14 +2144,16 @@ const ViewSetHW = ({
                                     }}
                                   >
                                     When there are about two lessons remaining
-                                    in the current textbook, it will be time to
-                                    order the next one. Adjustments to the
-                                    reading level are left to the teacher's
-                                    discretion, but if you are unable to decide,
-                                    please contact the office. Also, if you wish
-                                    to change the type of textbook, be sure to
-                                    first discuss it with the student and then
-                                    inform the office.
+                                    in the current textbook, it is time to order
+                                    the next one. Adjusting the reading level is
+                                    left to the teacher’s discretion, but if
+                                    you're unsure, please contact the
+                                    administrative office. If you wish to change
+                                    the type of textbook, be sure to discuss it
+                                    with the student first and then contact the
+                                    office. (*Exception: Oxford Reading Tree
+                                    textbooks are e-books, so there is no need
+                                    to order them.)
                                   </p>
                                 </>
                               ))}
@@ -2172,14 +2174,16 @@ const ViewSetHW = ({
                                     }}
                                   >
                                     When there are about two lessons remaining
-                                    in the current textbook, it will be time to
-                                    order the next one. Adjustments to the
-                                    reading level are left to the teacher's
-                                    discretion, but if you are unable to decide,
-                                    please contact the office. Also, if you wish
-                                    to change the type of textbook, be sure to
-                                    first discuss it with the student and then
-                                    inform the office.
+                                    in the current textbook, it is time to order
+                                    the next one. Adjusting the reading level is
+                                    left to the teacher’s discretion, but if
+                                    you're unsure, please contact the
+                                    administrative office. If you wish to change
+                                    the type of textbook, be sure to discuss it
+                                    with the student first and then contact the
+                                    office. (*Exception: Oxford Reading Tree
+                                    textbooks are e-books, so there is no need
+                                    to order them.)
                                   </p>
                                 </>
                               ))}
