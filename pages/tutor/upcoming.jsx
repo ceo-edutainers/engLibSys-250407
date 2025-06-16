@@ -1047,7 +1047,7 @@ const Upcoming = () => {
                 </Box>
                 <TabPanel value="1">
                   <div className="row">
-                    <div className="col-lg-3 col-md-6 ,mb-2 pl-3">
+                    <div className="col-lg-3 col-md-6  pl-3">
                       {/* <select
                         onChange={(e) => {
                           setSearchTermWeekday(e.target.value)
@@ -1133,7 +1133,7 @@ const Upcoming = () => {
                     )}
                   </div>
 
-                  <table className="table table table-bordered">
+                  <table className="table table table-bordered ">
                     <thead className="thead-dark">
                       <tr>
                         <th>Lesson Page</th>
@@ -1281,7 +1281,14 @@ const Upcoming = () => {
                                     <td>
                                       {val.subject}
                                       <br />
-                                      {val.seriesName}
+                                      {val.seriesName == 'Oxford Reading Tree'
+                                        ? 'ORT'
+                                        : val.seriesName}
+                                      {/* {val.seriesName} */}
+                                      <br />
+                                      <p style={{ color: 'red' }}>
+                                        {val.readingLevel}
+                                      </p>
                                     </td>
 
                                     <td>
@@ -1415,84 +1422,6 @@ const Upcoming = () => {
                                             </button>
                                           </>
                                         )}
-                                      {/* {modifyDateView == true &&
-                                      val.autoid == modifyAutoid ? (
-                                        <>
-                                          <hr
-                                            style={{
-                                              marginTop: 5,
-                                              marginBottom: 5,
-                                            }}
-                                          />
-                                          <DatePicker
-                                            className="text-black mb-1"
-                                            portalId="root-portal"
-                                            // selected={changedRegDate}
-                                            dateFormat="yyyy-MM-dd"
-                                            selected={
-                                              changedRegDate == null ||
-                                              changedRegDate == ''
-                                                ? new Date(val.yoyakuDate)
-                                                : new Date(changedRegDate)
-                                            }
-                                            onChange={(date) =>
-                                              changeLessonDate_temp(
-                                                val.yoyakuDate,
-                                                val.yoyakuWeekday,
-                                                date,
-                                                val.dateTimeChangeMemo
-                                              )
-                                            }
-                                            style={{
-                                              width: '50px',
-                                              height: '30px',
-                                            }}
-                                          />
-                                          <TimePicker
-                                            className="ml-2"
-                                            showSecond={false}
-                                            format="HH:mm"
-                                            minuteStep={30}
-                                            onChange={(value) =>
-                                              changeLessonTime_temp(
-                                                value,
-                                                val.dateTimeChangeMemo
-                                              )
-                                            }
-                                            style={{
-                                              backgroundColor: 'white',
-                                              color: 'gray',
-                                              fontSize: '20px',
-                                              width: '60px',
-                                              marginRight: '10px',
-                                              border: '1px solid gray',
-                                              borderRadius: '5px',
-                                            }}
-                                          />
-
-                                          <button
-                                            style={{ width: '80px' }}
-                                            type="button"
-                                            className="btn-sm btn-danger text-white"
-                                            onClick={() => {
-                                              changeLessonDateTime(
-                                                val.member_barcode_num,
-                                                val.teacher_barcode_num,
-                                                val.teacher_name,
-                                                val.homework_id,
-                                                val.yoyakuDate,
-                                                val.yoyakuTime,
-                                                val.yoyakuWeekday,
-                                                val.dateTimeChangeMemo
-                                              )
-                                            }}
-                                          >
-                                            change
-                                          </button>
-                                        </>
-                                      ) : (
-                                        <></>
-                                      )} */}
                                     </td>
 
                                     <td>
@@ -1698,108 +1627,85 @@ const Upcoming = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {lessonHistoryInfo
-                        // .filter((val) => {
-                        //   //test
-                        //   if (searchYear == '' || searchYear == null) {
-                        //     var searchYear = '2023'
-                        //   }
-                        //   if (searchMonth == '' || searchMonth == null) {
-                        //     var searchMonth = '01'
-                        //   }
+                      {lessonHistoryInfo?.map((val, key) => {
+                        var lessonComa
+                        if (val.duringTime == '25') {
+                          lessonComa = 1
+                        } else if (val.duringTime == '50') {
+                          lessonComa = 2
+                        }
 
-                        //   var searchDate = searchYear + '-' + searchMonth
+                        return (
+                          <>
+                            <tr>
+                              <td>
+                                {' '}
+                                <span
+                                  className="mr-2"
+                                  style={{ color: 'red', fontSize: '15px' }}
+                                >
+                                  &nbsp;[{val.yoyakuDate}]&nbsp;
+                                </span>
+                                <span
+                                  className="ml-2"
+                                  style={{ color: 'blue', fontSize: '12px' }}
+                                >
+                                  {val.yoyakuWeekday}
+                                </span>
+                                <br />
+                                {val.lessonStatus}
+                              </td>
+                              <td>
+                                <span
+                                  className="mr-2"
+                                  style={{
+                                    color: 'blue',
+                                    fontSize: '15px',
+                                    fontWeight: 'bold',
+                                  }}
+                                >
+                                  {val.teacher_name}
+                                </span>
+                                <br />
+                                <span
+                                  className="mr-2"
+                                  style={{
+                                    color: 'green',
+                                    fontSize: '15px',
+                                  }}
+                                >
+                                  [{val.name_eng}]
+                                </span>
+                              </td>
 
-                        //   if (searchYear == '' && searchMonth == '') {
-                        //     return val //everything data
-                        //   } else if (
-                        //     val.yoyakuDate
-                        //       .toLowerCase()
-                        //       .includes(searchDate.toLowerCase())
-                        //   ) {
-                        //     return val
-                        //   }
-                        // })
-
-                        ?.map((val, key) => {
-                          var lessonComa
-                          if (val.duringTime == '25') {
-                            lessonComa = 1
-                          } else if (val.duringTime == '50') {
-                            lessonComa = 2
-                          }
-
-                          return (
-                            <>
-                              <tr>
-                                <td>
-                                  {' '}
-                                  <span
-                                    className="mr-2"
-                                    style={{ color: 'red', fontSize: '15px' }}
-                                  >
-                                    &nbsp;[{val.yoyakuDate}]&nbsp;
-                                  </span>
-                                  <span
-                                    className="ml-2"
-                                    style={{ color: 'blue', fontSize: '12px' }}
-                                  >
-                                    {val.yoyakuWeekday}
-                                  </span>
-                                  <br />
-                                  {val.lessonStatus}
-                                </td>
-                                <td>
-                                  <span
-                                    className="mr-2"
-                                    style={{
-                                      color: 'blue',
-                                      fontSize: '15px',
-                                      fontWeight: 'bold',
-                                    }}
-                                  >
-                                    {val.teacher_name}
-                                  </span>
-                                  <br />
-                                  <span
-                                    className="mr-2"
-                                    style={{
-                                      color: 'green',
-                                      fontSize: '15px',
-                                    }}
-                                  >
-                                    [{val.name_eng}]
-                                  </span>
-                                </td>
-
-                                <td>{val.subject}</td>
-                                <td>{val.duringTime}</td>
-                                <td>{lessonComa} コマ</td>
-                                <td>
-                                  {val.extended_min_difference ? (
-                                    <>
-                                      {val.extended_min_difference} min
-                                      <br />
-                                      <span
-                                        className="ml-2"
-                                        style={{
-                                          color: 'green',
-                                          fontSize: '12px',
-                                        }}
-                                      >
-                                        {val.extended_memo}
-                                      </span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <span style={{ color: 'gray' }}>N/A</span>
-                                    </>
-                                  )}
-                                </td>
-                              </tr>
-                            </>
-                          )
-                        })}
+                              <td>{val.subject}</td>
+                              <td>{val.duringTime}</td>
+                              <td>{lessonComa} コマ</td>
+                              <td>
+                                {val.extended_min_difference ? (
+                                  <>
+                                    {val.extended_min_difference} min
+                                    <br />
+                                    <span
+                                      className="ml-2"
+                                      style={{
+                                        color: 'green',
+                                        fontSize: '12px',
+                                      }}
+                                    >
+                                      {val.extended_memo}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <span style={{ color: 'gray' }}>N/A</span>
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          </>
+                        )
+                      })}
                     </tbody>
                   </table>
                 </TabPanel>
@@ -2180,6 +2086,7 @@ const Upcoming = () => {
                 </TabPanel>
               </TabContext>
             </Box>
+            <br /> <br /> <br />
           </div>
           {/* //tabend */}
         </div>

@@ -2136,6 +2136,23 @@ const ViewSetHW = ({
                                     [*]&nbsp;Completed stories will be marked
                                     with this symbol.
                                   </span>
+                                  <p
+                                    style={{
+                                      color: 'black',
+                                      fontSize: '13px',
+                                      backgroundColor: 'yellow',
+                                    }}
+                                  >
+                                    When there are about two lessons remaining
+                                    in the current textbook, it will be time to
+                                    order the next one. Adjustments to the
+                                    reading level are left to the teacher's
+                                    discretion, but if you are unable to decide,
+                                    please contact the office. Also, if you wish
+                                    to change the type of textbook, be sure to
+                                    first discuss it with the student and then
+                                    inform the office.
+                                  </p>
                                 </>
                               ))}
                             {selectedReadingTextbook == 'CourseB' ||
@@ -2147,6 +2164,23 @@ const ViewSetHW = ({
                                   <span style={{ fontSize: '12px' }}>
                                     [*]&nbsp;読み終わった本
                                   </span>
+                                  <p
+                                    style={{
+                                      color: 'black',
+                                      fontSize: '13px',
+                                      backgroundColor: 'yellow',
+                                    }}
+                                  >
+                                    When there are about two lessons remaining
+                                    in the current textbook, it will be time to
+                                    order the next one. Adjustments to the
+                                    reading level are left to the teacher's
+                                    discretion, but if you are unable to decide,
+                                    please contact the office. Also, if you wish
+                                    to change the type of textbook, be sure to
+                                    first discuss it with the student and then
+                                    inform the office.
+                                  </p>
                                 </>
                               ))}
                           </td>
@@ -2161,6 +2195,11 @@ const ViewSetHW = ({
                             >
                               Student's Reading Level History
                             </span>
+                            <p style={{ color: 'red', fontSize: '14px' }}>
+                              You can only view the history of when the reading
+                              level changed. Please check the story list to see
+                              the books this student has read so far.
+                            </p>
                             <div
                               style={{
                                 width: '100%',
@@ -2933,7 +2972,7 @@ const ViewSetHW = ({
                                 fontWeight: '900',
                               }}
                             >
-                              QUESTIONS
+                              QUESTIONS-
                             </span>
                             <p>
                               Please choose the section to cover in the next
