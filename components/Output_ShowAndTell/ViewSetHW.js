@@ -2124,6 +2124,25 @@ const ViewSetHW = ({
                                     [*]&nbsp;Completed stories will be marked
                                     with this symbol.
                                   </span>
+                                  <p
+                                    style={{
+                                      color: 'black',
+                                      fontSize: '13px',
+                                      backgroundColor: 'yellow',
+                                    }}
+                                  >
+                                    When there are about two lessons remaining
+                                    in the current textbook, it is time to order
+                                    the next one. Adjusting the reading level is
+                                    left to the teacher’s discretion, but if
+                                    you're unsure, please contact the
+                                    administrative office. If you wish to change
+                                    the type of textbook, be sure to discuss it
+                                    with the student first and then contact the
+                                    office. (*Exception: Oxford Reading Tree
+                                    textbooks are e-books, so there is no need
+                                    to order them.)
+                                  </p>
                                 </>
                               ))}
                             {selectedReadingTextbook == 'CourseA' ||
