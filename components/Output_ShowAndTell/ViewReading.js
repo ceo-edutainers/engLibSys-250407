@@ -189,7 +189,7 @@ const ViewReading = ({
         setBookUrl(fsl)
 
         const bci =
-          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Reading+Triumphs/' +
+          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/img/' +
           response.data[0].readingLevel +
@@ -197,7 +197,7 @@ const ViewReading = ({
         setBookCoverImgUrl(bci)
 
         const bim =
-          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Reading+Triumphs/' +
+          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/img/' +
           response.data[0].storyNum +
@@ -205,7 +205,7 @@ const ViewReading = ({
         setBookImgUrl(bim)
 
         const baudio =
-          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Reading+Triumphs/' +
+          'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/audio/' +
           response.data[0].audio1
