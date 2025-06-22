@@ -267,7 +267,8 @@ function readingSelfCourseA() {
             setCopyHW(response.data[0].copyHW)
             if (cN == 'CourseA' || cN == 'CourseA_SC') {
               const bci =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/img/' +
                 response.data[0].readingLevel +
@@ -275,7 +276,8 @@ function readingSelfCourseA() {
               setBookCoverImgUrl(bci)
 
               const bim =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/img/' +
                 response.data[0].storyNum +
@@ -283,7 +285,8 @@ function readingSelfCourseA() {
               setBookImgUrl(bim)
 
               const baudio =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Reading+Triumphs/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/audio/' +
                 response.data[0].audio1
@@ -331,7 +334,8 @@ function readingSelfCourseA() {
               }
 
               var af =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                 response.data[0].readingLevel +
                 '/' +
                 response.data[0].bookNum +
@@ -339,16 +343,18 @@ function readingSelfCourseA() {
               setAnswerFile(af)
 
               const bci =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/img/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/img/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/img/' +
                 response.data[0].readingLevel +
-                '/' +
+                '_' +
                 response.data[0].bookNum +
                 '_Cover.png'
               setBookCoverImgUrl(bci)
 
               //https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/img/B2_2/Book1_Story1.png
               const bim =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/img/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/img/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/img/' +
                 response.data[0].readingLevel +
                 '/' +
                 response.data[0].storyNum +
@@ -358,7 +364,8 @@ function readingSelfCourseA() {
 
               //Main Story audio
               const baudio =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                 response.data[0].readingLevel +
                 '/' +
                 response.data[0].bookNum +
@@ -369,7 +376,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio_intro != '') {
                 const baudio_intro =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -380,7 +388,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio_intro2 != '') {
                 const baudio_intro2 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -391,7 +400,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio_author != '') {
                 const baudio_author =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -402,7 +412,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio2 != '') {
                 const baudio2 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -414,7 +425,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio3 != '') {
                 const baudio3 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -426,7 +438,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio4 != '') {
                 const baudio4 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -438,7 +451,8 @@ function readingSelfCourseA() {
 
               if (response.data[0].audio5 != '') {
                 const baudio5 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -449,7 +463,8 @@ function readingSelfCourseA() {
               }
               if (response.data[0].audio6 != '') {
                 const baudio6 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -460,7 +475,8 @@ function readingSelfCourseA() {
               }
               if (response.data[0].audio7 != '') {
                 const baudio7 =
-                  'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+                  'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
                   response.data[0].readingLevel +
                   '/' +
                   response.data[0].bookNum +
@@ -475,7 +491,8 @@ function readingSelfCourseA() {
               setBookCoverImgUrl(bci)
 
               const baudio =
-                'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/ORT/' +
+                // 'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/ORT/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/Reading/ORT/' +
                 response.data[0].readingLevel +
                 '/audio/' +
                 response.data[0].audio1
