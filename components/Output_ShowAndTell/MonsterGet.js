@@ -73,7 +73,7 @@ const MonsterGet = () => {
               var fileNum = key + 1
               var monster = 'Monster' + fileNum
               var fileImgLink =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/monster/' +
+                'https://englib-public-worker.englib-new-materials.workers.dev/monster/' +
                 fileNum +
                 '.png'
               if (getMonsterInfo[key]) {
