@@ -46,7 +46,7 @@ const RndBlackcatAnswer = ({ readingLevel, bookNum }) => {
 
   function handleFile(readingLevel, bookNum) {
     var af =
-      'https://englib-materials.s3.ap-northeast-1.amazonaws.com/Reading/Blackcat/' +
+      'https://englib-public-worker.englib-new-materials.workers.dev/Reading/Blackcat/' +
       readingLevel +
       '/' +
       bookNum +
