@@ -68,7 +68,7 @@ const OutlineSample = () => {
         className="col-lg-12 col-md-12"
         style={{ display: mindmapView ? 'block' : 'none' }}
       >
-        <img src="https://englib-materials.s3.ap-northeast-1.amazonaws.com/hwSample/show-and-tell-example1_Page_3.jpg" />
+        <img src="https://englib-public-worker.englib-new-materials.workers.dev/hwSample/show-and-tell-example1_Page_3.jpg" />
       </div>
       {/* </MediaQuery> */}
 
