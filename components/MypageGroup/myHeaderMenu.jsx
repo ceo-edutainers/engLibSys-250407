@@ -598,7 +598,7 @@ function App({ mst }) {
                       fontSize: '50px',
                     }}
                   >
-                    MY BEN
+                    <a href="./myGroupHistory">MY BEN</a>
                     <p className="mt-0 pt-0" style={{ fontWeight: 'normal' }}>
                       <strong>B</strong>eyond <strong>E</strong>nglish&nbsp;
                       <strong>N</strong>ative
@@ -909,7 +909,7 @@ function App({ mst }) {
                     </p>
                     ダウンロード
                   </button>
-                  <button
+                  {/* <button
                     style={{
                       backgroundColor: 'white',
                       width: '15%',
@@ -971,8 +971,8 @@ function App({ mst }) {
                       知らない
                     </p>
                     単語リスト
-                  </button>
-                  <button
+                  </button> */}
+                  {/* <button
                     style={{
                       backgroundColor: 'white',
                       width: '15%',
@@ -1003,9 +1003,9 @@ function App({ mst }) {
                       単語・文法など
                     </p>
                     毎日クイズ
-                  </button>
+                  </button> */}
                   {/* <a href="/myGroupHistory"> */}
-                  <button
+                  {/* <button
                     style={{
                       backgroundColor: 'white',
                       width: '15%',
@@ -1036,7 +1036,7 @@ function App({ mst }) {
                       &nbsp;
                     </p>
                     学習歴
-                  </button>
+                  </button> */}
                   {/* </a> */}
                   <button
                     style={{
@@ -1071,7 +1071,7 @@ function App({ mst }) {
                     </p>
                     ﾚｯｽﾝ歴
                   </button>
-                  <button
+                  {/* <button
                     className="btn btn-light"
                     style={{
                       // backgroundColor: 'orange',
@@ -1102,9 +1102,9 @@ function App({ mst }) {
                       請求・領収書
                     </p>
                     PAYMENT
-                  </button>
+                  </button> */}
                   {/* <Link href="/hurikaeEntry2"> */}
-                  <button
+                  {/* <button
                     className="btn btn-light"
                     style={{
                       // backgroundColor: 'orange',
@@ -1135,9 +1135,9 @@ function App({ mst }) {
                       makeup
                     </p>
                     振替・休み
-                  </button>
+                  </button> */}
                   {/* </Link> */}
-                  <button
+                  {/* <button
                     className="btn btn-warning"
                     style={{
                       // backgroundColor: 'orange',
@@ -1161,8 +1161,8 @@ function App({ mst }) {
                     無料英検
                     <br />
                     ﾚﾍﾞﾙ測定
-                  </button>
-                  <button
+                  </button> */}
+                  {/* <button
                     className="btn btn-light"
                     style={{
                       // backgroundColor: 'orange',
@@ -1198,7 +1198,7 @@ function App({ mst }) {
                       Same-day Cancellation
                     </p>
                     当日休みの連絡
-                  </button>
+                  </button> */}
                   {/* <button
                     className="btn btn-danger"
                     style={{
