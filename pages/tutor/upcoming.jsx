@@ -112,14 +112,14 @@ const Upcoming = () => {
   const handleReload = () => {
     router.reload()
   }
-  // let logOutID = () => {
-  //   // setT_LoginStatus(false)
-  //   localStorage.removeItem('T_token')
-  //   localStorage.removeItem('T_loginStatus')
-  //   localStorage.removeItem('T_email')
-  //   localStorage.removeItem('tbn')
-  //   router.push('/t_login')
-  // }
+  let logOutID = () => {
+    // setT_LoginStatus(false)
+    localStorage.removeItem('T_token')
+    localStorage.removeItem('T_loginStatus')
+    localStorage.removeItem('T_email')
+    localStorage.removeItem('tbn')
+    router.push('/t_login')
+  }
 
   const [openScheduleModal, setOpenScheduleModal] = useState({})
 
@@ -155,7 +155,7 @@ const Upcoming = () => {
           } else {
             alert(response.data.message)
             setLessonInfo([])
-            // logOutID()
+            logOutID()
           }
         }
       },
