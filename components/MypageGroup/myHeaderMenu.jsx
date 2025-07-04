@@ -425,7 +425,7 @@ function App({ mst }) {
           </a>
           &nbsp; &nbsp;{' '}
           <a
-            href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student.pdf`}
+            href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student-ver2.pdf`}
             target="_blank"
           >
             <img
@@ -623,7 +623,7 @@ function App({ mst }) {
                       <p style={{ fontSize: '12px', color: 'black' }}>
                         詳しくは
                         <a
-                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student.pdf`}
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student-ver2.pdf`}
                           target="_blank"
                         >
                           カレンダー
@@ -752,7 +752,7 @@ function App({ mst }) {
                         詳しくは
                         <a
                           // /calendar/2022_4_2023_3_1.pdf"
-                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student.pdf`}
+                          href={`https://${PUBLIC_R2_DOMAIN}/calendar/Calendar-2025-4-2026-3-for-student-ver2.pdf`}
                           target="_blank"
                         >
                           カレンダー
