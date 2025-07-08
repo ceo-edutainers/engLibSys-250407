@@ -40,7 +40,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
   const [dictationSec, setDictationSec] = useState(dictationSecond)
   const [shadowingSp, setShadowingSp] = useState(shadowingSpeed)
   const [playStatus, setPlayStatus] = useState(false)
-  const [playbackRate, setPlaybackRate] = useState(1)
+  const [playbackRate, setPlaybackRate] = useState(shadowingSpeed)
   const [subTitleStatus, setSubTitleStatus] = useState(false)
   //for Loop Button
   const [playLoop, setPlayLoop] = useState(true)
@@ -352,7 +352,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                     >
                       x 1.1
                     </option>
-                    <option
+                    {/* <option
                       value="1.2"
                       selected={shadowingSpeed == '1.2' && 'selected'}
                     >
@@ -375,9 +375,10 @@ export default function YoutubeScriptTimeInsertForShadowing({
                       selected={shadowingSpeed == '1.5' && 'selected'}
                     >
                       x 1.5
-                    </option>
+                    </option> */}
                   </select>
                 </span>
+                <br/>
                 <span className="mr-2" style={{ fontWeight: 'bold' }}>
                   &nbsp; Dictation:&nbsp;
                   <select
@@ -519,7 +520,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                   x0.8
                 </a>
               )}
-              {playbackRate == 0.9 ? (
+              {playbackRate == 0.9  ? (
                 <a
                   className="btn btn-danger m-2"
                   onClick={() => {
@@ -540,7 +541,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                   x0.9
                 </a>
               )}
-              {playbackRate == 1 ? (
+              {playbackRate == 1  ? (
                 <a
                   className="btn btn-danger m-2"
                   onClick={() => {
@@ -549,6 +550,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                   }}
                 >
                   x1
+              
                 </a>
               ) : (
                 <a
@@ -604,7 +606,9 @@ export default function YoutubeScriptTimeInsertForShadowing({
                   x1.2
                 </a>
               )}
-              {playbackRate == 1.3 ? (
+              {/* {shadowingSpeed}/{playbackRate}  */}
+              {/* shadowingSpeedとplaybackRateの値が同じならば、ボタンを赤くする */}
+              {/* {playbackRate == 1.3 ? (
                 <a
                   className="btn btn-danger m-2"
                   onClick={() => {
@@ -645,8 +649,8 @@ export default function YoutubeScriptTimeInsertForShadowing({
                 >
                   x1.4
                 </a>
-              )}
-              {playbackRate == 1.5 ? (
+              )} */}
+              {/* {playbackRate == 1.5 ? (
                 <a
                   className="btn btn-danger m-2"
                   onClick={() => {
@@ -664,7 +668,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                 >
                   x1.5
                 </a>
-              )}
+              )} */}
             </div>
           </div>
           <div
@@ -1205,28 +1209,7 @@ export default function YoutubeScriptTimeInsertForShadowing({
                 })}
             </div>
           </div>
-          {/* <div
-            className="col-lg-6 text-left mb-1 mt-1"
-            style={{
-              backgroundColor: 'white',
-              overflow: 'scroll',
-              height: '1000px',
-            }}
-          >
-            {hwInfo.map((val, key) => {
-              var imgSrc =
-                'https://englib.s3.ap-northeast-1.amazonaws.com/uploadhw/' +
-                val.fileName
-              return (
-                <>
-                  {' '}
-                  <p>
-                    <img src={imgSrc} />
-                  </p>
-                </>
-              )
-            })}
-          </div> */}
+
           {/* <RndHomeworkShadowing homework_id={homework_id} /> */}
         </div>
       </div>
