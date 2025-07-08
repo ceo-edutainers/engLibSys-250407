@@ -2127,8 +2127,9 @@ const ViewSetHW = ({
                                   <p
                                     style={{
                                       color: 'black',
-                                      fontSize: '13px',
+                                      fontSize: '15px',
                                       backgroundColor: 'yellow',
+                                      padding: '5px',
                                     }}
                                   >
                                     When there are about two lessons remaining
@@ -2502,6 +2503,7 @@ const ViewSetHW = ({
                             {/* <br />
                           setWhySameShadowingReason:{whySameShadowingReason} */}
                             &nbsp;{' '}
+                             
                             <span
                               style={{
                                 display: checkedOneMoreShadowing
@@ -2751,6 +2753,23 @@ const ViewSetHW = ({
                               selected={checkedOneMoreShadowing && 'selected'}
                             />{' '}
                             SET THE SAME VIDEO ONE MORE TIME &nbsp;{' '}
+                             <p
+                                    style={{
+                                      color: 'black',
+                                      fontSize: '16px',
+                                      backgroundColor: 'yellow',
+                                      padding: '5px',
+                                    }}
+                                  >
+                                   Students who have not reached the reading level below will keep working on the BASIC SHADOWING level.
+Please do not give them Dictation tasks yet.
+Instead, give them a copying task using the reading material.　<br/>Students who can do the Shadowing Dictation task should be set to PRE-INTERMEDIATE level or higher.
+If you don’t understand this, feel free to contact us on LINE support.<br/>
+                                   ⭕️Oxford Reading Tree: Level5<br/>
+                                   ⭕️Reading Triumphs: G2-2<br/>
+                                   ⭕️Blackcat Series: A2_Step1
+
+                                  </p>
                             <span
                               style={{
                                 display: checkedOneMoreShadowing
@@ -2851,7 +2870,10 @@ const ViewSetHW = ({
                             {/* <br />
                             shadowingHWAmount:{shadowingHWAmount} */}
                             &nbsp;
+                            
+
                             <select
+                           
                               onChange={(e) => {
                                 setShadowingHWAmount(e.target.value)
                               }}
@@ -2883,6 +2905,55 @@ const ViewSetHW = ({
                               >
                                 後半[second half]
                               </option>
+{/*                          
+                               <option
+                                value=" 最初〜1分前後まで[From the start to about 1 minute]"
+                                selected={
+                                  shadowingHWAmount == ' 最初〜1分前後まで[From the start to about 1 minute]' &&
+                                  'selected'
+                                }
+                              >
+                                最初〜1分前後まで[From the start to about 1 minute]
+                              </option>
+
+                               <option
+                                value="1分〜2分前後まで[From 1 minute to about 2 minutes]"
+                                selected={
+                                  shadowingHWAmount == '1分〜2分前後まで[From 1 minute to about 2 minutes]' &&
+                                  'selected'
+                                }
+                              >
+                                1分〜2分前後まで[From 1 minute to about 2 minutes]
+                              </option>
+
+                                 <option
+                                value="2分〜3分前後まで[From 2 minute to about 3 minutes]"
+                                selected={
+                                  shadowingHWAmount == '2分〜3分前後まで[From 2 minute to about 3 minutes]' &&
+                                  'selected'
+                                }
+                              >
+                                2分〜3分前後まで[From 2 minute to about 3 minutes]
+                              </option>
+                                    <option
+                                value="3分〜4分前後まで[From 3 minute to about 4 minutes]"
+                                selected={
+                                  shadowingHWAmount == '3分〜4分前後まで[From 3 minute to about 4 minutes]' &&
+                                  'selected'
+                                }
+                              >
+                                3分〜4分前後まで[From 3 minute to about 4 minutes]
+                              </option>
+
+                                   <option
+                                value="4分〜最後[From 4 minute to the end]"
+                                selected={
+                                  shadowingHWAmount == '4分〜最後[From 4 minute to the end]' &&
+                                  'selected'
+                                }
+                              >
+                                4分〜最後[From 4 minute to the end]
+                              </option> */}
                             </select>
                           </td>
                         </tr>
