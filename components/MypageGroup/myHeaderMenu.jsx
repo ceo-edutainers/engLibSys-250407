@@ -63,12 +63,12 @@ function App({ mst }) {
     if (mst == 'PERSONAL') {
       setRuleURL(
         //document/Student-Rule-2024-3-ver4.pdf'
-        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver6.pdf`
       )
     } else if (mst == 'COMPANY') {
-      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`)
+      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver6.pdf`)
     } else {
-      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`)
+      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver6.pdf`)
     }
   }, [mst])
 
@@ -417,7 +417,7 @@ function App({ mst }) {
           </a>
           <a
             className="btn btn-info mr-2 pt-0 pb-0"
-            // href="/document/Student-Rule-ver5.pdf"
+            // href="/document/Student-Rule-ver６.pdf"
             href={ruleURL}
             target="_blank"
           >
