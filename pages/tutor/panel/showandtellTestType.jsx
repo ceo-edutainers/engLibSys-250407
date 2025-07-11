@@ -385,11 +385,10 @@ const SHOWANDTELL = () => {
       try {
         axios.get(Url).then((response) => {
           // alert('1')
-          alert(response.data.status)
+          // alert(response.data.status)
           if (response.data.status) {
             // alert('2')
-
-            alert(response.data.message)
+            // alert(response.data.message)
             // alert('Modified Successfully!')
           }
         })
@@ -656,17 +655,9 @@ const SHOWANDTELL = () => {
           <h1>
             SHOW AND TELL <br />
             <span
-              className="btn btn-info p-1 mr-2"
-              style={{ fontSize: '25px' }}
-              onClick={() => {
-                setIsFinishThisLesson(true)
-                setNewLesson(true)
-              }}
+              className=" p-1 mr-2"
+              style={{ fontSize: '20px', marginTop: 0 }}
             >
-              Finish this Lesson
-            </span>
-            <br />
-            <span className=" p-1 mr-2" style={{ fontSize: '13px' }}>
               <input
                 type="checkbox"
                 value="adult"
@@ -678,10 +669,23 @@ const SHOWANDTELL = () => {
                   height: '20px',
                   verticalAlign: 'middle',
                   marginRight: '5px',
+                  marginTop: 0,
+                  fontSize: '20px',
                 }}
               />
               Use this assignment again
             </span>
+            <span
+              className="btn btn-info p-1 mr-2 mb-2"
+              style={{ fontSize: '25px' }}
+              onClick={() => {
+                setIsFinishThisLesson(true)
+                setNewLesson(true)
+              }}
+            >
+              Finish this Lesson
+            </span>
+            <br />
             {!isCheckedAbsentBtn ? (
               <span
                 className="btn btn-danger "
