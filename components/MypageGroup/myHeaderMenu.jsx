@@ -63,12 +63,12 @@ function App({ mst }) {
     if (mst == 'PERSONAL') {
       setRuleURL(
         //document/Student-Rule-2024-3-ver4.pdf'
-        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver5.pdf`
+        `https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`
       )
     } else if (mst == 'COMPANY') {
-      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver5.pdf`)
+      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`)
     } else {
-      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver5.pdf`)
+      setRuleURL(`https://${PUBLIC_R2_DOMAIN}/document/Student-Rule-ver６.pdf`)
     }
   }, [mst])
 
@@ -1103,7 +1103,7 @@ function App({ mst }) {
                     </p>
                     PAYMENT
                   </button> */}
-                  {/* <Link href="/hurikaeEntry2"> */}
+                  {/* <Link href="/hurikaeEntry"> */}
                   {/* <button
                     className="btn btn-light"
                     style={{
