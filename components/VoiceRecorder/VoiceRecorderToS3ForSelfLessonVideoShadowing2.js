@@ -65,9 +65,11 @@ export default class VoiceRecorderToS3ForSelfLessonVideoShadowing extends React.
       const blobUrl = URL.createObjectURL(blob)
       const duration = Math.round(await getBlobDuration(blobUrl))
 
-      if (duration < 40) {
+      if (duration < 30) {
         const utterance = new SpeechSynthesisUtterance(
-          '録音時間が短すぎます。再度録音をしてください。'
+          '録音時間が短すぎます。再度録音をしてください。あなたの録音時間は' +
+            duration +
+            '秒です。'
         )
         utterance.lang = 'ja-JP'
         speechSynthesis.speak(utterance)
