@@ -142,10 +142,10 @@ const Step2B = () => {
   //console.log('thisWidth:', thisWidth)
 
   let audioRightAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
+    'https://englib-public-worker.englib-new-materials.workers.dev/sound-effect/dingdongdang.mp3'
   )
   let audioWrongAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
+    'https://englib-public-worker.englib-new-materials.workers.dev/sound-effect/wrong-answer.mp3'
   )
   ////////////////////////////////////////////////////////////////////
   //SETTING START
@@ -769,6 +769,7 @@ const Step2B = () => {
                           }
                         />
                       )} */}
+
                       {courseName === 'CourseZ' ? (
                         <>
                           <span
@@ -791,16 +792,28 @@ const Step2B = () => {
                           （レベルの高い教材には、音声が付いていない場合があります）
                         </p>
                       ) : (
+                        // <ReactAudioPlayer
+                        //   src={bookAudioUrl}
+                        //   controls
+                        //   onPlay={() => {
+                        //     // setIsAudioPlaying(true)
+                        //   }}
+                        //   onPause={() => {
+                        //     // setIsAudioPlaying(false)
+                        //   }}
+                        //   style={{}}
+                        // />
                         <ReactAudioPlayer
                           src={bookAudioUrl}
                           controls
-                          onPlay={() => {
-                            // setIsAudioPlaying(true)
+                          style={{
+                            width: '100%',
+                            backgroundColor: '#e6f5e6', // 연한 그린
+                            borderRadius: '10px',
+                            padding: '8px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                            outline: 'none',
                           }}
-                          onPause={() => {
-                            // setIsAudioPlaying(false)
-                          }}
-                          style={{}}
                         />
                       )}
                       {/* test:{bookAudioUrl} */}

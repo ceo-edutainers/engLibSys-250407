@@ -149,13 +149,6 @@ const Step3B = () => {
   const thisWidth = width - 10 + 'px'
   //console.log('thisWidth:', thisWidth)
 
-  let audioRightAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/dingdongdang.mp3'
-  )
-  let audioWrongAnswer = new Audio(
-    'https://englib.s3.ap-northeast-1.amazonaws.com/sound-effect/wrong-answer.mp3'
-  )
-
   ////////////////////////////////////////////////////////////////////
   //SETTING START
   ////////////////////////////////////////////////////////////////////
@@ -794,13 +787,14 @@ const Step3B = () => {
                     <ReactAudioPlayer
                       src={bookAudioUrl}
                       controls
-                      onPlay={() => {
-                        // setIsAudioPlaying(true)
+                      style={{
+                        width: '100%',
+                        backgroundColor: '#e6f5e6', // 연한 그린
+                        borderRadius: '10px',
+                        padding: '8px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                        outline: 'none',
                       }}
-                      onPause={() => {
-                        // setIsAudioPlaying(false)
-                      }}
-                      style={{}}
                     />
                   )}
                   {/* <ReactAudioPlayer
