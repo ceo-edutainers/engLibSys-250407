@@ -181,7 +181,7 @@ const ViewReading = ({
         var pdf1 = response.data[0].pdf1
 
         var fsl =
-          'https://www.myenglib.com/onlesson/pdfviewer.php?sort=reading_triumphs&file=' +
+          'https://myenglibold.mycafe24.com/myenglib/backup/ebook/pdfviewer.php?sort=reading_triumphs&file=' +
           pdf1 +
           '&readingLevel=' +
           rL
@@ -189,7 +189,7 @@ const ViewReading = ({
         setBookUrl(fsl)
 
         const bci =
-          'Reading/Reading Triumphs/' +
+          'Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/img/' +
           response.data[0].readingLevel +
@@ -203,7 +203,7 @@ const ViewReading = ({
         )
 
         const bim =
-          'Reading/Reading Triumphs/' +
+          'Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/img/' +
           response.data[0].storyNum +
@@ -217,7 +217,7 @@ const ViewReading = ({
         )
 
         const baudio =
-          'Reading/Reading Triumphs/' +
+          'Reading/ReadingTriumphs/' +
           response.data[0].readingLevel +
           '/audio/' +
           response.data[0].audio1
@@ -289,7 +289,7 @@ const ViewReading = ({
               var rC = 'BCat_GreenApple'
             }
             var fsl =
-              'https://www.myenglib.com/onlesson/pdfviewer.php?sort=blackcat&file=' +
+              'https://myenglibold.mycafe24.com/myenglib/backup/ebook/pdfviewer.php?sort=blackcat&file=' +
               pdf1 +
               '&readingLevel=' +
               rL +
@@ -576,24 +576,16 @@ const ViewReading = ({
 
         var rL = response.data[0].readingLevel
         var bN = response.data[0].bookNum
-        var pdf = response.data[0].pdf
+        // var pdf = response.data[0].pdf
+        var pdf = response.data[0].pdf.replace(/\s+/g, '_')
 
-        //www.myenglib.com/onlesson/pdfviewer.php?sort=ort&readingLevel=Stage1plus&file=myenglib/materials/reading/ORT/Stage1plus/book/At_the_Park.pdf
-        //www.myenglib.com/onlesson/pdfviewer.php?sort=ort&readingLevel=Stage1plus&file=myenglib/materials/reading/ORT/Stage1plus/book/At_the_Park.pdf
-
-        //  var fsl =
-        //    'https://www.myenglib.com/onlesson/pdfviewer.php?sort=ort&readingLevel=' +
-        //    rL +
-        //    '&file=myenglib/materials/reading/ORT/' +
-        //    rL +
-        //    '/book/' +
-        //    pdf
         var fsl =
-          'https://www.myenglib.com/onlesson/pdfviewer.php?sort=ort&readingLevel=' +
+          'https://myenglibold.mycafe24.com/myenglib/backup/ebook/pdfviewer.php?sort=ort&readingLevel=' +
           rL +
-          '&file=myenglib/materials/reading/ORT/' +
-          rL +
-          '/book/' +
+          // '&file=myenglib/materials/Reading/ORT/' +
+          '&file=' +
+          // rL +
+          // '/book/' +
           pdf
 
         setBookUrl(fsl)
@@ -605,9 +597,8 @@ const ViewReading = ({
           response.data[0].audio1
         const encodedPath_baudio = encodeURIComponent(baudio)
         setBookAudioUrl(
-          process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_DOMAIN +
-            encodedPath_baudio +
-            '?alt=media'
+          process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_DOMAIN + encodedPath_baudio
+          // +'?alt=media'
         )
 
         // selectMemo(
@@ -1030,7 +1021,7 @@ const ViewReading = ({
               padding: 0,
             }}
           >
-            {/* <h1>bookUrl{bookUrl}</h1> */}
+            {/* <p>bookUrl{bookUrl}</p> */}
 
             <object
               // data="https://www.myenglib.com/onlesson/pdfviewer.php?sort=ort&readingLevel=Stage1plus&file=myenglib/materials/reading/ORT/Stage1plus/book/At_the_Park.pdf"
@@ -1070,7 +1061,7 @@ const ViewReading = ({
                   width: '80%',
                   borderRadius: '10px',
                 }}
-              />
+              />{' '}
             </div>
           </div>
 

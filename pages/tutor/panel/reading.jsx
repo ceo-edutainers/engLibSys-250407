@@ -92,6 +92,9 @@ const READINGA = () => {
   const [openMaterialPage, setOpenMaterialPage] = useState()
   useEffect(() => {
     var page = 'https://www.myben.app/materials/readingMaterials'
+    //var page =
+    ;('https://myenglibold.mycafe24.com/myenglib/materials/readingMaterials')
+
     // 'https://www.myenglib.com/onlesson/teacher_book_list_bc.php?mbn=123'
 
     setOpenMaterialPage(page)
@@ -429,7 +432,8 @@ const READINGA = () => {
                 var pB = response.data[0].phonicsLessonTitle
                 var pC = response.data[0].phonicsLessonOrder
                 var fsl =
-                  'https://myenglib.com/myenglib/backup/lesson_sub_phonics.php?num_p=&test=test1&phonicsBigCourse=' +
+                  // 'https://myenglib.com/myenglib/backup/lesson_sub_phonics.php?num_p=&test=test1&phonicsBigCourse=' +
+                  'https://myenglibold.mycafe24.com/myenglib/backup/lesson_sub_phonics.php?num_p=&test=test1&phonicsBigCourse=' +
                   pA +
                   '&phonicsLessonTitle=' +
                   pB +
@@ -444,13 +448,16 @@ const READINGA = () => {
                 //終了しても、見せる。
                 if (cB == '3-1') {
                   var fsl2 =
-                    'https://myenglib.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=START&questionLessonOrder=1-1'
+                    // 'https://myenglib.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=START&questionLessonOrder=1-1'
+                    'https://myenglibold.mycafe24.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=START&questionLessonOrder=1-1'
+
                   setConverFinishAlert(
                     'This student has completed all the lessons.'
                   )
                 } else {
                   var fsl2 =
-                    'https://myenglib.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=' +
+                    // 'https://myenglib.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=' +
+                    'https://myenglibold.mycafe24.com/myenglib/backup/lesson_sub_question.php?questionBigCourse=' +
                     cA +
                     '&questionLessonOrder=' +
                     cB
@@ -2031,6 +2038,7 @@ const READINGA = () => {
             }}
           >
             <center>
+              {/* {bookPhonicsUrl} */}
               {phonicsLessonOrder && <ViewPhonics fsl={bookPhonicsUrl} />}
             </center>
           </div>
@@ -2040,6 +2048,7 @@ const READINGA = () => {
               display: conversationView ? 'block' : 'none',
             }}
           >
+            {/* {bookConversationUrl} */}
             <ViewConversation
               courseName={courseName}
               mbn={mbn}

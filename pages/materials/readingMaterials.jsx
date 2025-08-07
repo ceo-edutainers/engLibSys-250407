@@ -13,9 +13,11 @@ const ViewReading = () => {
 
   // totor material page
   const [openMaterialPage, setOpenMaterialPage] = useState()
+
   useEffect(() => {
     var page =
-      'https://www.myenglib.com/onlesson/teacher_book_list_bc.php?mbn=123'
+      'https://myenglibold.mycafe24.com/onlesson/teacher_book_list_bc.php?mbn=123'
+    // 'https://www.myenglib.com/onlesson/teacher_book_list_bc.php?mbn=123'
 
     setOpenMaterialPage(page)
   })
@@ -32,6 +34,7 @@ const ViewReading = () => {
               [{phonicsLessonTitle}]&nbsp;{phonicsLessonOrder}/ {bookUrl}
             </h1>
           </div> */}
+
           <div
             className="col-lg-12 col-md-12 p-0 pl-3 m-0"
             style0={{
@@ -40,6 +43,7 @@ const ViewReading = () => {
               padding: 0,
             }}
           >
+            {/* <p> {openMaterialPage}</p> */}
             <object
               data={openMaterialPage}
               style={{
