@@ -268,7 +268,7 @@ function readingSelfCourseA() {
             setCopyHW(response.data[0].copyHW)
             if (cN == 'CourseA' || cN == 'CourseA_SC') {
               const bci =
-                'Reading/Reading Triumphs/' +
+                'Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/img/' +
                 response.data[0].readingLevel +
@@ -283,7 +283,7 @@ function readingSelfCourseA() {
               )
 
               const bim =
-                'Reading/Reading Triumphs/' +
+                'Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/img/' +
                 response.data[0].storyNum +
@@ -296,7 +296,7 @@ function readingSelfCourseA() {
               )
 
               const baudio =
-                'Reading/Reading Triumphs/' +
+                'Reading/ReadingTriumphs/' +
                 response.data[0].readingLevel +
                 '/audio/' +
                 response.data[0].audio1 +
@@ -310,7 +310,7 @@ function readingSelfCourseA() {
             } else if (cN == 'CourseB' || cN == 'CourseB_SC') {
               //first Story View
               //'father'が含まれるかどうか確認。
-              //www.myenglib.com/onlesson/pdfviewer.php?sort=blackcat&file=Wicked_and_Humorous_Tales_Part1.pdf&readingLevel=B2_1&readingCourse=BCat_RTraining&bookNum=Book2
+              //myenglibold.mycafe24.com/onlesson/pdfviewer.php?sort=blackcat&file=Wicked_and_Humorous_Tales_Part1.pdf&readingLevel=B2_1&readingCourse=BCat_RTraining&bookNum=Book2
               var sN = response.data[0].storyNum
               var rL = response.data[0].readingLevel
               var bN = response.data[0].bookNum
@@ -336,7 +336,7 @@ function readingSelfCourseA() {
                   var rC = 'BCat_GreenApple'
                 }
                 var fsl =
-                  'https://www.myenglib.com/onlesson/pdfviewer.php?sort=blackcat&file=' +
+                  'https://myenglibold.mycafe24.com/onlesson/pdfviewer.php?sort=blackcat&file=' +
                   pdf1 +
                   '&readingLevel=' +
                   rL +
