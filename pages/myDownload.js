@@ -193,7 +193,7 @@ function App() {
                   <td>
                     {' '}
                     <a
-                      href="https://myenglib.com/onlesson/online_material/homeworksheet/Voca6-online.pdf"
+                      href="https://myenglibold.mycafe24.com/onlesson/online_material/homeworksheet/Voca6-online.pdf"
                       target="_blank"
                     >
                       <span className="btn btn-danger">ダウンロード</span>
@@ -207,7 +207,7 @@ function App() {
                   <td>
                     {' '}
                     <a
-                      href="https://myenglib.com/onlesson/online_material/homeworksheet/Voca10-online.pdf"
+                      href="https://myenglibold.mycafe24.com/onlesson/online_material/homeworksheet/Voca10-online.pdf"
                       target="_blank"
                     >
                       <span className="btn btn-danger">ダウンロード</span>
@@ -221,7 +221,7 @@ function App() {
                   <td>
                     {' '}
                     <a
-                      href="https://myenglib.com/onlesson/online_material/homeworksheet/Voca20-online.pdf"
+                      href="https://myenglibold.mycafe24.com/onlesson/online_material/homeworksheet/Voca20-online.pdf"
                       target="_blank"
                     >
                       <span className="btn btn-danger">ダウンロード</span>
